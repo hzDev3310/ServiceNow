@@ -1,0 +1,52 @@
+import { View, TextInput, TouchableOpacity, Text } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { useDarkMode } from '../store'
+import { useState } from 'react'
+import AppText from './AppText'
+import colors from '../colors'
+
+const AppInput = ({ password, iconName, label, error = false, errorMessage, ...otherProps }) => {
+  const [show, setShow] = useState(true)
+  const { darkMode } = useDarkMode()
+  return (
+    <View className="w-full px-2 py-1" >
+      <AppText className={`px-2 text-xl capitalize font-medium `} >{label}</AppText>
+      <View className={` rounded-3xl  flex flex-row w-full p-4 my-1 justify-between items-center ${darkMode ? "bg-stone-950" : "bg-gray-200"} `} style={error && {borderWidth : 2 , borderColor : colors.danger}} >
+        <View className="flex flex-row items-center " style={{width : "79%"}} >
+          {iconName && (
+            <MaterialCommunityIcons size={25} color={!darkMode ? "black" : "white"} name={iconName} />
+          )}
+          <TextInput
+            placeholder={label}
+            placeholderTextColor={!darkMode ? "#8c8b8b" : "#696868"}
+            style={{
+              fontSize: 18,
+              fontFamily: "",
+              marginLeft: 10,
+              width :"100%",
+              color: !darkMode ? "black" : "white"
+            }}
+            
+            {...otherProps}
+            secureTextEntry={password && show}
+          />
+        </View>
+        {password && (
+          <TouchableOpacity onPress={() => { setShow(!show) }}>
+            <MaterialCommunityIcons size={25} color={!darkMode ? "black" : "white"} name={show ? 'eye-off' : 'eye'} />
+          </TouchableOpacity>
+        )}
+      </View>
+
+      {
+        error && <View className="flex flex-row px-2 items-center ">
+          <MaterialCommunityIcons size={15} color={colors.danger} name="alert-circle" />
+          <Text style={{color:colors.danger}} > {errorMessage}</Text>
+        </View>
+      }
+    </View>
+  )
+}
+
+export default AppInput
+

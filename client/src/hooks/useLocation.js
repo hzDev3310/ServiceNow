@@ -1,5 +1,4 @@
 import * as Location from "expo-location";
-import { useEffect } from "react";
 import { useCurrentLocation } from "../store";
 
 
@@ -27,9 +26,7 @@ const useLocation = () => {
     });
   }
 
-  useEffect(() => {
-    getLocation()
-  }, []);
+ 
 
   return { currentLocation ,getLocation};
 };

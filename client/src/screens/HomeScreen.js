@@ -11,12 +11,14 @@ const HomeScreen = () => {
 
 
   const { data, error, loading } = useGet("/users/0/0/all");
-  const { currentLocation } = useLocation();
-
+  const { getLocation,currentLocation } = useLocation();
+  useFocusEffect(()=>{
+    getLocation
+  })
 
   return (
     <View className="flex flex-1 ">
-     
+      <Text>{JSON.stringify(currentLocation)}</Text>
       {loading && <ActivityIndicator />}
       {error && alert(JSON.stringify(error))}
       {data?.message && alert("connection error message")}

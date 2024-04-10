@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, StatusBar, ScrollView } from 'react-native'
-import { AppActivityIndicator, AppAlert, AppBadge, AppButton, AppInput, AppSeparator, AppText } from '../componenet'
+import { AppActivityIndicator, AppAlert, AppBadge, AppButton, AppInput, AppSeparator } from '../componenet'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { VerifyPassword, verifyInputs, verifyPhoneNumber } from "../verficationInputs"
 import colors from '../colors'

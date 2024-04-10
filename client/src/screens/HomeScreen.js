@@ -1,11 +1,8 @@
 import useGet from "../apis/useGet";
 import { AppService, AppText } from "../componenet";
-import { View, FlatList, ActivityIndicator, Button } from "react-native";
+import { View, FlatList, ActivityIndicator } from "react-native";
 import useLocation from "../hooks/useLocation";
-import useToken from "../hooks/useToken";
-import { useEffect, useState } from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
 
@@ -18,7 +15,7 @@ const HomeScreen = () => {
 
   return (
     <View className="flex flex-1 ">
-      <Text>{JSON.stringify(currentLocation)}</Text>
+      <AppText>{JSON.stringify(currentLocation)}</AppText>
       {loading && <ActivityIndicator />}
       {error && alert(JSON.stringify(error))}
       {data?.message && alert("connection error message")}

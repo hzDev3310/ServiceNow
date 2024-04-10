@@ -2,7 +2,7 @@ import { View, Text, ScrollView, StatusBar } from 'react-native'
 import { AppBadge, AppButton, AppInput, AppSeparator, AppAlert, AppActivityIndicator, AppText } from '../componenet'
 import { VerifyPassword, verifyPhoneNumber, verifyInputs } from '../verficationInputs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import {  useEffect, useState } from 'react'
+import { useState } from 'react'
 import colors from '../colors'
 
 import useLogin from '../hooks/useLogin'
@@ -89,6 +89,7 @@ const LoginScreen = ({ navigation }) => {
 
         </ScrollView>
       </AppBadge>
+      {loading && <AppActivityIndicator />}
       <AppAlert
         error={error && true}
         message={error ? error : 'login sussefuly'}

@@ -15,7 +15,7 @@ const AppMessageCard = ({ item, currentUser }) => {
             {error && <AppText>{error.message}</AppText>}
             {
                 data && <TouchableOpacity
-                    onPress={() => navigation.navigate('chat' , {data , currentUser , otherUser})}
+                    onPress={() => navigation.navigate('chat' , {conv : conv, currentUser , otherUser})}
                     style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image
                         style={{ width: 100, height: 100, borderRadius: 50 }}

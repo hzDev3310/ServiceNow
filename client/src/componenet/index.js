@@ -11,4 +11,5 @@ export { default as AppAlert } from "./AppAlert";
 export { default as AppButton } from "./AppButton";
 export { default as AppSeparator } from "./AppSeparator";
 export { default as AppActivityIndicator } from "./AppActivityIndicator";
+export { default as AppMessageCard } from "./AppMessageCard";
 

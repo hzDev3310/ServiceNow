@@ -1,7 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native';
-import { AppText } from "../componenet"
+import { AppMessageCard, AppText } from "../componenet"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useGet from '../apis/useGet';
 const ConversationScreen = ({navigation}) => {
@@ -32,9 +32,10 @@ const ConversationScreen = ({navigation}) => {
   const {data,isLoading , error} = useGet(`conversation/${currentUser}`) 
   return (
     <View>
-      <AppText>
-       {JSON.stringify(data)}
-      </AppText>
+      <FlatList
+      data={data}
+      renderItem={item => <AppMessageCard item={item} currentUser={currentUser} />}
+      ></FlatList>
     </View>
   )
 }

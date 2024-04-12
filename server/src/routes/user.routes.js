@@ -4,11 +4,12 @@ const {
     getServices,
     removeUser,
     updateUser,
+    getOtherUser,
   } = require("../controller/userController");
   
   const router = require("express").Router();
   
-  router.get("/:id", getServices);
+  router.get("/:id", getOtherUser);
   router.get("/:latitude/:longitude/:serviceName", getServices);
   router.post("/:userId", emproveAccount);
   router.delete("/:userId", removeUser);

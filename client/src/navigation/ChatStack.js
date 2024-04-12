@@ -12,7 +12,7 @@ function ChatStack() {
         
       />
       <Stack.Screen
-        name="chats"
+        name="chat"
         component={ChatScreen}
         
       />

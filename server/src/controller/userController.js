@@ -122,9 +122,22 @@ const getuser = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error " +error });}
 }
 
+const getOtherUser =async(req,res)=>{
+  try {
+    const user = await userModel.findById(req.params.id)
+    res.json( {
+      name : user.name , 
+      pic : user.profilPic
+    })
+  } catch (error) {
+    res.status(404).json(error)
+  }
+}
+
 module.exports = {
   getServices,
   updateUser,
   removeUser,
-  getuser
+  getuser,
+  getOtherUser
 };

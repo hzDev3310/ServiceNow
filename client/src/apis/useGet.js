@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import instance from "./apiClient";
 
 const useGet = (endpoint, headers = {}) => {

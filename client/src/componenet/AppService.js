@@ -1,24 +1,24 @@
 import { View, Image, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { useDarkMode } from "../store";
+
 import { useNavigation } from "@react-navigation/native";
 
 import CallButton from "./CallButton";
 import AppText from "./AppText";
 import Availability from "./Availability";
+import AppBadge from "./AppBadge";
 
 const AppService = ({ provider }) => {
-  const { darkMode } = useDarkMode();
+
   const data = provider.service;
   const navigation = useNavigation();
   const noProfilPic =
     "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
   const img = data.profilPic === "" ? noProfilPic : data?.profilPic;
   return (
-    <View
-      className={`${darkMode ? "bg-zinc-900" : "bg-white"
-        } m-2 p-2 rounded-xl  flex flex-row justify-between items-center shadow-inherit`}
+    <AppBadge
+      className={` m-2 p-2 rounded-xl max-h-32 flex flex-row justify-between items-center shadow-inherit`}
     >
       <TouchableOpacity
         className={"flex - flex-row"}
@@ -55,7 +55,7 @@ const AppService = ({ provider }) => {
         </View>
         <CallButton phoneNumber={data.phoneNumber} />
       </View>
-    </View>
+    </AppBadge>
   );
 };
 

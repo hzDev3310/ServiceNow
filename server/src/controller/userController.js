@@ -115,7 +115,6 @@ const updateUser = async (req, res) => {
 const getuser = async (req, res) => {
   try {
     const  userId  = req.user.id;
-    console.log(req.user)
     const user = await userModel.findById(userId);
     res.json(user);
   } catch (error) {

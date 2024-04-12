@@ -2,12 +2,13 @@ import useGet from "../apis/useGet";
 import { AppService, AppText } from "../componenet";
 import { View, FlatList, ActivityIndicator } from "react-native";
 import useLocation from "../hooks/useLocation";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 const HomeScreen = () => {
 
 
-  const { data, error, loading } = useGet("/users/0/0/all");
+  const { data, error, isLoading } = useGet("/users/0/0/all");
   const { getLocation,currentLocation } = useLocation();
   useFocusEffect(()=>{
     getLocation
@@ -15,10 +16,10 @@ const HomeScreen = () => {
 
   return (
     <View className="flex flex-1 ">
-      <AppText>{JSON.stringify(currentLocation)}</AppText>
-      {loading && <ActivityIndicator />}
+      <AppText>{JSON.stringify({currentLocation,error,isLoading})}</AppText>
+      {isLoading && <ActivityIndicator />}
       {error && alert(JSON.stringify(error))}
-      {data?.message && alert("connection error message")}
+
       {data && (
         <FlatList
           data={data}

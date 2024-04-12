@@ -10,14 +10,22 @@ const ProfilScreen = ({ navigation }) => {
     try {
       const value = await AsyncStorage.getItem('token');
       if (value !== null) {
-        setToken(value);
+        const parsedValue = JSON.parse(value);
+        if (parsedValue.hasOwnProperty('token')) {
+          setToken(parsedValue.token);
+        } else {
+          console.log("Token not found in the retrieved data.");
+          navigation.navigate('login');
+        }
       } else {
+        console.log("Token not found in AsyncStorage.");
         navigation.navigate('login');
       }
     } catch (e) {
-      console.log("Error occurred while fetching token.");
+      console.log("Error occurred while fetching token:", e);
     }
   };
+  
 
   const removeValue = async () => {
     try {
@@ -40,7 +48,8 @@ const {data} =useGet('/auth',{
 })
   return (
     <View>
-      <Text className="mt-10 bg-red-300">{JSON.stringify(data)}</Text>
+      <Text className="mt-10 bg-red-300">{JSON.stringify({token})}</Text>
+      <Text className="mt-10 bg-red-300">{JSON.stringify({data})}</Text>
       <Button title='Logout' onPress={removeValue} />
     </View>
   );

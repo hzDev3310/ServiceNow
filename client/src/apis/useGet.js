@@ -8,20 +8,9 @@ const useGet = (endpoint, headers = {}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await instance.get(endpoint, { headers });
-        setData(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-
+    setIsLoading(true)
+    instance.get(endpoint, { headers }).then(res => setData(res.data)).catch(e => setError(e.message))
+    setIsLoading(false)
   }, [endpoint, headers]);
 
   return { data, error, isLoading };

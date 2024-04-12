@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { ChatScreen } from "../screens";
+import { ChatScreen, ConversationScreen } from "../screens";
 
 const Stack = createStackNavigator();
 
@@ -7,7 +7,12 @@ function ChatStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="chat screen"
+        name="conversation"
+        component={ConversationScreen}
+        
+      />
+      <Stack.Screen
+        name="chats"
         component={ChatScreen}
         
       />

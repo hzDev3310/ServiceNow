@@ -12,13 +12,14 @@ const useLogin = (phoneNumber, password) => {
   useEffect(() => {
     const storeData = async (value) => {
       try {
-        await AsyncStorage.setItem('token', value);
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem('token', jsonValue);
       } catch (e) {
         console.log(e)
       }
     };
     if (responseData && responseData.token) {
-      storeData(responseData.token);
+      storeData(responseData);
     }
   }, [responseData]);
 

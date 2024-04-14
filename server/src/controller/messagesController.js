@@ -39,7 +39,8 @@ const getConv = async (req, res) => {
 
 const addNewMessage = async (req, res) => {
   try {
-    const { convId, sender, content } = req.body;
+    const {convId} = req.params
+    const {  sender, content } = req.body;
     const message = new MessageModel({
       sender,
       content,

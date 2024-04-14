@@ -26,4 +26,10 @@ const useCurrentUser = create((set) => ({
   changeUser: (user) => set((state) => ({ currentUser: user }))
 }));
 
-export { useCurrentLocation, useDarkMode,useCurrentUser , useIsLogin }
+const useOtherUser = create((set) => ({
+  otherUser: {},
+  changeUser: (user) => set((state) => ({ otherUser: user }))
+}));
+
+
+export { useCurrentLocation, useDarkMode,useCurrentUser ,useOtherUser, useIsLogin }

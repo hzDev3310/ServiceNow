@@ -9,15 +9,15 @@ const useLogin = (phoneNumber, password) => {
     await postData("/auth/login", { phoneNumber, password });
   };
 
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('token', jsonValue);
+    } catch (e) {
+      console.log(e)
+    }
+  };
   useEffect(() => {
-    const storeData = async (value) => {
-      try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem('token', jsonValue);
-      } catch (e) {
-        console.log(e)
-      }
-    };
     if (responseData && responseData.token) {
       storeData(responseData);
     }

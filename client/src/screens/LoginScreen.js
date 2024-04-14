@@ -12,22 +12,22 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
 
-  const { loading, error, login ,responseData} = useLogin(phoneNumber, password)
+  const { loading, error, login, responseData } = useLogin(phoneNumber, password)
 
   const [alert, setAlert] = useState(false)
 
   const handelLogin = async () => {
     try {
       await login(phoneNumber, password);
-     
+
     } catch (error) {
-      
+
       console.error('Login error:', error);
     }
     error && setAlert(true)
     responseData && setAlert(true)
   }
-    
+
   return (
     <View style={{ backgroundColor: colors.primary }} classname="flex-1" >
       {loading && <AppText> isLoading</AppText>}
@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
         <AppText className="text-xl" >
           {
             JSON.stringify({
-             responseData
+              responseData
             })
           }
         </AppText>
@@ -96,7 +96,7 @@ const LoginScreen = ({ navigation }) => {
         visible={alert}
         onClose={() => {
           setAlert(false);
-          responseData.token && navigation.navigate('profil')
+          responseData.token && navigation.goBack();
         }} />
     </View>
   )

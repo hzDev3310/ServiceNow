@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import instance from "./apiClient";
 
-const useGet = (endpoint, headers = {}) => {
+const useGet = (endpoint, dep = null, headers = {}) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -10,7 +10,7 @@ const useGet = (endpoint, headers = {}) => {
     setIsLoading(true)
     instance.get(endpoint, { headers }).then(res => setData(res.data)).catch(e => setError(e.message))
     setIsLoading(false)
-  }, [endpoint, headers]);
+  }, [data, dep]);
 
   return { data, error, isLoading };
 };

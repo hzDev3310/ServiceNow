@@ -5,7 +5,7 @@ import { useState } from 'react'
 import AppText from './AppText'
 import colors from '../colors'
 
-const AppInput = ({ password, iconName, label, error = false, errorMessage, ...otherProps }) => {
+const AppInput = ({ password, iconName, label, error = false, errorMessage ,rightIcon , onpress , ...otherProps }) => {
   const [show, setShow] = useState(true)
   const { darkMode } = useDarkMode()
   return (
@@ -36,6 +36,11 @@ const AppInput = ({ password, iconName, label, error = false, errorMessage, ...o
             <MaterialCommunityIcons size={25} color={!darkMode ? "black" : "white"} name={show ? 'eye-off' : 'eye'} />
           </TouchableOpacity>
         )}
+          {rightIcon && (
+          <TouchableOpacity onPress={onpress }>
+            <MaterialCommunityIcons size={25} color={colors.primary} name={rightIcon} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {
@@ -44,6 +49,7 @@ const AppInput = ({ password, iconName, label, error = false, errorMessage, ...o
           <Text style={{color:colors.danger}} > {errorMessage}</Text>
         </View>
       }
+      
     </View>
   )
 }

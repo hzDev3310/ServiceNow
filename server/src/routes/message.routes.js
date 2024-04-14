@@ -8,7 +8,7 @@ const {
 const router = require("express").Router();
 router.post("/", createNewConversation);
 router.get("/:id", getConv);
-router.put("/", addNewMessage);
+router.post("/:id", addNewMessage);
 router.get('/:id/messages',getMessages)
 
 module.exports = router;

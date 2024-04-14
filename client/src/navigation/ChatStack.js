@@ -1,9 +1,13 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { ChatScreen, ConversationScreen } from "../screens";
+import { ChatScreen, ConversationScreen, LoginScreen } from "../screens";
+import { useOtherUser } from "../store";
+import { AppText } from "../componenet";
+import { Image, View } from "react-native";
 
 const Stack = createStackNavigator();
 
 function ChatStack() {
+  const {otherUser} = useOtherUser()
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -11,11 +15,20 @@ function ChatStack() {
         component={ConversationScreen}
         
       />
+      
       <Stack.Screen
         name="chat"
         component={ChatScreen}
-        
+       options={{
+        headerTitle : ()=>(<View className="flex flex-row items-center">
+          <Image width={50} height={50} className="rounded-full" source={{uri:otherUser.pic}} />
+          <AppText className="ml-2 text-lg">
+            {otherUser.name}
+          </AppText>
+        </View>)
+       }} 
       />
+        <Stack.Screen options={{headerShown :false}} name="login" component={LoginScreen} />
     </Stack.Navigator>
   );
 }

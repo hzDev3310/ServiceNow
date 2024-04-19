@@ -3,11 +3,11 @@ import React from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 import colors from '../colors'
 
-const AppButton = ({ children, icon, outLine = false, ...otherProps }) => {
+const AppButton = ({ classname,children, icon, outLine = false, ...otherProps }) => {
     return (
         <TouchableOpacity
             {...otherProps}
-            className="flex flex-row p-4 w-full border-2  justify-center items-center rounded-full" 
+            className={`flex flex-row py-1  w-full border-2  justify-center items-center rounded-full ${classname}`} 
             style={[
                 !outLine && { backgroundColor: colors.primary },
                 otherProps.disabled ? { borderColor: colors.secondary } : { borderColor: colors.primary },
@@ -17,7 +17,7 @@ const AppButton = ({ children, icon, outLine = false, ...otherProps }) => {
             <Text style={[
                 outLine ? { color: colors.primary } : { color: colors.white },
                 otherProps.disabled && { color: colors.white }
-            ]} className={"text-2xl font-medium capitalize"} >
+            ]} className={"text-lg font-medium capitalize"} >
                 {children}
             </Text>
         </TouchableOpacity>

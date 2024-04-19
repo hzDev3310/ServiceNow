@@ -4,6 +4,7 @@ import AppText from './AppText';
 import useGet from '../apis/useGet';
 import { useNavigation } from '@react-navigation/native';
 import { useOtherUser } from '../store';
+import AppBadge from './AppBadge';
 const AppMessageCard = ({ item, currentUser }) => {
     const navigation = useNavigation()
     const conv = item.item;
@@ -22,8 +23,9 @@ const AppMessageCard = ({ item, currentUser }) => {
                         changeUser(data);
                         navigation.navigate('chat', { conv: conv, currentUser, otherUser })}}
                     style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image
-                        style={{ width: 100, height: 100, borderRadius: 50 }}
+                 <AppBadge classname={"flex w-full flex-row items-center rounded-lg p-2"}>
+                 <Image
+                        style={{ width: 70, height: 70, borderRadius: 50 }}
                         source={data && data.pic ? { uri: data.pic } : require("../assets/img/noProfilPic.jpg")}
                     />
                     
@@ -31,6 +33,7 @@ const AppMessageCard = ({ item, currentUser }) => {
                         <AppText>{data?.name}</AppText>
 
                     </View>
+                 </AppBadge>
                 </TouchableOpacity>
             }
         </>

@@ -23,14 +23,8 @@ const AppAlert = ({ visible = false, message, onClose, error = false }) => {
         }}
       >
         <AppBadge classname={`p-4 rounded-xl flex  items-center  w-3/4 ${error && 'bg-red-200'}`}>
-         
-            
             <AppText className={`ml-1 text-lg ${error && "text-red-950"}`}  >{message}</AppText>
-        
-         
          <AppSeparator classname="mt-4 mb-1" color={error ? colors.danger : colors.primary} />
-      
-
           <TouchableOpacity onPress={onClose} >
             <Text className='text-base' style={{ color: error ? colors.danger : colors.primary }}>Close</Text>
           </TouchableOpacity>

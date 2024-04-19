@@ -11,28 +11,28 @@ const getServices = async (req, res) => {
       return;
     }
 
-    const { latitude, longitude , serviceName} = req.params;
+    const { latitude, longitude, serviceName } = req.params;
     let services = [];
     if (serviceName === "all") {
-       services = await userModel.find({isProvider:true}).select('service');
+      services = await userModel.find({ isProvider: true }).select('service');
     } else {
-      services = await userModel.find({isProvider:true , "service.serviceName" :serviceName}).select('service');
+      services = await userModel.find({ isProvider: true, "service.serviceName": serviceName }).select('service');
     }
 
- 
+
     services.sort((a, b) => b.service.rating.average - a.service.rating.average);
 
     services.sort((a, b) => {
       const distanceToA = calculateDistance(
         latitude,
         longitude,
-        parseFloat(a.service.location.latitude ),
+        parseFloat(a.service.location.latitude),
         parseFloat(a.service.location.longitude)
       );
       const distanceToB = calculateDistance(
         latitude,
         longitude,
-        parseFloat(b.service.location.latitude ),
+        parseFloat(b.service.location.latitude),
         parseFloat(b.service.location.longitude)
       );
       return distanceToA - distanceToB;
@@ -62,44 +62,46 @@ const updateUser = async (req, res) => {
   try {
     const { userId, attribute } = req.params;
     const user = await userModel.findById(userId);
-
+    const {value} = req.body
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     switch (attribute) {
       case "name":
-        user.name = req.body.name;
+        user.name = value;
+        user.service ? user.service.ProviderName = value : null;
         break;
-      case "phoneNumber":
+        case "location":
+          user.location = value;
+          user.service ? user.service.location = value : null;
+          break;
+      case "number":
         user.phoneNumber = {
-          number: req.body.phoneNumber,
+          number: value,
           code: code(),
         };
+        user.service ? user.service.phoneNumber = value : null;
         break;
       case "password":
-        const cryptedPassword = bcrypt.hashSync(req.body.password, 10);
+        const cryptedPassword = bcrypt.hashSync(value, 10);
         user.password = cryptedPassword;
         break;
-      case "imageUrl":
-        user.imageUrl = req.body.imageUrl;
-        break;
+
       case "rating":
-        user.rating = req.body.rating;
-        break;
-      case "numberOfUsers":
-        user.numberOfUsers = req.body.numberOfUsers;
+        user.service.rating.numberOfUsers++;
+        user.service.rating.total += value;
         break;
       case "email":
         user.email = {
-          emailAddress: req.body.email,
+          emailAddress: value,
           code: Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
         };
         break;
       case "serviceName":
-        user.serviceName = req.body.serviceName;
+        user.service.serviceName = value;
         break;
       case "certification":
-        user.certification = req.body.certification;
+        user.service.certification = value;
         break;
       default:
         return res.status(400).json({ message: "Invalid attribute" });
@@ -114,20 +116,21 @@ const updateUser = async (req, res) => {
 
 const getuser = async (req, res) => {
   try {
-    const  userId  = req.user.id;
+    const userId = req.user.id;
     const user = await userModel.findById(userId);
     res.json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error " +error });}
+    res.status(500).json({ message: "Internal Server Error " + error });
+  }
 }
 
-const getOtherUser =async(req,res)=>{
+const getOtherUser = async (req, res) => {
   try {
     const user = await userModel.findById(req.params.id)
-    res.json( {
-      name : user.name , 
-      pic : user.profilPic
+    res.json({
+      name: user.name,
+      pic: user.profilPic
     })
   } catch (error) {
     res.status(404).json(error)

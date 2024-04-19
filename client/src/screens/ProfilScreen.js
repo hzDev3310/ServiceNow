@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Text, View } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDarkMode } from '../store';
 import useGet from '../apis/useGet';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+import { ActivityIndicator, Image, StatusBar, Text, View } from 'react-native';
+import { AppBadge, AppText, UserDetailsUpdate } from "../componenet";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import colors from '../colors';
+import { useFocusEffect } from '@react-navigation/native';
 const ProfilScreen = ({ navigation }) => {
+  const { darkMode } = useDarkMode()
   const [token, setToken] = useState(null);
   const [removedValue, setRemovedValue] = useState(false);
   const getData = async () => {
@@ -25,7 +33,7 @@ const ProfilScreen = ({ navigation }) => {
       console.log("Error occurred while fetching token:", e);
     }
   };
-  
+
 
   const removeValue = async () => {
     try {
@@ -36,21 +44,52 @@ const ProfilScreen = ({ navigation }) => {
       console.log('Error occurred while removing token.');
     }
   }
-useEffect(()=>{
-  getData();
-},[removedValue , token])
   useFocusEffect(() => {
-    getData();
-  });
-
-const {data} =useGet('/auth',{
-  Authorization : `Bearer ${token}`
-})
+    getData()
+  })
+  const { data, error, isLoading } = useGet('/auth', null, {
+    Authorization: `Bearer ${token}`
+  })
   return (
     <View>
-      <Text className="mt-10 bg-red-300">{JSON.stringify({token})}</Text>
-      <Text className="mt-10 bg-red-300">{JSON.stringify({data})}</Text>
-      <Button title='Logout' onPress={removeValue} />
+      <StatusBar backgroundColor={colors.primary} />
+
+
+      {error && <View className="flex flex-1 justify-center items-center">
+        <Text style={{ color: colors.danger }} >
+          check your internt connexion
+        </Text>
+      </View>}
+      {isLoading && <View className="flex flex-1 justify-center items-center">
+        <ActivityIndicator />
+      </View>}
+      {
+        data && token &&
+        <View>
+          <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
+            <View className="flex flex-row items-center" >
+              <View className="relative w-24 h-24 justify-center items-center ">
+                <Image
+                  className="rounded-xl"
+                  width={80}
+                  height={80}
+                  source={data?.profilPic == "" ? require('../assets/img/noProfilPic.jpg') : { uri: data.profilPic }} />
+              </View>
+              <View className='ml-2  flex justify-between' >
+                <AppText className="capitalize text-xl ml-1">
+                  {data.name}
+                </AppText>
+                <View className='flex flex-row mt-2'>
+                  <MaterialCommunityIcons name="google-maps" size={20} color={darkMode ? "white" : "black"} />
+                  <AppText className="capitalize ">Tunisia, {data?.location?.cityName}</AppText>
+                </View>
+              </View>
+                
+            </View>
+          </AppBadge>
+          <UserDetailsUpdate data={data} />
+        </View>
+      }
     </View>
   );
 };

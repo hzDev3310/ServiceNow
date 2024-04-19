@@ -1,12 +1,9 @@
 import { View, Image, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-
 import { useNavigation } from "@react-navigation/native";
 
 import CallButton from "./CallButton";
 import AppText from "./AppText";
-import Availability from "./Availability";
 import AppBadge from "./AppBadge";
 
 const AppService = ({ provider }) => {
@@ -15,7 +12,7 @@ const AppService = ({ provider }) => {
   const navigation = useNavigation();
   const noProfilPic =
     "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
-  const img = data.profilPic === "" ? noProfilPic : data?.profilPic;
+  const img = !data.profilPic ? noProfilPic : data?.profilPic;
   return (
     <AppBadge
       className={` m-2 p-2 rounded-xl max-h-32 flex flex-row justify-between items-center shadow-inherit`}

@@ -1,6 +1,3 @@
-//bouton pour appeller directement le serivce
-
-
 import React from 'react';
 import { TouchableOpacity, Linking } from 'react-native';
 import { Zocial } from '@expo/vector-icons';

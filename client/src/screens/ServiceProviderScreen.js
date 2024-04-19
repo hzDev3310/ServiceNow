@@ -1,10 +1,10 @@
-import { Image, View } from "react-native";
+import { Image, ScrollView, View } from "react-native";
 import { AppBadge, AppText, Availability, StarRating } from "../componenet";
 
 const ServiceProviderScreen = ({ navigation, route }) => {
   const provider = route.params.provider.service;
   return (
-    <View>
+    <ScrollView>
       <View className="w-full flex p-2 items-center">
         <View className="border-2 border-blue-600 rounded-lg overflow-hidden">
           <Image source={{ uri: route.params.img }} width={200} height={200} />
@@ -32,7 +32,7 @@ const ServiceProviderScreen = ({ navigation, route }) => {
       <View className="w-full flex p-1  items-center">
         <StarRating />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

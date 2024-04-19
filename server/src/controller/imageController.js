@@ -1,6 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 const userModel = require('../models/Users');
-require('dotenv').config(); 
+require('dotenv').config();
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -18,16 +18,21 @@ const uploadimg = async (req, res) => {
             return res.status(400).json({ message: 'Invalid attribute' });
         }
 
-     
-        const updateObject = {};
-        updateObject[attribute] = result.secure_url;
-
-        const user = await userModel.findByIdAndUpdate(userId, updateObject, { new: true });
+        let user = await userModel.findById(userId);
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        if (attribute === 'profilPic') {
+            user.profilPic = result.secure_url;
+            if (user.isProvider) {
+                user.service.profilPic = result.secure_url;
+            }
+        } else if (attribute === 'certification' && user.isProvider) {
+            user.service.certification = result.secure_url;
+        }
+        user = await user.save();
         res.status(200).json({ message: 'Image uploaded successfully!', user });
     } catch (error) {
         console.error(error);
@@ -37,4 +42,4 @@ const uploadimg = async (req, res) => {
 
 
 
-module.exports = {  uploadimg };
+module.exports = { uploadimg };

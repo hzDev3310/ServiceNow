@@ -8,9 +8,14 @@ const useGet = (endpoint, dep = null, headers = {}) => {
 
   useEffect(() => {
     setIsLoading(true)
-    instance.get(endpoint, { headers }).then(res => setData(res.data)).catch(e => setError(e.message))
+    instance.get(endpoint, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers
+      }
+    }).then(res => setData(res.data)).catch(e => setError(e.message))
     setIsLoading(false)
-  }, [data, dep]);
+  }, [data, dep, headers]);
 
   return { data, error, isLoading };
 };

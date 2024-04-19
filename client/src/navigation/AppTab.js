@@ -4,9 +4,9 @@ import { HomeStack, AuthStack, ChatStack } from "./";
 import { useDarkMode } from "../store";
 import colors from "../colors";
 const TabArr = [
+  { route: "auth", label: "Account", component: AuthStack, icon: "account" },
   { route: "Home", label: "Home", component: HomeStack, icon: "home" },
   { route: "Chats", label: "chats", component: ChatStack, icon: "chat" },
-  { route: "auth", label: "Account", component: AuthStack, icon: "account" },
 ];
 
 const Tab = createBottomTabNavigator();

@@ -1,14 +1,13 @@
 
-import { View, Button, FlatList, ScrollView, TouchableOpacity, TextInput, Text } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
+import { AppBadge, TimeElapsedComponent, AppInput, AppText } from '../componenet';
 
-import AppAlert from '../componenet/AppAlert';
 import { useEffect, useRef, useState } from 'react';
-import { AppBadge, AppButton, AppInput, AppText } from '../componenet';
+
 import useGet from '../apis/useGet';
 import usePost from '../apis/usePost';
-import TimeElapsedComponent from '../componenet/TimeElapsedComponent';
-import { useOtherUser } from '../store';
-import { useFocusEffect } from '@react-navigation/native';
+
+
 const ChatScreen = ({ naviagtion, route }) => {
   const { conv, otherUser, currentUser } = route.params
   const { data, isLoading, error } = useGet(`conversation/${conv._id}/messages`)
@@ -16,39 +15,45 @@ const ChatScreen = ({ naviagtion, route }) => {
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const flatListRef = useRef(null);
 
-  // Function to handle user scrolling
-  const handleScroll = (event) => {
+  const handleScroll = async (event) => {
     const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
-    // Check if user is actively scrolling
+
     if (
       contentOffset.y !== contentSize.height - layoutMeasurement.height
     ) {
-      setIsUserScrolling(true);
+      await setIsUserScrolling(true);
     } else {
-      setIsUserScrolling(false);
+      await setIsUserScrolling(false);
     }
   };
 
-
-
-  // Scroll to the end when the data changes, unless the user is actively scrolling
   useEffect(() => {
-    if (!isUserScrolling && flatListRef.current) {
-      flatListRef.current.scrollToEnd({ animated: true });
+    const scrollToEndView = async () => {
+      if (!isUserScrolling && flatListRef.current) {
+        await flatListRef.current.scrollToEnd();
+      }
     }
+    scrollToEndView()
   }, [data, isUserScrolling]);
 
+
   const [newMessage, setNewMessage] = useState('')
-  const { responseData, postData, loading, error: errorPost } = usePost()
+  const { postData, loading, error: errorPost } = usePost()
 
-  const sendMessge = async () => {
-    await postData(`conversation/${conv._id}`, { sender: currentUser, content: newMessage })
-    flatListRef.current.scrollToEnd({ animated: true });
+  const sendMessge = () => {
+    postData(`conversation/${conv._id}`, { sender: currentUser, content: newMessage })
+    flatListRef.current.scrollToEnd();
   }
-
+  if (loading || isLoading) {
+    return (
+      <ActivityIndicator />
+    )
+  }
+  { error || errorPost && alert('check your internet connection') }
   return (
 
-    <View style={{ flex: 1 }}>
+    <View className="flex flex-1 px-1">
+
       <FlatList
         ref={flatListRef}
         data={data}
@@ -59,7 +64,7 @@ const ChatScreen = ({ naviagtion, route }) => {
             <View className={`w-full my-2 flex-row items-center ${currentUser == item.sender && "justify-end"}`}>
 
               <AppBadge style={{ maxWidth: '80%' }} classname={`p-2 rounded-2xl mx-1  ${otherUser == item.sender && "bg-blue-700 text-white"}`}>
-                <AppText>
+                <AppText className={otherUser == item.sender && " text-white"} >
                   {item.content}
                 </AppText>
               </AppBadge>
@@ -80,7 +85,6 @@ const ChatScreen = ({ naviagtion, route }) => {
           onpress={sendMessge}
         />
       </View>
-
     </View>
 
   );

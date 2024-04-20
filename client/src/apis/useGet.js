@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import instance from "./apiClient";
+import baseUrl from "./apiClient";
 
 const useGet = (endpoint, dep = null, headers = {}) => {
   const [data, setData] = useState(null);
@@ -7,15 +7,25 @@ const useGet = (endpoint, dep = null, headers = {}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true)
-    instance.get(endpoint, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(baseUrl+endpoint, {
+          headers: {
+            'Content-Type': 'application/json',
+            ...headers
+          },
+        });
+        const responseData = await response.json();
+        setData(responseData);
+      } catch (error) {
+        setError(error);
       }
-    }).then(res => setData(res.data)).catch(e => setError(e.message))
-    setIsLoading(false)
-  }, [data, dep, headers]);
+      setIsLoading(false)
+    };
+
+    fetchData();
+  }, [endpoint, dep, headers]);
 
   return { data, error, isLoading };
 };

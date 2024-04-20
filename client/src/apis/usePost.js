@@ -1,17 +1,26 @@
-// usePost.js
 import { useState } from "react";
-import instance from "./apiClient";
+import baseUrl from "./apiClient";
 
-const usePost = () => { // No need to pass parameters here
+const usePost = () => { 
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // Renamed isLoading to loading
-
-  const postData = async (endpoint, body, headers = {}) => { // Receive endpoint, body, and headers here
+  const [loading, setLoading] = useState(false); 
+  const postData = async (endpoint, body, headers = {}) => {
     setLoading(true);
     try {
-      const response = await instance.post(endpoint, body, { headers });
-      setResponseData(response.data);
+      const response = await fetch(baseUrl+endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers
+        },
+        body: JSON.stringify(body)
+      });
+
+    
+
+      const responseData = await response.json();
+      setResponseData(responseData);
     } catch (error) {
       setError(error);
     } finally {
@@ -19,9 +28,7 @@ const usePost = () => { // No need to pass parameters here
     }
   };
 
-  return { postData, responseData, error, loading }; // Return loading instead of isLoading
+  return { postData, responseData, error, loading }; 
 };
 
 export default usePost;
-
-

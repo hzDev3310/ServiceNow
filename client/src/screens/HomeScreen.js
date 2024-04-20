@@ -1,5 +1,5 @@
 import useGet from "../apis/useGet";
-import { AppService } from "../componenet";
+import { AppActivityIndicator, AppService } from "../componenet";
 import { View, FlatList, ActivityIndicator } from "react-native";
 
 
@@ -9,7 +9,7 @@ const HomeScreen = () => {
   return (
     <View className="flex flex-1 ">
 
-      {isLoading && <ActivityIndicator />}
+      {isLoading &&  <AppActivityIndicator />}
       {error && alert(JSON.stringify(error))}
 
       {data && (

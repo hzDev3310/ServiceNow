@@ -14,8 +14,8 @@ const UserDetailsUpdate = ({ data }) => {
         <AppBadge className={"py-2"}>
             <ScrollView className="">
                 
-                <UpdateCard userId={data._id} keyName={"name"} update={"name"} icon={"account"} item={data.name} />
-                <UpdateCard userId={data._id} keyName={"phone number"} update={"number"} icon={"phone"} item={data.phoneNumber.number} />
+                <UpdateCard userId={data._id} keyName={"name"} update={"name"} icon={"account"} item={data?.name} />
+                <UpdateCard userId={data._id} keyName={"phone number"} update={"number"} icon={"phone"} item={data?.phoneNumber?.number} />
                 <UpdateCard userId={data._id} keyName={"change password"} update={"password"} icon={"key"} />
                 <UpdateLocations userId={data._id} currentLocation={data.location} />
                 <UploadImage  keyName={"profil picture"} userId={data._id}attribute={"profilPic"}  />

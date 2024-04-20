@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import { ActivityIndicator, Image, StatusBar, Text, View } from 'react-native';
-import { AppBadge, AppText, UserDetailsUpdate } from "../componenet";
+import { AppActivityIndicator, AppBadge, AppButton, AppText, UserDetailsUpdate } from "../componenet";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../colors';
@@ -55,16 +55,15 @@ const ProfilScreen = ({ navigation }) => {
       <StatusBar backgroundColor={colors.primary} />
 
 
-      {error && <View className="flex flex-1 justify-center items-center">
+      {data?.message || error && <View className="flex flex-1 justify-center items-center">
         <Text style={{ color: colors.danger }} >
           check your internt connexion
         </Text>
       </View>}
-      {isLoading && <View className="flex flex-1 justify-center items-center">
-        <ActivityIndicator />
-      </View>}
+      {isLoading && 
+       <AppActivityIndicator />}
       {
-        data && token &&
+        data && token && 
         <View>
           <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
             <View className="flex flex-row items-center" >
@@ -84,8 +83,9 @@ const ProfilScreen = ({ navigation }) => {
                   <AppText className="capitalize ">Tunisia, {data?.location?.cityName}</AppText>
                 </View>
               </View>
-                
+
             </View>
+           <AppButton classname={"w-24"} onPress={removeValue}  >logout</AppButton>
           </AppBadge>
           <UserDetailsUpdate data={data} />
         </View>

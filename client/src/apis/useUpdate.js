@@ -1,5 +1,5 @@
 import { useState } from "react";
-import instance from "./apiClient";
+import baseUrl from "./apiClient";
 
 const useUpdate = (method = 'put') => {
   const [responseData, setResponseData] = useState(null);
@@ -11,20 +11,35 @@ const useUpdate = (method = 'put') => {
     try {
       let response;
       if (method === 'put') {
-        response = await instance.put(endpoint, body, { headers });
+        response = await fetch(baseUrl+endpoint, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            ...headers
+          },
+          body: JSON.stringify(body)
+        });
       } else if (method === 'patch') {
-        response = await instance.patch(endpoint, body, { headers });
+        response = await fetch(baseUrl+endpoint, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            ...headers
+          },
+          body: JSON.stringify(body)
+        });
       } else {
         throw new Error('Invalid method provided. Only "put" or "patch" are allowed.');
       }
-      setResponseData(response.data);
-      setError(null)
+      const responseData = await response.json();
+      setResponseData(responseData);
+      setError(null);
     } catch (error) {
       setError(error);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return { updateData, responseData, error, isLoading };
 };

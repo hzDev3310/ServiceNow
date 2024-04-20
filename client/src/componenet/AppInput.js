@@ -10,7 +10,7 @@ const AppInput = ({ password, iconName, label, error = false, errorMessage ,righ
   return (
     <View className="w-full mt-1" >
   
-      <View className={` rounded-3xl  flex flex-row w-full p-3 justify-between items-center ${darkMode ? "bg-stone-950" : "bg-gray-200"} `} style={error && {borderWidth : 2 , borderColor : colors.danger}} >
+      <View className={` rounded-3xl  flex flex-row w-full p-2 justify-between items-center ${darkMode ? "bg-stone-950" : "bg-gray-200"} `} style={error && {borderWidth : 2 , borderColor : colors.danger}} >
         <View className="flex flex-row items-center " style={{width : "79%"}} >
           {iconName && (
             <MaterialCommunityIcons size={25} color={!darkMode ? "black" : "white"} name={iconName} />

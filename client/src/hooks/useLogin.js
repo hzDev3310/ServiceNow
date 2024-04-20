@@ -1,12 +1,13 @@
 
 import { useEffect } from "react";
-import { usePost } from "../apis";
+import  usePost  from "../apis/usePost";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const useLogin = (phoneNumber, password) => {
+const useLogin = () => {
   const { postData, loading, error, responseData } = usePost();
 
-  const login = async () => {
-    await postData("/auth/login", { phoneNumber, password });
+  const login = async (phoneNumber, password) => {
+    await postData("/auth/login", {phoneNumber, password});
+   
   };
 
   const storeData = async (value) => {

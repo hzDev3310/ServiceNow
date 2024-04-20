@@ -7,7 +7,7 @@ const AppButton = ({ classname,children, icon, outLine = false, ...otherProps })
     return (
         <TouchableOpacity
             {...otherProps}
-            className={`flex flex-row py-1  w-full border-2  justify-center items-center rounded-full ${classname}`} 
+            className={`flex flex-row  w-full border-2  justify-center items-center rounded-full ${classname}`} 
             style={[
                 !outLine && { backgroundColor: colors.primary },
                 otherProps.disabled ? { borderColor: colors.secondary } : { borderColor: colors.primary },
@@ -17,7 +17,7 @@ const AppButton = ({ classname,children, icon, outLine = false, ...otherProps })
             <Text style={[
                 outLine ? { color: colors.primary } : { color: colors.white },
                 otherProps.disabled && { color: colors.white }
-            ]} className={"text-lg font-medium capitalize"} >
+            ]} className={"text-base font-medium capitalize"} >
                 {children}
             </Text>
         </TouchableOpacity>

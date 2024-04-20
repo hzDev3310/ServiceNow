@@ -30,16 +30,20 @@ const UploadImage = ({ keyName, userId, attribute }) => {
             </View>
 
             <View className={showInput && "hidden"} >
-                {loading && <ActivityIndicator />}
+
                 <AppImagePicker selectedImage={img} setSelectedImage={setImg} />
                 {img &&
                     <View className="w-full flex flex-row justify-center items-center">
-                       <View className="w-1/3 rounded-xl overflow-hidden" >
-                       <Image width={"100%"} height={100} source={{ uri: img }} />
-                       </View>
-                       <View className="w-2/3 pl-1" style={{height : 100 ,marginVertical : 2}} >
-                       <AppButton classname={"h-full rounded-xl"} icon={"arrow-up-bold"} onPress={postImg} >uploade</AppButton>
-                       </View>
+                        {loading && <ActivityIndicator />}
+                        <View className="w-1/3 rounded-xl overflow-hidden" >
+                            <Image width={"100%"} height={100} source={{ uri: img }} />
+                        </View>
+                        <View className="w-2/3 pl-1" style={{ height: 100, marginVertical: 2 }} >
+                            <AppButton classname={"h-full rounded-xl"} icon={"arrow-up-bold"} onPress={() => {
+                                postImg();
+                                setImg(null)
+                            }} >uploade</AppButton>
+                        </View>
                     </View>
                 }
             </View>

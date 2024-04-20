@@ -7,21 +7,23 @@ import AppInput from './AppInput'
 import UpdateButton from './UpdateButton'
 import AppSeparator from './AppSeparator'
 import useUpdate from "../apis/useUpdate"
+import AppActivityIndicator from './AppActivityIndicator'
 const UpdateCard = ({ item, keyName, userId, icon, update }) => {
     const { darkMode } = useDarkMode()
     const [showInput, setShowInput] = useState(true)
     const [updatedValue, setValue] = useState('');
-    const { error, responseData, updateData } = useUpdate();
+    const { error, responseData, updateData, isLoading } = useUpdate();
     const handleUpdate = async () => {
         await updateData(`/users/${userId}/${update}`, { value: updatedValue })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         error && alert(error?.message)
-        responseData &&  alert(responseData?.message)
-    }, [responseData , error] )
+        responseData && alert(responseData?.message)
+    }, [responseData, error])
     return (
         <>
+            {isLoading && <AppActivityIndicator />}
             <View className="p-2 m-1 rounded-xl">
                 <View className="flex justify-between items-center flex-row">
                     <View className="flex flex-row justify-center items-center  " >

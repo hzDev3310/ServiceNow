@@ -4,11 +4,12 @@ const adminRouter = require('./routes/admin.routes')
 const authRouter = require('./routes/auth.routes')
 const imageRouter = require('./routes/image.routes')
 const  messageRouter = require('./routes/message.routes')
+const  conversationRouter = require('./routes/conversation.routes')
 
 const router = express();
 router.use(express.json());
-
-router.use("/conversation",messageRouter);
+router.use("/messages",messageRouter);
+router.use("/conversation",conversationRouter);
 router.use("/users", userRouter)
 router.use("/admin", adminRouter)
 router.use("/image", imageRouter)

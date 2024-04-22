@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import colors from '../colors'
 
 import useLogin from '../hooks/useLogin'
-import usePost from '../apis/usePost'
+
 
 
 const LoginScreen = ({ navigation }) => {
@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("")
 
   const { loading, error, login, responseData } = useLogin()
-  const { postData , responseData :data , loading : l , error : err } = usePost()
+
 
 
   useEffect(() => {

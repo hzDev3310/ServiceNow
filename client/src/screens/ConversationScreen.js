@@ -1,11 +1,11 @@
-import { View, Text, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { useFocusEffect } from '@react-navigation/native';
-import { AppMessageCard, AppText } from "../componenet"
+import { View,FlatList } from 'react-native'
+import React, {  useLayoutEffect, useState } from 'react'
+
+import { AppActivityIndicator, AppMessageCard, AppText } from "../componenet"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useGet from '../apis/useGet';
-const ConversationScreen = ({navigation}) => {
-  const [currentUser,setCurrentUser]=useState(null)
+const ConversationScreen = ({ navigation }) => {
+  const [currentUser, setCurrentUser] = useState(null)
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
@@ -25,18 +25,28 @@ const ConversationScreen = ({navigation}) => {
       console.log("Error occurred while fetching token:", e);
     }
   };
-  useFocusEffect(() => {
+  useLayoutEffect(() => {
     getData();
-  });
+  },[currentUser]);
 
-  const {data,isLoading , error} = useGet(`conversation/${currentUser}`,currentUser) 
+  const { data, isLoading, error } = useGet(`/conversation/${currentUser}`)
   return (
-    <View>
-      <FlatList
-      data={data}
-      renderItem={item => <AppMessageCard item={item} currentUser={currentUser} />}
-      ></FlatList>
-    </View>
+    <>
+    {isLoading && <AppActivityIndicator />}
+      {error && <AppText>
+        {error?.message}
+      </AppText>
+      }
+      {
+        data && <View className="flex-1">
+          <FlatList
+          
+            data={data}
+            renderItem={item => <AppMessageCard item={item} currentUser={currentUser} />}
+          ></FlatList>
+        </View>
+      }
+    </>
   )
 }
 

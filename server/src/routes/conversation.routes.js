@@ -1,11 +1,11 @@
 const {
-  addNewMessage,
-  getMessages,
+    createNewConversation,
+    getConv,
+
 } = require("../controller/messagesController");
 
 const router = require("express").Router();
-
-router.post("/", addNewMessage);
-router.get('/:id',getMessages)
+router.post("/", createNewConversation);
+router.get("/:id", getConv);
 
 module.exports = router;

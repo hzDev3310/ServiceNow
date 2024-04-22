@@ -1,24 +1,24 @@
 import { useState } from "react";
 import baseUrl from "./apiClient";
 
-const usePost = () => { 
+const usePost = () => {
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); 
-  const postData = async (endpoint, body, headers = {}) => {
+  const [loading, setLoading] = useState(false);
+  const postData = async (endpoint, body, headers = { 'Content-Type': 'application/json', }) => {
     setLoading(true);
     try {
-      const response = await fetch(baseUrl+endpoint, {
+      let requestBody;
+      if (body instanceof FormData) {
+        requestBody = body;
+      } else {
+        requestBody = JSON.stringify(body);
+      }
+      const response = await fetch(baseUrl + endpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...headers
-        },
-        body: JSON.stringify(body)
+        headers,
+        body : requestBody
       });
-
-    
-
       const responseData = await response.json();
       setResponseData(responseData);
     } catch (error) {
@@ -28,7 +28,7 @@ const usePost = () => {
     }
   };
 
-  return { postData, responseData, error, loading }; 
+  return { postData, responseData, error, loading };
 };
 
 export default usePost;

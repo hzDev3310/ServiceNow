@@ -9,7 +9,7 @@ const HomeScreen = () => {
   return (
     <View className="flex flex-1 ">
 
-      {isLoading &&  <AppActivityIndicator />}
+      {isLoading  &&  <AppActivityIndicator />}
       {error && alert(JSON.stringify(error))}
 
       {data && (

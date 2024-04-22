@@ -9,7 +9,8 @@ const Stack = createStackNavigator();
 function ChatStack() {
   const {otherUser} = useOtherUser()
   return (
-    <Stack.Navigator>
+    <Stack.Navigator  
+    >
       <Stack.Screen
         name="conversation"
         component={ConversationScreen}
@@ -19,14 +20,8 @@ function ChatStack() {
       <Stack.Screen
         name="chat"
         component={ChatScreen}
-       options={{
-        headerTitle : ()=>(<View className="flex flex-row items-center">
-          <Image width={50} height={50} className="rounded-full" source={{uri:otherUser.pic}} />
-          <AppText className="ml-2 text-lg">
-            {otherUser.name}
-          </AppText>
-        </View>)
-       }} 
+        options={{}}
+
       />
         <Stack.Screen options={{headerShown :false}} name="login" component={LoginScreen} />
     </Stack.Navigator>

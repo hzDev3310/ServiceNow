@@ -4,12 +4,12 @@ const UserModel = require("../models/Users");
 
 const createNewConversation = async (req, res) => {
   try {
-    const { id1, id2 } = req.body;
-    const conv = await ConversationModel.findOne({ users: [id1, id2] });
+    const {users}  = req.body;
+    const conv = await ConversationModel.findOne({ users });
     if (conv) {
       return res.status(200).json(conv);
     }
-    const newConversation = new ConversationModel({ users: [id1, id2] });
+    const newConversation = new ConversationModel({ users });
     await newConversation.save();
     res.status(200).json({ message: "Conversation created successfully" });
   } catch (error) {
@@ -39,8 +39,7 @@ const getConv = async (req, res) => {
 
 const addNewMessage = async (req, res) => {
   try {
-    const {convId} = req.params
-    const {  sender, content } = req.body;
+    const { convId ,sender, content } = req.body;
     const message = new MessageModel({
       sender,
       content,
@@ -58,8 +57,7 @@ const addNewMessage = async (req, res) => {
 
 const getMessages = async (req, res) => {
   try {
-    const { convId } = req.params
-    messages = await MessageModel.find({convId});
+    messages = await MessageModel.find({convId :req.params.id});
     res.json(messages)
   } catch (error) {
     console.error(error);

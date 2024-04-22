@@ -27,7 +27,7 @@ const UpdateCard = ({ item, keyName, userId, icon, update }) => {
             <View className="p-2 m-1 rounded-xl">
                 <View className="flex justify-between items-center flex-row">
                     <View className="flex flex-row justify-center items-center  " >
-                        <MaterialCommunityIcons name={icon} size={20} color={darkMode ? "white" : "dark"} />
+                        <MaterialCommunityIcons name={icon} size={20} color={darkMode ? "white" : "black"} />
                         <AppText className="font-bold capitalize ml-2">{keyName}</AppText>
                         {item && <AppText className="capitalize" >{" : " + item}</AppText>}
                     </View>

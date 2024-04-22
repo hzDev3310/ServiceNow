@@ -4,8 +4,8 @@ import useGet from '../apis/useGet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-import { ActivityIndicator, Image, StatusBar, Text, View } from 'react-native';
-import { AppActivityIndicator, AppBadge, AppButton, AppText, UserDetailsUpdate } from "../componenet";
+import {  Image, ScrollView, StatusBar, Text, View } from 'react-native';
+import { AppActivityIndicator, AppBadge, AppButton, AppText, ServiceUpdate, UserDetailsUpdate } from "../componenet";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../colors';
@@ -47,24 +47,25 @@ const ProfilScreen = ({ navigation }) => {
   useFocusEffect(() => {
     getData()
   })
-  const { data, error, isLoading } = useGet('/auth', null, {
-    Authorization: `Bearer ${token}`
+  const { data, error, isLoading } = useGet('/auth', {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
   })
   return (
     <View>
       <StatusBar backgroundColor={colors.primary} />
 
 
-      {data?.message || error && <View className="flex flex-1 justify-center items-center">
+      {error && <View className="flex flex-1 justify-center items-center">
         <Text style={{ color: colors.danger }} >
           check your internt connexion
         </Text>
       </View>}
-      {isLoading && 
-       <AppActivityIndicator />}
+      {isLoading &&
+        <AppActivityIndicator />}
       {
-        data && token && 
-        <View>
+        data && token &&
+        <ScrollView className="z-0" >
           <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
             <View className="flex flex-row items-center" >
               <View className="relative w-24 h-24 justify-center items-center ">
@@ -78,6 +79,9 @@ const ProfilScreen = ({ navigation }) => {
                 <AppText className="capitalize text-xl ml-1">
                   {data.name}
                 </AppText>
+                <AppText className="capitalize  ml-1">
+                  {data.service?.serviceName}
+                </AppText>
                 <View className='flex flex-row mt-2'>
                   <MaterialCommunityIcons name="google-maps" size={20} color={darkMode ? "white" : "black"} />
                   <AppText className="capitalize ">Tunisia, {data?.location?.cityName}</AppText>
@@ -85,10 +89,13 @@ const ProfilScreen = ({ navigation }) => {
               </View>
 
             </View>
-           <AppButton classname={"w-24"} onPress={removeValue}  >logout</AppButton>
+            <AppButton classname={"w-24"} onPress={removeValue}  >logout</AppButton>
           </AppBadge>
+
           <UserDetailsUpdate data={data} />
-        </View>
+          <ServiceUpdate data={data} />
+
+        </ScrollView>
       }
     </View>
   );

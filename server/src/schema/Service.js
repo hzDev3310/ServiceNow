@@ -41,7 +41,7 @@ const Service = new Schema({
     type: String,
     default: "",
   },
-  experience: Number,
+  experience: String,
   availability: {
     type: Availability,
     default: { from: "monthly", to: "friday", isAvailable: true },

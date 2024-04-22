@@ -16,7 +16,9 @@ export { default as TimeElapsedComponent } from "./TimeElapsedComponent";
 export { default as UpdateButton } from "./UpdateButton";
 export { default as UpdateCard } from "./UpdateCard";
 export { default as UserDetailsUpdate } from "./UserDetailsUpdate";
-export { default as UpdateLocations } from "./UpdateLocations";
+export { default as UpdateSelect } from "./UpdateSelect";
 export { default as AppPicker } from "./AppPicker";
+export { default as ServiceUpdate } from "./ServiceUpdate";
+export { default as MessageContainer } from "./MessageContainer";
 
 

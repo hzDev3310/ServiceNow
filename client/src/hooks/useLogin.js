@@ -2,7 +2,10 @@
 import { useEffect } from "react";
 import  usePost  from "../apis/usePost";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsLogin } from "../store";
 const useLogin = () => {
+const {setIsLogin}= useIsLogin() 
+
   const { postData, loading, error, responseData } = usePost();
 
   const login = async (phoneNumber, password) => {
@@ -21,6 +24,7 @@ const useLogin = () => {
   useEffect(() => {
     if (responseData && responseData.token) {
       storeData(responseData);
+      setIsLogin(true)
     }
   }, [responseData]);
 

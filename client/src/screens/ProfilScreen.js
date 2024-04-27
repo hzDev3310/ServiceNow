@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDarkMode } from '../store';
+import { useDarkMode, useIsLogin } from '../store';
 import useGet from '../apis/useGet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,6 +11,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../colors';
 import { useFocusEffect } from '@react-navigation/native';
 const ProfilScreen = ({ navigation }) => {
+  const {setIsLogin}= useIsLogin() 
   const { darkMode } = useDarkMode()
   const [token, setToken] = useState(null);
   const [removedValue, setRemovedValue] = useState(false);
@@ -38,7 +39,7 @@ const ProfilScreen = ({ navigation }) => {
   const removeValue = async () => {
     try {
       await AsyncStorage.removeItem('token');
-      setRemovedValue(prevValue => !prevValue);
+      setIsLogin(false)
       console.log('Token removed.');
     } catch (e) {
       console.log('Error occurred while removing token.');
@@ -50,10 +51,10 @@ const ProfilScreen = ({ navigation }) => {
   const { data, error, isLoading } = useGet('/auth', {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`
-  })
+  },[token])
   return (
     <View>
-      <StatusBar backgroundColor={colors.primary} />
+      <StatusBar  />
 
 
       {error && <View className="flex flex-1 justify-center items-center">

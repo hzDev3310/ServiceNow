@@ -1,7 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen  , ServiceProviderScreen} from "../screens";
 import colors from "../colors";
-import { ColorModeSwitch } from "../componenet";
+
+import AppAuth from "../componenet/AppAuth";
 const Stack = createStackNavigator();
 function HomeStack() {
   return (
@@ -14,7 +15,7 @@ function HomeStack() {
           headerTintColor :colors.primary,
           headerTitleAlign : "center",
           headerTitleStyle: { fontWeight: "bold" ,fontSize : 30 },
-          headerRight : ()=><ColorModeSwitch />,
+          headerRight : ()=><AppAuth />,
         }}
       />
       <Stack.Screen

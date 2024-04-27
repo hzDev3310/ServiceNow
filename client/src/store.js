@@ -23,7 +23,7 @@ const useIsLogin = create((set)=>({
 
 const useCurrentUser = create((set) => ({
   currentUser: null,
-  changeUser: (user) => set((state) => ({ currentUser: user }))
+  setCurrentUser: (user) => set((state) => ({ currentUser: user }))
 }));
 
 const useOtherUser = create((set) => ({

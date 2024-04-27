@@ -1,16 +1,18 @@
 
-import { FlatList, Image, ScrollView, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, TouchableOpacity, View } from 'react-native'
 import { AppActivityIndicator, AppInput, AppText, MessageContainer } from '../componenet'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useGet from '../apis/useGet'
 import usePost from '../apis/usePost';
 import colors from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {io} from "socket.io-client"
 
 const ChatScreen = ({ navigation, route }) => {
 
   const { convId, currentUser, otherUser, otherUserDetails } = route.params;
   const [newMessage, setNewMessage] = useState("");
+  const [socket, setSocket] = useState(null);
   const { data, error, isLoading } = useGet("/messages/" + convId);
   const { responseData, error: sendError, loading, postData } = usePost()
 
@@ -54,6 +56,10 @@ const ChatScreen = ({ navigation, route }) => {
     sendError && alert(sendError.message);
     error && alert(error.message);
   }, [sendError]);
+
+  useEffect(()=>{
+    setSocket(io("ws://192.168.1.16:8900"))
+  },[])
 
 
  

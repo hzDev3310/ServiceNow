@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { ProfilScreen, LoginScreen, RegisterScreen } from "../screens";
-import AppTab from "./AppTab";
+import { LoginScreen, RegisterScreen } from "../screens";
+
 
 function AuthStack() {
   const Stack = createStackNavigator();

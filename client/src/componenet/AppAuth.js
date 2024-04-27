@@ -3,7 +3,7 @@ import { useCurrentUser } from '../store'
 import AppButton from './AppButton'
 import { useNavigation } from "@react-navigation/native";
 import { ActivityIndicator, Image, View } from 'react-native';
-import AppText from './AppText';
+
 import useGet from '../apis/useGet';
 const AppAuth = () => {
     const navigation = useNavigation()
@@ -19,7 +19,13 @@ const AppAuth = () => {
                 />
             </View>
         )
-    } else return (<AppButton classname={"w-10 h-10 mr-3 rounded-lg"} icon={"login"} onPress={() => { navigation.navigate('auth') }} />)
+    } else return (
+        <AppButton
+            classname={"w-10 h-10 mr-3 rounded-lg"}
+            icon={"login"}
+            onPress={() => { navigation.navigate('auth') }}
+        />
+    )
 }
 
 export default AppAuth

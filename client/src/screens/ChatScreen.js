@@ -1,36 +1,121 @@
 
 import { FlatList, Image, TouchableOpacity, View } from 'react-native'
-import { AppActivityIndicator, AppInput, AppText, MessageContainer } from '../componenet'
-import { useEffect, useState } from 'react';
+import { AppActivityIndicator, AppButton, AppInput, AppText, MessageContainer } from '../componenet'
+import { useEffect, useRef, useState } from 'react';
 import useGet from '../apis/useGet'
 import usePost from '../apis/usePost';
 import colors from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {io} from "socket.io-client"
+import { io } from "socket.io-client"
+import baseUrl from '../apis/apiClient';
 
 const ChatScreen = ({ navigation, route }) => {
 
-  const { convId, currentUser, otherUser, otherUserDetails } = route.params;
-  const [newMessage, setNewMessage] = useState("");
-  const [socket, setSocket] = useState(null);
-  const { data, error, isLoading } = useGet("/messages/" + convId);
-  const { responseData, error: sendError, loading, postData } = usePost()
 
-  const renderMessage = ({ item }) => (
-    <MessageContainer
-      key={item._id.toString()}
-      date={item.createdAt}
-      message={item.content}
-      sender={item.sender}
-      user={currentUser}
-      otherUser={otherUser}
-    />
-  );
+  const { convId, currentUser, otherUser,otherUserDetails } = route.params;
+  const [newMessage, setNewMessage] = useState("");
+  const [recivedMessage, setRecivedMessage] = useState(null); // corrected typo
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); // corrected initial state
+  const [error, setError] = useState(null);
+  const socket = useRef();
+  const flatRef = useRef()
+  const { responseData, error: sendError, loading, postData } = usePost()
+  const [visible , setVisable]=useState(false)
+  const [isScrolling, setIsScrolling] = useState(false);
+
+ 
+  const getMessages = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${baseUrl}/messages/${convId}`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const data = await res.json(); // corrected variable declaration
+      setMessages(data);
+      setIsLoading(false);
+      setError(null);
+    } catch (error) {
+      setError(error);
+      setIsLoading(false);
+      setMessages([]); // corrected setting to empty array on error
+    }
+  };
+
+  useEffect(() => {
+    getMessages();
+  }, [convId]);
+
+
+  useEffect(() => {
+    // Establish connection with Socket.IO server
+    socket.current = io("ws://192.168.1.16:8900");
+    // Clean up socket connection when component unmounts
+  
+  }, []);
+
+
+  useEffect(() => {
+    // Add the currentUser to the list of users when component mounts or currentUser changes
+    socket.current.emit('addUser', currentUser);
+  }, [currentUser]);
+
+  useEffect(() => {
+    // Listen for incoming messages from Socket.IO server
+    socket.current.on("getMessage", message => {
+      
+      // Check if the message is sent by either the currentUser or otherUser
+     
+        // Update state with the received message
+        setRecivedMessage({
+          convId,
+          sender: message.senderId,
+          content: message.content,
+          createdAt: Date.now()
+        });
+      
+    });
+    // Clean up socket event listener when component unmounts
+
+  }, [recivedMessage]);
+
+  useEffect(()=>{
+    console.log(recivedMessage);
+    if (currentUser === recivedMessage?.sender || otherUser === recivedMessage?.sender) {
+      console.log(recivedMessage);
+      setMessages(prv=>[...prv,recivedMessage])
+    }
+    
+  
+  },[recivedMessage])
+
+
+
 
   const sendNewMessage = async () => {
     await postData("/messages", { convId, sender: currentUser, content: newMessage });
-    responseData && setNewMessage("");
+
+    setMessages(prv=>[...prv,{
+      convId,
+          sender: currentUser,
+          content: newMessage,
+          createdAt: Date.now()
+    }])
+    // Emit the new message to the Socket.IO server
+    socket.current.emit("sendMessage", {
+      senderId: currentUser,
+      reciverId: otherUser,
+      content: newMessage
+    });
+    // Reset the newMessage state after sending
+  
+    setNewMessage("");
   };
+
 
 
   useEffect(() => {
@@ -52,29 +137,41 @@ const ChatScreen = ({ navigation, route }) => {
     });
   }, []);
 
-  useEffect(() => {
-    sendError && alert(sendError.message);
-    error && alert(error.message);
-  }, [sendError]);
+  const renderMessage = ({ item,index }) => (
+    <MessageContainer
+    
+      key={index}
+      date={item.createdAt}
+      message={item.content}
+      sender={item.sender}
+      user={currentUser}
+      otherUser={otherUser}
+    />
+  );
+  // useEffect(() => {
+  //   sendError && alert(sendError.message);
+  //   error && alert(error.message);
+  // }, [sendError]);
 
-  useEffect(()=>{
-    setSocket(io("ws://192.168.1.16:8900"))
-  },[])
 
 
- 
 
   return (
     <View className="flex items-center  w-full flex-1">
-      {(loading || isLoading )&& <AppActivityIndicator />}
-      {data && (
+      {(loading || isLoading) && <AppActivityIndicator />}
+      {messages && (
         <View className="flex items-center  w-full flex-1">
+          <AppButton 
+          onpress={()=>{flatRef.current.scrollToEnd({animation: true})}}
+          icon="arrow-down"  
+          classname={`${visible ?"flex" : "hidden"} w-10 h-10  justify-center items-center absolute  bottom-20`} />
           <FlatList
+            ref={flatRef}
             inverted
             style={{ width: "95%", display: "flex", flex: 1 }}
-            data={[...data].reverse()}
+            data={[...messages].reverse()}
             renderItem={renderMessage}
-            keyExtractor={(item) => item._id.toString()}
+            keyExtractor={(item,index) => index}
 
           />
           <AppInput

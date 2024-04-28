@@ -4,13 +4,13 @@ import { useDarkMode } from '../store'
 import { useState } from 'react'
 import colors from '../colors'
 
-const AppInput = ({ password, iconName, label, error = false, errorMessage ,rightIcon,disableRightIcon , onpress , ...otherProps }) => {
+const AppInput = ({ password, iconName, label, error = false, errorMessage, rightIcon, disableRightIcon, onpress, containerStyle, ...otherProps }) => {
   const [show, setShow] = useState(true)
   const { darkMode } = useDarkMode()
   return (
     <View className="w-full m-1" >
-      <View className={` rounded-3xl  flex flex-row w-full p-2 justify-between items-center ${darkMode ? "bg-stone-950" : "bg-gray-200"} `} style={error && {borderWidth : 2 , borderColor : colors.danger}} >
-        <View className="flex flex-row items-center " style={{width : "79%"}} >
+      <View className={` rounded-3xl  flex flex-row w-full p-2 justify-between items-center  ${darkMode ? "bg-stone-950" : "bg-gray-200"}`} style={[ error && { borderWidth: 2, borderColor: colors.danger },containerStyle]} >
+        <View className="flex flex-row items-center " style={{ width: "79%" }} >
           {iconName && (
             <MaterialCommunityIcons size={25} color={!darkMode ? "black" : "white"} name={iconName} />
           )}
@@ -19,10 +19,10 @@ const AppInput = ({ password, iconName, label, error = false, errorMessage ,righ
             placeholderTextColor={!darkMode ? "#8c8b8b" : "#696868"}
             style={{
               marginLeft: 10,
-              width :"100%",
+              width: "100%",
               color: !darkMode ? "black" : "white"
             }}
-            
+
             {...otherProps}
             secureTextEntry={password && show}
           />
@@ -32,8 +32,8 @@ const AppInput = ({ password, iconName, label, error = false, errorMessage ,righ
             <MaterialCommunityIcons size={25} color={!darkMode ? "black" : "white"} name={show ? 'eye-off' : 'eye'} />
           </TouchableOpacity>
         )}
-          {(rightIcon && disableRightIcon== false )&& (
-          <TouchableOpacity onPress={onpress }>
+        {(rightIcon && disableRightIcon == false) && (
+          <TouchableOpacity onPress={onpress}>
             <MaterialCommunityIcons size={25} color={colors.primary} name={rightIcon} />
           </TouchableOpacity>
         )}
@@ -42,10 +42,10 @@ const AppInput = ({ password, iconName, label, error = false, errorMessage ,righ
       {
         error && <View className="flex flex-row px-2 items-center ">
           <MaterialCommunityIcons size={15} color={colors.danger} name="alert-circle" />
-          <Text style={{color:colors.danger}} > {errorMessage}</Text>
+          <Text style={{ color: colors.danger }} > {errorMessage}</Text>
         </View>
       }
-      
+
     </View>
   )
 }

@@ -8,6 +8,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+
 const uploadimg = async (req, res) => {
     try {
         const result = await cloudinary.uploader.upload(req.file.path);
@@ -33,13 +34,11 @@ const uploadimg = async (req, res) => {
             user.service.certification = result.secure_url;
         }
         user = await user.save();
-        res.status(200).json({ message: 'Image uploaded successfully!', user });
+        res.status(200).json({ message: 'File uploaded successfully!' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error uploading image' });
+        res.status(500).json({ message: 'Error uploading file' });
     }
 };
-
-
 
 module.exports = { uploadimg };

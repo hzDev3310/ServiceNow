@@ -38,7 +38,7 @@ const AppService = ({ provider }) => {
           <AppText className="text-lg" >🤵🏻{data.ProviderName}</AppText>
           <AppText className="text-lg">⚒️ {data.serviceName}</AppText>
           <AppText className="text-lg">➕ experience : {data.experience}</AppText>
-          <AppText className="text-lg">📌 location</AppText>
+          <AppText className="text-lg">📌 {data.location.cityName}</AppText>
         </View>
       </TouchableOpacity>
       <View className="h-full flex justify-between items-end">

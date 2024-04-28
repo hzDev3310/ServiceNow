@@ -1,22 +1,63 @@
 import useGet from "../apis/useGet";
-import { AppActivityIndicator, AppService } from "../componenet";
-import { View, FlatList } from "react-native";
-
-
+import { AppActivityIndicator, AppInput, AppService, AppText } from "../componenet";
+import { View, FlatList, Text } from "react-native";
+import useLocation from "../hooks/useLocation";
+import { useEffect, useState } from "react";
+import colors from "../colors";
 
 const HomeScreen = () => {
-  const { data, error, isLoading } = useGet("/users/0/0/all");
-  return (
-    <View className="flex flex-1 ">
+  const { getLocation, currentLocation } = useLocation();
+  const [search, setSearch] = useState("");
+  const [url, setUrl] = useState(`/serivces/${currentLocation.latitude}/${currentLocation.longitude}`);
+  const { data, error, isLoading } = useGet(url, [currentLocation]);
+  const [services, setServices] = useState([]); // Corrected the typo here
 
-      {isLoading  &&  <AppActivityIndicator />}
-      {error && alert(JSON.stringify(error))}
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      setServices(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (search) {
+      const searchData = services.filter(service => 
+        service.service?.serviceName.toLowerCase().includes(search.toLowerCase())
+      );
+      if (searchData.length > 0) {
+        setServices(searchData);
+      }
+    } else {
+      setServices(data);
+    }
+  }, [data, search]);
+
+  return (
+    <View className="flex flex-1 items-center">
+      <View className="w-full px-3">
+        <AppInput
+          containerStyle={{ borderWidth: 2, borderColor: colors.primary }}
+          disableRightIcon={false}
+          rightIcon={"account-search"}
+          onChangeText={(text) => setSearch(text)}
+          value={search}
+        />
+      </View>
+      {isLoading && <AppActivityIndicator />}
+      {error && (
+        <View className="flex flex-1 justify-center">
+          <Text className="text-red-600 text-center">Check your internet connection</Text>
+        </View>
+      )}
 
       {data && (
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <AppService provider={item} />}
-        />
+          <FlatList
+            data={services}
+            renderItem={({ item }) => <AppService provider={item} />}
+          />
       )}
     </View>
   );

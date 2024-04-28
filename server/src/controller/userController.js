@@ -1,49 +1,8 @@
 const code = require("../services/verificationCode");
 const userModel = require("../models/Users");
 const bcrypt = require("bcrypt");
-const calculateDistance = require("../services/calculateDistance");
-
-const getServices = async (req, res) => {
-  try {
-    if (!req.params) {
-      const services = await userModel.find({ isProvider: true }).select('service');
-      res.json(services);
-      return;
-    }
-
-    const { latitude, longitude, serviceName } = req.params;
-    let services = [];
-    if (serviceName === "all") {
-      services = await userModel.find({ isProvider: true }).select('service');
-    } else {
-      services = await userModel.find({ isProvider: true, "service.serviceName": serviceName }).select('service');
-    }
 
 
-    services.sort((a, b) => b.service.rating.average - a.service.rating.average);
-
-    services.sort((a, b) => {
-      const distanceToA = calculateDistance(
-        latitude,
-        longitude,
-        parseFloat(a.service.location.latitude),
-        parseFloat(a.service.location.longitude)
-      );
-      const distanceToB = calculateDistance(
-        latitude,
-        longitude,
-        parseFloat(b.service.location.latitude),
-        parseFloat(b.service.location.longitude)
-      );
-      return distanceToA - distanceToB;
-    });
-
-    res.json(services);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error " + error });
-  }
-};
 
 
 const removeUser = async (req, res) => {
@@ -138,7 +97,6 @@ const getOtherUser = async (req, res) => {
 }
 
 module.exports = {
-  getServices,
   updateUser,
   removeUser,
   getuser,

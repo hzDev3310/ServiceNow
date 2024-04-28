@@ -1,5 +1,6 @@
-const multer = require('multer');
 
+const multer = require('multer');
+// Multer storage configuration
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './src/uploads/'); 
@@ -8,6 +9,9 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
+
+// Multer upload middleware
+
 
 const upload = multer({ storage: storage }); 
 

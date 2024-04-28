@@ -20,9 +20,9 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     error && !error.message && alert(error)
     error?.message && alert(error.message)
+    responseData?.token && alert("login succesfuly")
     responseData?.token && navigation.goBack();
   }, [responseData])
-
 
 
   return (
@@ -37,9 +37,6 @@ const LoginScreen = ({ navigation }) => {
       <AppBadge classname={"h-2/3 rounded-t-3xl flex justify-center items-center p-2"}>
 
         <Text style={{ color: colors.primary }} className="font-bold text-2xl m-4" >Welcom Back</Text>
-        <AppText className="text-xl" >
-          {JSON.stringify({ responseData , error , loading })}
-        </AppText>
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

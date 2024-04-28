@@ -12,18 +12,19 @@ import usePost from '../apis/usePost';
 import baseUrl from '../apis/apiClient';
 
 const ChatScreen = ({ navigation, route }) => {
-  const { convId, currentUser, otherUser,otherUserDetails } = route.params;
+  const { convId, currentUser, otherUser, otherUserDetails } = route.params;
 
   const [newMessage, setNewMessage] = useState("");
-  const [recivedMessage, setRecivedMessage] = useState(null); 
+  const [recivedMessage, setRecivedMessage] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [page, setPage] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const socket = useRef();
   const flatListRef = useRef()
-  const {  error: sendError, loading, postData } = usePost()
- 
-//fetch the messages 
+  const { error: sendError, loading, postData } = usePost()
+
+  //fetch the messages 
   const getMessages = async () => {
     setIsLoading(true);
     try {
@@ -34,14 +35,14 @@ const ChatScreen = ({ navigation, route }) => {
         }
       });
 
-      const data = await res.json(); 
+      const data = await res.json();
       setMessages(data);
       setIsLoading(false);
       setError(null);
     } catch (error) {
       setError(error);
       setIsLoading(false);
-      setMessages([]); 
+      setMessages([]);
     }
   };
 
@@ -49,12 +50,17 @@ const ChatScreen = ({ navigation, route }) => {
     getMessages();
   }, [convId]);
 
-//connect to socket server
-  useEffect(() => { 
+  //page of message
+  const loadMoreMessages = () => {
+    setPage(prv => prv + 10);
+  };
+
+  //connect to socket server
+  useEffect(() => {
     socket.current = io("ws://192.168.1.16:8900");
   }, []);
 
-//conncet the userser to socket
+  //conncet the userser to socket
   useEffect(() => {
     socket.current.emit('addUser', currentUser);
   }, [currentUser]);
@@ -62,34 +68,34 @@ const ChatScreen = ({ navigation, route }) => {
   //get the messages
   useEffect(() => {
     socket.current.on("getMessage", message => {
-        setRecivedMessage({
-          convId,
-          sender: message.senderId,
-          content: message.content,
-          createdAt: Date.now()
-        });
-     
+      setRecivedMessage({
+        convId,
+        sender: message.senderId,
+        content: message.content,
+        createdAt: Date.now()
+      });
+
     });
   }, [recivedMessage]);
 
-//add the recived message the messages
-  useEffect(()=>{
-    console.log(recivedMessage);
-    if (currentUser === recivedMessage?.sender || otherUser === recivedMessage?.sender) {
-      setMessages(prv=>[...prv,recivedMessage])
-    }
-  },[recivedMessage])
+  //add the recived message the messages
+  useEffect(() => {
 
-//post new message the db and soket io and adet the messages
+    if (currentUser === recivedMessage?.sender || otherUser === recivedMessage?.sender) {
+      setMessages(prv => [...prv, recivedMessage])
+    }
+  }, [recivedMessage])
+
+  //post new message the db and soket io and adet the messages
   const sendNewMessage = async () => {
     await postData("/messages", { convId, sender: currentUser, content: newMessage });
-    setMessages(prv=>[...prv,{
+    setMessages(prv => [...prv, {
       convId,
-          sender: currentUser,
-          content: newMessage,
-          createdAt: Date.now()
+      sender: currentUser,
+      content: newMessage,
+      createdAt: Date.now()
     }])
-  
+
     socket.current.emit("sendMessage", {
       senderId: currentUser,
       reciverId: otherUser,
@@ -97,9 +103,9 @@ const ChatScreen = ({ navigation, route }) => {
     });
     sendError && alert("check your enter connetion")
     setNewMessage("");
-    
+
   };
-//edite the screen header
+  //edite the screen header
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -118,10 +124,10 @@ const ChatScreen = ({ navigation, route }) => {
         </TouchableOpacity>,
     });
   }, []);
-//render the messages
-  const renderMessage = ({ item,index }) => (
+  //render the messages
+  const renderMessage = ({ item, index }) => (
     <MessageContainer
-    
+     
       key={index}
       date={item.createdAt}
       message={item.content}
@@ -131,10 +137,10 @@ const ChatScreen = ({ navigation, route }) => {
     />
   );
 
-//scroll if new messages
-  useEffect(()=>{
+
+  useEffect(() => {
     flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
-  },[messages])
+  }, [messages])
 
   return (
     <View className="flex items-center  w-full flex-1">
@@ -142,14 +148,16 @@ const ChatScreen = ({ navigation, route }) => {
       {(loading || isLoading) && <AppActivityIndicator />}
       {messages && (
         <View className="flex items-center  w-full flex-1">
-         
+
           <FlatList
             ref={flatListRef}
             inverted
             style={{ width: "95%", display: "flex", flex: 1 }}
-            data={[...messages].reverse()}
+            data={[...messages].reverse().slice(0, page)}
             renderItem={renderMessage}
-            keyExtractor={(item,index) => index}
+            keyExtractor={(item, index) => index}
+            onEndReached={loadMoreMessages}
+            onEndReachedThreshold={0.1}
 
           />
           <AppInput

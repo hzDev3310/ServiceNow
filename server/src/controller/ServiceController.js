@@ -1,5 +1,46 @@
 const code = require("../services/verificationCode");
 const userModel = require("../models/Users");
+const calculateDistance = require("../services/calculateDistance");
+
+const getServices = async (req, res) => {
+  try {
+    if (!req.params) {
+      const services = await userModel.find({ isProvider: true }).select('service');
+      res.json(services);
+      return;
+    }
+
+    const { latitude, longitude } = req.params;
+    
+    
+    let services = await userModel.find({ isProvider: true }).select('service');
+
+    
+    services.sort((a, b) => b.service.rating.average - a.service.rating.average);
+
+    services.sort((a, b) => {
+      const distanceToA = calculateDistance(
+        latitude,
+        longitude,
+        parseFloat(a.service.location.latitude),
+        parseFloat(a.service.location.longitude)
+      );
+      const distanceToB = calculateDistance(
+        latitude,
+        longitude,
+        parseFloat(b.service.location.latitude),
+        parseFloat(b.service.location.longitude)
+      );
+      return distanceToA - distanceToB;
+    });
+
+    res.json(services);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error " + error });
+  }
+};
+
 
 const emproveAccount = async (req, res) => {
   try {
@@ -28,7 +69,7 @@ const emproveAccount = async (req, res) => {
       phoneNumber: user.phoneNumber.number,
       profilPic: user.profilPic,
       location: user.location,
-     
+
       serviceName,
       description,
       experience,
@@ -44,4 +85,4 @@ const emproveAccount = async (req, res) => {
   }
 };
 
-module.exports = emproveAccount;
+module.exports = { emproveAccount, getServices };

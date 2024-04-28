@@ -8,16 +8,12 @@ const useDarkMode = create((set) => ({
 
 
 const useCurrentLocation = create((set) => ({
-  currentLocation: {
-    latitude: null,
-    longitude: null,
-    cityName: null
-  },
+  currentLocation: { "cityName": "Tunis", "latitude": 36.8065, "longitude": 10.1815 },
   changeLocation: (location) => set((state) => ({ currentLocation: location }))
 }));
 
-const useIsLogin = create((set)=>({
-  isLogin : false,
+const useIsLogin = create((set) => ({
+  isLogin: false,
   setIsLogin: (b) => set((state) => ({ isLogin: b })),
 }))
 
@@ -32,4 +28,4 @@ const useOtherUser = create((set) => ({
 }));
 
 
-export { useCurrentLocation, useDarkMode,useCurrentUser ,useOtherUser, useIsLogin }
+export { useCurrentLocation, useDarkMode, useCurrentUser, useOtherUser, useIsLogin }

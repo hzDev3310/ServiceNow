@@ -77,7 +77,7 @@ const ChatScreen = ({ navigation, route }) => {
           content: message.content,
           createdAt: Date.now()
         });
-      
+      setVisable(true)
     });
     // Clean up socket event listener when component unmounts
 
@@ -105,14 +105,14 @@ const ChatScreen = ({ navigation, route }) => {
           content: newMessage,
           createdAt: Date.now()
     }])
-    // Emit the new message to the Socket.IO server
+  
     socket.current.emit("sendMessage", {
       senderId: currentUser,
       reciverId: otherUser,
       content: newMessage
     });
-    // Reset the newMessage state after sending
   
+  setVisable(true)
     setNewMessage("");
   };
 
@@ -161,10 +161,7 @@ const ChatScreen = ({ navigation, route }) => {
       {(loading || isLoading) && <AppActivityIndicator />}
       {messages && (
         <View className="flex items-center  w-full flex-1">
-          <AppButton 
-          onpress={()=>{flatRef.current.scrollToEnd({animation: true})}}
-          icon="arrow-down"  
-          classname={`${visible ?"flex" : "hidden"} w-10 h-10  justify-center items-center absolute  bottom-20`} />
+         
           <FlatList
             ref={flatRef}
             inverted

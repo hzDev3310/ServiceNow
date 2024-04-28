@@ -1,6 +1,6 @@
 import useGet from "../apis/useGet";
 import { AppActivityIndicator, AppService } from "../componenet";
-import { View, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList } from "react-native";
 
 
 

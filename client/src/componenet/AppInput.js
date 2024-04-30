@@ -4,7 +4,7 @@ import { useDarkMode } from '../store'
 import { useState } from 'react'
 import colors from '../colors'
 
-const AppInput = ({ password, iconName, label, error = false, errorMessage, rightIcon, disableRightIcon, onpress, containerStyle, ...otherProps }) => {
+const AppInput = ({ password, iconName, label, error = false, errorMessage, rightIcon, disableRightIcon=false, onpress, containerStyle, ...otherProps }) => {
   const [show, setShow] = useState(true)
   const { darkMode } = useDarkMode()
   return (

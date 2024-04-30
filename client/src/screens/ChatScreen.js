@@ -127,7 +127,7 @@ const ChatScreen = ({ navigation, route }) => {
   //render the messages
   const renderMessage = ({ item, index }) => (
     <MessageContainer
-     
+
       key={index}
       date={item.createdAt}
       message={item.content}
@@ -160,14 +160,17 @@ const ChatScreen = ({ navigation, route }) => {
             onEndReachedThreshold={0.1}
 
           />
-          <AppInput
-            disableRightIcon={newMessage == ""}
-            rightIcon={"send"}
-            value={newMessage}
-            onChangeText={(e) => setNewMessage(e)}
-            placeholder="type your message"
-            onpress={sendNewMessage}
-          />
+          <View className="w-full px-2 pb-1" >
+            <AppInput
+              containerStyle={{ borderWidth: 2, borderColor: colors.primary }}
+              disableRightIcon={newMessage == ""}
+              rightIcon={"send"}
+              value={newMessage}
+              onChangeText={(e) => setNewMessage(e)}
+              placeholder="type your message"
+              onpress={sendNewMessage}
+            />
+          </View>
         </View>
       )}
     </View>

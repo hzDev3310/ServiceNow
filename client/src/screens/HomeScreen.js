@@ -1,16 +1,18 @@
 import useGet from "../apis/useGet";
-import { AppActivityIndicator, AppInput, AppService, AppText } from "../componenet";
+import { AppActivityIndicator, AppInput, AppPicker, AppService, AppText } from "../componenet";
 import { View, FlatList, Text } from "react-native";
 import useLocation from "../hooks/useLocation";
 import { useEffect, useState } from "react";
 import colors from "../colors";
+import { locations } from "../storage";
 
 const HomeScreen = () => {
   const { getLocation, currentLocation } = useLocation();
   const [search, setSearch] = useState("");
-  const [url, setUrl] = useState(`/serivces/${currentLocation.latitude}/${currentLocation.longitude}`);
+  const [selectedValue, setSelectedValue] = useState(currentLocation);
+  const [url, setUrl] = useState(`/serivces/${selectedValue.latitude}/${selectedValue.longitude}`)
   const { data, error, isLoading } = useGet(url, [currentLocation]);
-  const [services, setServices] = useState([]); // Corrected the typo here
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     getLocation();
@@ -23,8 +25,12 @@ const HomeScreen = () => {
   }, [data]);
 
   useEffect(() => {
+    setUrl(`/serivces/${selectedValue.latitude}/${selectedValue.longitude}`)
+  }, [selectedValue])
+
+  useEffect(() => {
     if (search) {
-      const searchData = services.filter(service => 
+      const searchData = services.filter(service =>
         service.service?.serviceName.toLowerCase().includes(search.toLowerCase())
       );
       if (searchData.length > 0) {
@@ -37,14 +43,23 @@ const HomeScreen = () => {
 
   return (
     <View className="flex flex-1 items-center">
-      <View className="w-full px-3">
-        <AppInput
-          containerStyle={{ borderWidth: 2, borderColor: colors.primary }}
-          disableRightIcon={false}
-          rightIcon={"account-search"}
-          onChangeText={(text) => setSearch(text)}
-          value={search}
-        />
+      <View className="w-full flex justify-center items-end ">
+        <View className="w-full px-2 flex items-center ">
+          <AppInput
+            containerStyle={{ borderWidth: 2, borderColor: colors.primary }}
+            disableRightIcon={false}
+            rightIcon={"account-search"}
+            onChangeText={(text) => setSearch(text)}
+            value={search}
+          />
+        </View>
+        <View className="w-1/2 px-2 h-12 flex justify-center ">
+          <AppPicker
+            data={locations}
+            selectedValue={selectedValue}
+            onValueChange={v => setSelectedValue(v)}
+            label={selectedValue.cityName} />
+        </View>
       </View>
       {isLoading && <AppActivityIndicator />}
       {error && (
@@ -54,10 +69,10 @@ const HomeScreen = () => {
       )}
 
       {data && (
-          <FlatList
-            data={services}
-            renderItem={({ item }) => <AppService provider={item} />}
-          />
+        <FlatList
+          data={services}
+          renderItem={({ item }) => <AppService provider={item} />}
+        />
       )}
     </View>
   );

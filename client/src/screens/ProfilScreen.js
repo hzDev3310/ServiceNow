@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDarkMode, useIsLogin } from '../store';
+import { useCurrentUser, useDarkMode, useIsLogin } from '../store';
 import useGet from '../apis/useGet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,31 +9,13 @@ import { AppActivityIndicator, AppBadge, AppButton, AppText, ServiceUpdate, User
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../colors';
-import { useFocusEffect } from '@react-navigation/native';
+import useProfil from '../hooks/useProfil';
+
 const ProfilScreen = ({ navigation }) => {
   const {setIsLogin}= useIsLogin() 
   const { darkMode } = useDarkMode()
-  const [token, setToken] = useState(null);
-  const [removedValue, setRemovedValue] = useState(false);
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-      if (value !== null) {
-        const parsedValue = JSON.parse(value);
-        if (parsedValue.hasOwnProperty('token')) {
-          setToken(parsedValue.token);
-        } else {
-          console.log("Token not found in the retrieved data.");
-          navigation.navigate('login');
-        }
-      } else {
-        console.log("Token not found in AsyncStorage.");
-        navigation.navigate('login');
-      }
-    } catch (e) {
-      console.log("Error occurred while fetching token:", e);
-    }
-  };
+  const {currentUser} = useCurrentUser()
+
 
 
   const removeValue = async () => {
@@ -45,13 +27,8 @@ const ProfilScreen = ({ navigation }) => {
       console.log('Error occurred while removing token.');
     }
   }
-  useFocusEffect(() => {
-    getData()
-  })
-  const { data, error, isLoading } = useGet('/auth', {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  },[token])
+
+  const { data, error, isLoading } = useProfil(currentUser?.token)
   return (
     <View>
       <StatusBar  />
@@ -65,7 +42,7 @@ const ProfilScreen = ({ navigation }) => {
       {isLoading &&
         <AppActivityIndicator />}
       {
-        data && token &&
+        data && currentUser &&
         <ScrollView className="z-0" >
           <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
             <View className="flex flex-row items-center" >

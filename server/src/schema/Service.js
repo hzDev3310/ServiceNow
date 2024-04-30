@@ -41,7 +41,7 @@ const Service = new Schema({
     type: String,
     default: "",
   },
-  experience: String,
+  experience: Number,
   availability: {
     type: Availability,
     default: { from: "monthly", to: "friday", isAvailable: true },
@@ -50,9 +50,6 @@ const Service = new Schema({
     type: [Comment],
     default: [],
   },
-  album: {
-    type: [String],
-    default: [],
-  },
+ 
 });
 module.exports = Service;

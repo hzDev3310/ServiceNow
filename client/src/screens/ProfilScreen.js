@@ -10,6 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../colors';
 import useProfil from '../hooks/useProfil';
+import AppLoadingProfil from '../componenet/AppLoadingProfil';
 
 const ProfilScreen = ({ navigation }) => {
   const {setIsLogin}= useIsLogin() 
@@ -40,7 +41,7 @@ const ProfilScreen = ({ navigation }) => {
         </Text>
       </View>}
       {isLoading &&
-        <AppActivityIndicator />}
+        <AppLoadingProfil />}
       {
         data && currentUser &&
         <ScrollView className="z-0" >

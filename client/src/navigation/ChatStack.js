@@ -3,6 +3,7 @@ import { ChatScreen, ConversationScreen, LoginScreen } from "../screens";
 import { useOtherUser } from "../store";
 import { AppText } from "../componenet";
 import { Image, View } from "react-native";
+import colors from "../colors";
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,11 @@ function ChatStack() {
     >
       <Stack.Screen
         name="conversation"
+        options={{
+          title:"Conversations",
+          headerTitleAlign : "center",
+          headerTitleStyle :{color :colors.primary , fontWeight : "bold" , fontSize : 25}
+        }}
         component={ConversationScreen}
         
       />

@@ -17,7 +17,7 @@ function HomeStack() {
           headerLeft:()=><Image style={{width : 30 , height :30 , marginLeft : 10}} source={require("../assets/favicon.png")} ></Image>,
           headerTitle: "ServiceNow",
           headerTintColor: colors.primary,
-          headerTitleStyle: { fontWeight: "bold", fontSize: 30 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
           headerRight: () => <View className="flex flex-row justify-center items-center mr-3">
             <ColorModeSwitch />
             <AppAuth />

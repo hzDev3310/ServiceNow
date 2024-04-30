@@ -5,6 +5,7 @@ import useLocation from "../hooks/useLocation";
 import { useEffect, useState } from "react";
 import colors from "../colors";
 import { locations } from "../storage";
+import AppLoadingCard from "../componenet/AppLoadingCard";
 
 const HomeScreen = () => {
   const { getLocation, currentLocation } = useLocation();
@@ -61,7 +62,7 @@ const HomeScreen = () => {
             label={selectedValue.cityName} />
         </View>
       </View>
-      {isLoading && <AppActivityIndicator />}
+      {isLoading && <AppLoadingCard />}
       {error && (
         <View className="flex flex-1 justify-center">
           <Text className="text-red-600 text-center">Check your internet connection</Text>

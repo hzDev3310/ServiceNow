@@ -1,49 +1,34 @@
-import { View,FlatList } from 'react-native'
-import React, {  useLayoutEffect, useState } from 'react'
+import { View, FlatList, Image } from 'react-native'
+import React from 'react'
 
-import { AppActivityIndicator, AppMessageCard, AppText } from "../componenet"
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppActivityIndicator, AppMessageCard, AppSeparator, AppText } from "../componenet"
+
 import useGet from '../apis/useGet';
+import { useCurrentUser } from '../store';
+import AppLoadingCard from '../componenet/AppLoadingCard';
 const ConversationScreen = ({ navigation }) => {
-  const [currentUser, setCurrentUser] = useState(null)
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-      if (value !== null) {
-        const parsedValue = JSON.parse(value);
-        if (parsedValue.hasOwnProperty('token')) {
-          setCurrentUser(parsedValue.userId);
-        } else {
-          console.log("Token not found in the retrieved data.");
-          navigation.navigate('login');
-        }
-      } else {
-        console.log("Token not found in AsyncStorage.");
-        navigation.navigate('login');
-      }
-    } catch (e) {
-      console.log("Error occurred while fetching token:", e);
-    }
-  };
-  useLayoutEffect(() => {
-    getData();
-  },[currentUser]);
 
-  const { data, isLoading, error } = useGet(`/conversation/${currentUser}`)
+  const { currentUser } = useCurrentUser()
+  const { data, isLoading, error } = useGet(`/conversation/${currentUser.userId}`)
   return (
     <>
-    {isLoading && <AppActivityIndicator />}
+      {isLoading && 
+      <AppLoadingCard message />
+      
+      }
       {error && <AppText>
         {error?.message}
       </AppText>
       }
       {
         data && <View className="flex-1">
+
           <FlatList
-          
+            ItemSeparatorComponent={() => <AppSeparator />}
             data={data}
-            renderItem={item => <AppMessageCard item={item} currentUser={currentUser} />}
+            renderItem={item => <AppMessageCard item={item} currentUser={currentUser.userId} />}
           ></FlatList>
+
         </View>
       }
     </>

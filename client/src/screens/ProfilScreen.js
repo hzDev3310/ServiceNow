@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCurrentUser, useDarkMode, useIsLogin } from '../store';
-import { Image, ScrollView, StatusBar, Text, View } from 'react-native';
+import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { AppBadge, AppButton, AppText, AppUpdateUserCard} from "../componenet";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -39,13 +39,13 @@ const ProfilScreen = ({ navigation }) => {
         <ScrollView className="z-0" >
           <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
             <View className="flex flex-row items-center" >
-              <View className="relative w-24 h-24 justify-center items-center ">
+            <TouchableOpacity onPress={() => { navigation.navigate('image', { image: data.profilPic }) }} className="relative w-24 h-24 justify-center items-center">
                 <Image
                   className="rounded-xl"
                   width={80}
                   height={80}
                   source={data?.profilPic == "" ? require('../assets/img/noProfilPic.jpg') : { uri: data.profilPic }} />
-              </View>
+              </TouchableOpacity>
               <View className='ml-2  flex justify-between' >
                 <AppText className="capitalize text-xl ml-1">
                   {data.name}

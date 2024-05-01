@@ -1,4 +1,4 @@
-import { Image, ScrollView, View } from "react-native";
+import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 import { AppBadge, AppText, Availability, StarRating } from "../componenet";
 
 const ServiceProviderScreen = ({ navigation, route }) => {
@@ -6,9 +6,9 @@ const ServiceProviderScreen = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View className="w-full flex p-2 items-center">
-        <View className="border-2 border-blue-600 rounded-lg overflow-hidden">
+        <TouchableOpacity onPress={() => { navigation.navigate('image' , {image:route.params.img })  }} className="border-2 border-blue-600 rounded-lg overflow-hidden">
           <Image source={{ uri: route.params.img }} width={200} height={200} />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <AppBadge classname={`p-4 m-2 rounded-2xl`}>

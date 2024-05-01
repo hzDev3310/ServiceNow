@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import AppBadge from './AppBadge';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import colors from '../colors';
+
 const AppMessageCard = ({ item, currentUser }) => {
     const navigation = useNavigation()
     const conv = item.item;

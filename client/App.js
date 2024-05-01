@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import {  useCurrentUser, useIsLogin } from "./src/store";
 import { AuthStack } from "./src/navigation";
 import { createStackNavigator } from "@react-navigation/stack";
+import { ViewImageScreen } from "./src/screens";
 
 
 
@@ -49,6 +50,7 @@ export default function App() {
         >
           <Stack.Screen name="app" component={AppTab} />
           <Stack.Screen name="auth" component={AuthStack} />
+          <Stack.Screen options={{headerShown : true , headerTitle : ""}} name="image" component={ViewImageScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

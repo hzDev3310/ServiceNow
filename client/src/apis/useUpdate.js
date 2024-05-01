@@ -6,17 +6,14 @@ const useUpdate = (method = 'put') => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const updateData = async (endpoint, body, headers = {}) => {
+  const updateData = async (endpoint, body, headers =  {'Content-Type': 'application/json'}) => {
     setIsLoading(true);
     try {
       let response;
       if (method === 'put') {
         response = await fetch(baseUrl+endpoint, {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            ...headers
-          },
+          headers,
           body: JSON.stringify(body)
         });
       } else if (method === 'patch') {

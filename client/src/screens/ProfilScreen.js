@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useCurrentUser, useDarkMode, useIsLogin } from '../store';
-import useGet from '../apis/useGet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-import {  Image, ScrollView, StatusBar, Text, View } from 'react-native';
-import { AppActivityIndicator, AppBadge, AppButton, AppText, ServiceUpdate, UserDetailsUpdate } from "../componenet";
+import { useCurrentUser, useDarkMode, useIsLogin } from '../store';
+import { Image, ScrollView, StatusBar, Text, View } from 'react-native';
+import { AppBadge, AppButton, AppText, AppUpdateUserCard} from "../componenet";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../colors';
@@ -13,11 +9,10 @@ import useProfil from '../hooks/useProfil';
 import AppLoadingProfil from '../componenet/AppLoadingProfil';
 
 const ProfilScreen = ({ navigation }) => {
-  const {setIsLogin}= useIsLogin() 
+  const { setIsLogin } = useIsLogin()
   const { darkMode } = useDarkMode()
-  const {currentUser} = useCurrentUser()
-
-
+  const { currentUser } = useCurrentUser()
+  const { data, error, isLoading } = useProfil(currentUser?.token)
 
   const removeValue = async () => {
     try {
@@ -29,12 +24,9 @@ const ProfilScreen = ({ navigation }) => {
     }
   }
 
-  const { data, error, isLoading } = useProfil(currentUser?.token)
   return (
     <View>
-      <StatusBar  />
-
-
+      <StatusBar />
       {error && <View className="flex flex-1 justify-center items-center">
         <Text style={{ color: colors.danger }} >
           check your internt connexion
@@ -43,7 +35,7 @@ const ProfilScreen = ({ navigation }) => {
       {isLoading &&
         <AppLoadingProfil />}
       {
-        data && currentUser &&
+        data  &&
         <ScrollView className="z-0" >
           <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
             <View className="flex flex-row items-center" >
@@ -68,12 +60,12 @@ const ProfilScreen = ({ navigation }) => {
               </View>
 
             </View>
-            <AppButton classname={"w-24"} onPress={removeValue}  >logout</AppButton>
+            
           </AppBadge>
+          <AppUpdateUserCard user={data} />
+          
 
-          <UserDetailsUpdate data={data} />
-          <ServiceUpdate data={data} />
-
+          <AppButton classname={"w-24"} onPress={removeValue}  >logout</AppButton>
         </ScrollView>
       }
     </View>

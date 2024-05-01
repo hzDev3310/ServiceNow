@@ -5,8 +5,6 @@ const useDarkMode = create((set) => ({
   changeDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
 }));
 
-
-
 const useCurrentLocation = create((set) => ({
   currentLocation: { "cityName": "Tunis", "latitude": 36.8065, "longitude": 10.1815 },
   changeLocation: (location) => set((state) => ({ currentLocation: location }))

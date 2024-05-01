@@ -4,6 +4,7 @@ import { HomeStack, AuthStack, ChatStack } from "./";
 import { useDarkMode, useIsLogin } from "../store";
 import colors from "../colors";
 import { ProfilScreen } from "../screens";
+import AccountStack from "./AccountStack";
 const TabArr = [
   { route: "auth", label: "Account", component: AuthStack, icon: "account" },
   { route: "Home", label: "Home", component: HomeStack, icon: "home" },
@@ -62,7 +63,7 @@ export default function AppTab() {
     isLogin && 
     <Tab.Screen
        name="account"
-       component={ProfilScreen}
+       component={AccountStack}
        options={{
          tabBarShowLabel: false,
          tabBarIcon: ({color}) => (

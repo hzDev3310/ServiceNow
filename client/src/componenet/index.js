@@ -13,12 +13,9 @@ export { default as AppSeparator } from "./AppSeparator";
 export { default as AppActivityIndicator } from "./AppActivityIndicator";
 export { default as AppMessageCard } from "./AppMessageCard";
 export { default as TimeElapsedComponent } from "./TimeElapsedComponent";
-export { default as UpdateButton } from "./UpdateButton";
-export { default as UpdateCard } from "./UpdateCard";
-export { default as UserDetailsUpdate } from "./UserDetailsUpdate";
-export { default as UpdateSelect } from "./UpdateSelect";
 export { default as AppPicker } from "./AppPicker";
-export { default as ServiceUpdate } from "./ServiceUpdate";
-export { default as MessageContainer } from "./MessageContainer";
+export { default as AppLoadingCard } from "./AppLoadingCard";
+export { default as AppLoadingProfil } from "./AppLoadingProfil";
+export { default as AppUpdateUserCard } from "./AppUpdateUserCard";
 
 

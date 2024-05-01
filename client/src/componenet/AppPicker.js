@@ -5,20 +5,20 @@ import colors from '../colors';
 import AppText from './AppText';
 
 
-const AppPicker = ({ selectedValue, onValueChange, data ,label }) => {
+const AppPicker = ({ selectedValue, onValueChange, data, label }) => {
 
   return (
-    <View className={`h-10 my-2 flex justify-center rounded-full`} style={{backgroundColor : colors.secondary}}  >
+    <View className={`h-10 my-2 flex justify-center rounded-full`} style={{ backgroundColor: colors.secondary }}  >
       <Picker
         selectedValue={selectedValue}
-        style={{ width: '100%'}}
+        style={{ width: '100%' }}
         onValueChange={onValueChange}
         mode="dropdown"
-       
+
       >
-        
-        <Picker.Item label={label} enabled={false} />
-       {Object.values(data).map((item, index) => (
+
+        {label && <Picker.Item label={label} enabled={false} />}
+        {Object.values(data).map((item, index) => (
           <Picker.Item key={index} label={item.label} value={item.value} />
         ))}
       </Picker>

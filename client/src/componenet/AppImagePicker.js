@@ -11,7 +11,6 @@ const AppImagePicker = ({ setSelectedImage }) => {
             let result = await ImagePicker.launchImageLibraryAsync({
                 allowsEditing: true,
                 quality: 1,
-                aspect: [4, 4]
             });
 
             if (!result.canceled) {
@@ -27,7 +26,7 @@ const AppImagePicker = ({ setSelectedImage }) => {
     return (
         <View className="my-1">
             <AppButton classname={"w-36 flex justify-center items-center"} outLine icon={"plus"} onPress={pickImageAsync}>
-               {loading ? <ActivityIndicator color={"white"}  /> : "uploade"}
+                {loading ? <ActivityIndicator color={"white"} /> : "uploade"}
             </AppButton>
         </View>
     )

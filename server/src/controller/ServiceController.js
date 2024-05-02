@@ -57,7 +57,7 @@ const emproveAccount = async (req, res) => {
       "service.email.emailAddress": email,
     });
     if (verifiedEmail) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ error: "Email already exists" });
     }
 
     const Email = {
@@ -69,7 +69,6 @@ const emproveAccount = async (req, res) => {
       phoneNumber: user.phoneNumber.number,
       profilPic: user.profilPic,
       location: user.location,
-
       serviceName,
       description,
       experience,
@@ -78,7 +77,7 @@ const emproveAccount = async (req, res) => {
 
     await user.save();
 
-    res.json({ message: "Service added successfully", user });
+    res.json({ message: "Service added successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error " + error });

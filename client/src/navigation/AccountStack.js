@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { UpdateImageScreen, ProfilScreen } from "../screens";
+import OfferServiceScreen from "../screens/OfferServiceScreen";
 
 
 
@@ -16,6 +17,10 @@ function AccountStack() {
          headerShown: true,
          headerTitle : ""
       }} name="updateImage" component={UpdateImageScreen} />
+      <Stack.Screen  options={{
+         headerShown: true,
+         headerTitle : ""
+      }} name="offerService" component={OfferServiceScreen} />
     </Stack.Navigator>
   );
 }

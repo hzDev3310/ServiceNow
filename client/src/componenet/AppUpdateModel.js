@@ -3,15 +3,20 @@ import AppText from "./AppText"
 import AppSeparator from "./AppSeparator"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { useState } from "react"
+import { useDarkMode } from "../store"
 
-const AppUpdateModel = ({ children, label, nav }) => {
+const AppUpdateModel = ({ children, label, nav , icon }) => {
+    const {darkMode} = useDarkMode()
     const [show, setShow] = useState(false)
     return (
         <View className="p-2">
             <View className="flex flex-row justify-between items-center">
-                <AppText className="text-base capitalize" >
-                    {label}
-                </AppText>
+                <View className="flex flex-row items-center">
+                    <MaterialCommunityIcons color={darkMode ? "white" : "black"} name={icon} size={20} />
+                    <AppText className="text-base capitalize ml-1" >
+                        {label}
+                    </AppText>
+                </View>
                 {nav ?
                     <TouchableOpacity onPress={nav} >
                         <MaterialCommunityIcons color="gray" name={show ? "window-close" : "lead-pencil"} size={20} />

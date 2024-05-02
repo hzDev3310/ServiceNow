@@ -17,5 +17,7 @@ export { default as AppPicker } from "./AppPicker";
 export { default as AppLoadingCard } from "./AppLoadingCard";
 export { default as AppLoadingProfil } from "./AppLoadingProfil";
 export { default as AppUpdateUserCard } from "./AppUpdateUserCard";
+export { default as AppUpdateService } from "./AppUpdateService";
+export { default as MessageContainer } from "./MessageContainer";
 
 

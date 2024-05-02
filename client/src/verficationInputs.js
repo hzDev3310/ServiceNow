@@ -1,7 +1,7 @@
 const verifyInputs = (inputs) => {
     for (let index = 0; index < inputs.length; index++) {
         const input = inputs[index];
-        if (input=="") {
+        if (input == "") {
             return false
         }
     }
@@ -24,4 +24,20 @@ const verifyPhoneNumber = (phoneNumber) => {
 };
 
 
-export { VerifyPassword, verifyPhoneNumber, verifyInputs };
+const isServiceAvailableToday = (isAvailable, days) => {
+    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const currentDate = new Date();
+    const currentDayIndex = currentDate.getDay();
+    const currentDayName = daysOfWeek[currentDayIndex];
+    if (isAvailable) {
+        return true;
+    } else return days[currentDayName]
+};
+
+function isEmail(email) {
+    var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(email=== "" ) return true
+    else return pattern.test(email);
+}
+
+export { VerifyPassword, verifyPhoneNumber, verifyInputs, isServiceAvailableToday , isEmail };

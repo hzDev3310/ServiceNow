@@ -27,7 +27,7 @@ const ServiceProviderScreen = ({ navigation, route }) => {
         
       </AppBadge>
       <AppBadge className="flex p-4 m-2 rounded-2xl items-center">
-        <Availability />
+        <Availability days={provider.availability.days}  />
         </AppBadge>
       <View className="w-full flex p-1  items-center">
         <StarRating />

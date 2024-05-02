@@ -1,18 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCurrentUser, useDarkMode, useIsLogin } from '../store';
 import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
-import { AppBadge, AppButton, AppText, AppUpdateUserCard} from "../componenet";
+import { AppBadge, AppButton, AppText, AppUpdateService, AppUpdateUserCard } from "../componenet";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../colors';
 import useProfil from '../hooks/useProfil';
 import AppLoadingProfil from '../componenet/AppLoadingProfil';
+import { isServiceAvailableToday } from '../verficationInputs';
 
 const ProfilScreen = ({ navigation }) => {
   const { setIsLogin } = useIsLogin()
   const { darkMode } = useDarkMode()
   const { currentUser } = useCurrentUser()
   const { data, error, isLoading } = useProfil(currentUser?.token)
+
+
 
   const removeValue = async () => {
     try {
@@ -35,15 +38,17 @@ const ProfilScreen = ({ navigation }) => {
       {isLoading &&
         <AppLoadingProfil />}
       {
-        data  &&
-        <ScrollView className="z-0" >
+        data &&
+        <ScrollView >
+          <AppText>
+
+          </AppText>
           <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
             <View className="flex flex-row items-center" >
-            <TouchableOpacity onPress={() => { navigation.navigate('image', { image: data.profilPic }) }} className="relative w-24 h-24 justify-center items-center">
+              <TouchableOpacity onPress={() => { navigation.navigate('image', { image: data.profilPic }) }} className="relative w-24 h-24 justify-center items-center">
                 <Image
                   className="rounded-xl"
-                  width={80}
-                  height={80}
+                 style={{height: 80 , width : 80}}
                   source={data?.profilPic == "" ? require('../assets/img/noProfilPic.jpg') : { uri: data.profilPic }} />
               </TouchableOpacity>
               <View className='ml-2  flex justify-between' >
@@ -60,10 +65,42 @@ const ProfilScreen = ({ navigation }) => {
               </View>
 
             </View>
-            
+
           </AppBadge>
+          {
+            !data.service && <AppBadge classname={"w-full mb-2 px-2 py-4 flex flex-row items-center justify-between"} >
+              <AppText className="text-base" style={{ color: colors.primary }} >
+                you want to offer a service ?
+              </AppText>
+              <AppButton classname={"w-28"} onPress={()=>{navigation.navigate("offerService")}}  >
+                click here
+              </AppButton>
+            </AppBadge>
+          }
+          {
+            data.service?.certification && !data.isProvider && <AppBadge classname={"w-full mb-2 px-2 py-4 flex flex-row items-center justify-between"} >
+              <AppText className="text-base" style={darkMode ? { color: colors.warning } : { color: "rgb(192, 151, 39)" }} >
+                Wait for the admin to confirm your verification.
+              </AppText>
+
+            </AppBadge>
+          }
+          {
+            data.service && !data.service.certification && <AppBadge classname={"w-full mb-2 px-2 py-4 flex flex-row items-center justify-between"} >
+              <AppText className="text-base" style={darkMode ? { color: colors.warning } : { color: "rgb(192, 151, 39)" }}>
+                please verify your account !
+              </AppText>
+              <AppButton classname={"w-28"} onPress={() => navigation.navigate("updateImage" , {attribute : "certification",label : "are you sure "})} >
+                click here
+              </AppButton>
+            </AppBadge>
+          }
           <AppUpdateUserCard user={data} />
-          
+          {
+            data.service && <AppUpdateService user={data} />
+          }
+
+
 
           <AppButton classname={"w-24"} onPress={removeValue}  >logout</AppButton>
         </ScrollView>

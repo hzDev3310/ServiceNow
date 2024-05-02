@@ -29,7 +29,7 @@ function ChatStack() {
         options={{}}
 
       />
-        <Stack.Screen options={{headerShown :false}} name="login" component={LoginScreen} />
+        
     </Stack.Navigator>
   );
 }

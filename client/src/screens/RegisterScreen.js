@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StatusBar, ScrollView } from 'react-native'
-import { AppActivityIndicator, AppAlert, AppBadge, AppButton, AppInput, AppSeparator } from '../componenet'
+import { AppActivityIndicator, AppBadge, AppButton, AppInput, AppSeparator } from '../componenet'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { VerifyPassword, verifyInputs, verifyPhoneNumber } from "../verficationInputs"
 import colors from '../colors'
@@ -10,24 +10,35 @@ import usePost from '../apis/usePost'
 const RegisterScreen = ({ navigation }) => {
   const { currentLocation } = useLocation();
   const { loading, error, responseData, postData } = usePost()
-  const [alert, setAlert] = useState(false)
+
   const [body, setBody] = useState({
     number: "",
     password: "",
     name: "",
     Location: currentLocation
   })
+  useEffect(()=>{
+    error && alert("check your internt connection")
+    responseData?.message === "account created successfully"&& navigation.navigate('login')
+    responseData && alert(responseData.message)
+  }, [responseData , error])
 
   const handelSignUp = () => {
 
     if (verifyPhoneNumber(body.number) && VerifyPassword(body.password) && VerifyPassword(body.name)) {
       postData('/auth/signup', body)
-      error || responseData &&  setAlert(true)
+     
     }
+
+ 
   }
+  if (loading) {
+    {loading && <AppActivityIndicator />}
+  } else 
   return (
     <View style={{ backgroundColor: colors.primary }} className="flex-1" >
-      {loading && <AppActivityIndicator />}
+     
+
       <StatusBar backgroundColor={colors.primary} />
       <View className="h-1/4 flex justify-center items-center" >
 
@@ -85,7 +96,7 @@ const RegisterScreen = ({ navigation }) => {
           <View className="w-full p-2">
             <AppButton icon={"login"} onPress={() => { navigation.navigate('login') }} outLine >login</AppButton>
           </View>
-          <AppAlert error={error && true} message={error ? error.message : 'sign up sussefuly'} onClose={() => setAlert(false)} visible={alert} />
+         
         </ScrollView>
       </AppBadge>
     </View>

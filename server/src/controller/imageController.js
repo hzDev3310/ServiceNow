@@ -30,7 +30,7 @@ const uploadimg = async (req, res) => {
             if (user.isProvider) {
                 user.service.profilPic = result.secure_url;
             }
-        } else if (attribute === 'certification' && user.isProvider) {
+        } else if (attribute === 'certification') {
             user.service.certification = result.secure_url;
         }
         user = await user.save();

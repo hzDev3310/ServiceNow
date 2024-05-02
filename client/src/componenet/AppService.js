@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import CallButton from "./CallButton";
 import AppText from "./AppText";
 import AppBadge from "./AppBadge";
+import { isServiceAvailableToday } from "../verficationInputs";
 
 const AppService = ({ provider }) => {
 
@@ -50,7 +51,7 @@ const AppService = ({ provider }) => {
             color={"yellow"}
           />
         </View>
-        <CallButton phoneNumber={data.phoneNumber} />
+        <CallButton phoneNumber={data.phoneNumber} disabled={!isServiceAvailableToday(data.availability.isAvailable,data.availability.days)} />
       </View>
     </AppBadge>
   );

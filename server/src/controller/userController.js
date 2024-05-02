@@ -21,7 +21,7 @@ const updateUser = async (req, res) => {
   try {
     const { userId, attribute } = req.params;
     const user = await userModel.findById(userId);
-    const {value} = req.body
+    const { value } = req.body
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -30,10 +30,10 @@ const updateUser = async (req, res) => {
         user.name = value;
         user.service ? user.service.ProviderName = value : null;
         break;
-        case "location":
-          user.location = value;
-          user.service ? user.service.location = value : null;
-          break;
+      case "location":
+        user.location = value;
+        user.service ? user.service.location = value : null;
+        break;
       case "number":
         user.phoneNumber = {
           number: value,
@@ -62,11 +62,14 @@ const updateUser = async (req, res) => {
       case "certification":
         user.service.certification = value;
         break;
+      case "availability":
+        user.service.availability = value;
+        break;
       default:
         return res.status(400).json({ message: "Invalid attribute" });
     }
     await user.save();
-    res.json({ message: `${attribute} updated successfully`, user });
+    res.json({ message: `${attribute} updated successfully` });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error " + error });

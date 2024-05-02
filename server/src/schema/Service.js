@@ -44,7 +44,18 @@ const Service = new Schema({
   experience: Number,
   availability: {
     type: Availability,
-    default: { from: "monthly", to: "friday", isAvailable: true },
+    default:  {
+      isAvailable: true,
+      days: {
+          monday: true,
+          tuesday: true,
+          wednesday: true,
+          thursday: true,
+          friday: true,
+          saturday: true,
+          sunday: true
+      }
+  },
   },
   comments: {
     type: [Comment],

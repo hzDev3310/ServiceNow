@@ -49,6 +49,7 @@ const updateUser = async (req, res) => {
       case "rating":
         user.service.rating.numberOfUsers++;
         user.service.rating.total += value;
+        user.service.rating.average = user.service.rating.total / user.service.rating.numberOfUsers;
         break;
       case "email":
         user.email = {
@@ -58,6 +59,8 @@ const updateUser = async (req, res) => {
         break;
       case "serviceName":
         user.service.serviceName = value;
+        user.isProvider = false;
+        user.service.certification = "";
         break;
       case "certification":
         user.service.certification = value;

@@ -48,7 +48,7 @@ const ProfilScreen = ({ navigation }) => {
               <TouchableOpacity onPress={() => { navigation.navigate('image', { image: data.profilPic }) }} className="relative w-24 h-24 justify-center items-center">
                 <Image
                   className="rounded-xl"
-                 style={{height: 80 , width : 80}}
+                  style={{ height: 80, width: 80 }}
                   source={data?.profilPic == "" ? require('../assets/img/noProfilPic.jpg') : { uri: data.profilPic }} />
               </TouchableOpacity>
               <View className='ml-2  flex justify-between' >
@@ -72,7 +72,7 @@ const ProfilScreen = ({ navigation }) => {
               <AppText className="text-base" style={{ color: colors.primary }} >
                 you want to offer a service ?
               </AppText>
-              <AppButton classname={"w-28"} onPress={()=>{navigation.navigate("offerService")}}  >
+              <AppButton classname={"w-28"} onPress={() => { navigation.navigate("offerService") }}  >
                 click here
               </AppButton>
             </AppBadge>
@@ -90,19 +90,19 @@ const ProfilScreen = ({ navigation }) => {
               <AppText className="text-base" style={darkMode ? { color: colors.warning } : { color: "rgb(192, 151, 39)" }}>
                 please verify your account !
               </AppText>
-              <AppButton classname={"w-28"} onPress={() => navigation.navigate("updateImage" , {attribute : "certification",label : "are you sure "})} >
+              <AppButton classname={"w-28"} onPress={() => navigation.navigate("updateImage", { attribute: "certification", label: "are you sure " })} >
                 click here
               </AppButton>
             </AppBadge>
           }
+
           <AppUpdateUserCard user={data} />
           {
             data.service && <AppUpdateService user={data} />
           }
-
-
-
-          <AppButton classname={"w-24"} onPress={removeValue}  >logout</AppButton>
+          <View className="my-2 px-1">
+            <AppButton onPress={removeValue}  >logout</AppButton>
+          </View>
         </ScrollView>
       }
     </View>

@@ -12,7 +12,7 @@ const AppMessageCard = ({ item, currentUser }) => {
     const conv = item.item;
     const convId = conv._id
     const otherUser = conv.users.find(user => user !== currentUser);
-    const { data, error, isLoading } = useGet(`/users/${otherUser}`, [otherUser]);
+    const { data, error } = useGet(`/users/${otherUser}`, [otherUser]);
 
 
 
@@ -38,9 +38,7 @@ const AppMessageCard = ({ item, currentUser }) => {
                         </View>
 
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <MaterialCommunityIcons color={"gray"} name='login' />
-                    </TouchableOpacity>
+                    
                 </AppBadge>
             }
         </>

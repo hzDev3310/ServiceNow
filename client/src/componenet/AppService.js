@@ -1,4 +1,4 @@
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity, Text } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -6,53 +6,45 @@ import CallButton from "./CallButton";
 import AppText from "./AppText";
 import AppBadge from "./AppBadge";
 import { isServiceAvailableToday } from "../verficationInputs";
+import colors from "../colors";
+import { useDarkMode } from "../store";
+import Availability from "./Availability";
+import StarRating from "./StarRating";
 
 const AppService = ({ provider }) => {
-
+  const { darkMode } = useDarkMode()
   const data = provider.service;
   const providerId = provider._id
   const navigation = useNavigation();
-  const noProfilPic =
-    "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
-  const img = !data.profilPic ? noProfilPic : data?.profilPic;
+
   return (
-    <AppBadge
-      className={` m-2 p-2 rounded-xl max-h-32 flex flex-row justify-between items-center shadow-inherit`}
-    >
-      <TouchableOpacity
-        className={"flex - flex-row"}
-        onPress={() => navigation.navigate("provider", { provider, img ,providerId})}
-      >
-        <View className="flex justify-center items-center p-2">
-          <View className="overflow-hidden w-24 h-24 p-2 flex justify-center items-center rounded-lg ">
-            <Image
-              width={100}
-              height={100}
-              source={{
-                uri: img,
-              }}
-            />
-          </View>
-
-        </View>
-
-        <View className="ml-2 justify-center">
-          <AppText className="text-lg" >🤵🏻{data.ProviderName}</AppText>
-          <AppText className="text-lg">⚒️ {data.serviceName}</AppText>
-          <AppText className="text-lg">➕ experience : {data.experience}</AppText>
-          <AppText className="text-lg">📌 {data.location?.cityName}</AppText>
-        </View>
-      </TouchableOpacity>
-      <View className="h-full flex justify-between items-end">
-        <View className=" flex flex-row justify-center items-center">
-          <AppText className='font-bold text-lg' >{data.rating.average}</AppText>
-          <MaterialCommunityIcons
-            name={"star"}
-            size={25}
-            color={"yellow"}
+    <AppBadge classname={"rounded-xl p-2 mb-2 h-28 flex flex-row justify-between items-center"} >
+      <TouchableOpacity style={{ width: "80%" }} className="flex flex-row" onPress={()=>{navigation.navigate("provider",{data , providerId})}} >
+        <View className="flex justify-center items-center w-24 h-24 bg-slate-600 rounded-xl overflow-hidden" >
+          <Image
+            style={{ width: "100%", height: "100%" }}
+            source={data.profilPic ? { uri: data.profilPic } : require("../assets/img/noProfilPic.jpg")}
           />
         </View>
-        <CallButton phoneNumber={data.phoneNumber} disabled={!isServiceAvailableToday(data.availability.isAvailable,data.availability.days)} />
+        <View className="ml-2" >
+          <Text style={{ color: colors.primary }} className="text-lg font-semibold capitalize" >{data.serviceName}</Text>
+          <View className="mb-1 w-20" >
+          <StarRating  rating={data.rating.average} size={18} />
+          </View>
+          <View className={"flex flex-row"} >
+            <MaterialCommunityIcons name="map-marker" color={darkMode ? "white" : "black"} size={20} />
+            <AppText>Tunisa, {data.location.cityName}</AppText>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <View className="h-full flex justify-between items-end" >
+        <View>
+      
+        </View>
+        <CallButton
+          phoneNumber={data.phoneNumber}
+          disabled={!isServiceAvailableToday(data.availability.isAvailable, data.availability.days)}
+        />
       </View>
     </AppBadge>
   );

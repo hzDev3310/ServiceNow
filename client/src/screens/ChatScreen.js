@@ -118,10 +118,7 @@ const ChatScreen = ({ navigation, route }) => {
         </View>
       ),
       headerTitleAlign: "center",
-      headerRight: () =>
-        <TouchableOpacity className="mr-3">
-          <MaterialCommunityIcons name="chat-remove" size={24} color={colors.primary} />
-        </TouchableOpacity>,
+     
     });
   }, []);
   //render the messages

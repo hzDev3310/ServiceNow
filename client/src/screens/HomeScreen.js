@@ -71,10 +71,12 @@ const HomeScreen = () => {
       )}
 
       {data && (
-        <FlatList
-          data={services}
-          renderItem={({ item }) => <AppService provider={item} />}
-        />
+        <View className="w-full p-1 mt-1" >
+          <FlatList
+            data={services}
+            renderItem={({ item }) => <AppService provider={item} />}
+          />
+        </View>
       )}
     </View>
   );

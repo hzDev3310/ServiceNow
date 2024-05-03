@@ -9,11 +9,10 @@ const AppAuth = () => {
     const { darkMode } = useDarkMode();
     const navigation = useNavigation()
     const { currentUser } = useCurrentUser()
-    const { data, isLoading } = useGet('/users/' + currentUser?.userId, [currentUser])
+    const { data } = useGet('/users/' + currentUser?.userId, [currentUser,data])
     if (currentUser) {
         return (
-            <TouchableOpacity onPress={() => { navigation.navigate('image',{image:data.pic})  }} className=" w-10 h-10 flex justify-center items-center overflow-hidden rounded-xl">
-                {isLoading && <ActivityIndicator />}
+            <TouchableOpacity onPress={() => { navigation.navigate('account')  }} className=" w-10 h-10 flex justify-center items-center overflow-hidden rounded-xl">
                 <Image
                     style={{ width: "100%", height: "100%" }}
                     source={data?.pic ? { uri: data.pic } : require("../assets/img/noProfilPic.jpg")}

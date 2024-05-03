@@ -1,13 +1,14 @@
 import { Image, ScrollView, TouchableOpacity, View } from "react-native";
-import { AppActivityIndicator, AppBadge, AppButton, AppText, Availability, CallButton, StarRating } from "../componenet";
+import { AppActivityIndicator, AppBadge, AppButton, AppSeparator, AppText, Availability, CallButton, StarRating } from "../componenet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../colors";
 import { isServiceAvailableToday } from "../verficationInputs";
 import { useCurrentUser, useIsLogin } from "../store";
 import usePost from "../apis/usePost";
 import { useEffect } from "react";
+import InteractiveStarRating from "../componenet/InteractiveStarRating";
 const ServiceProviderScreen = ({ navigation, route }) => {
-  const provider = route.params.provider.service;
+  const provider = route.params.data;
   const providerId = route.params.providerId;
   const { isLogin } = useIsLogin()
   const { currentUser } = useCurrentUser()
@@ -39,12 +40,12 @@ const ServiceProviderScreen = ({ navigation, route }) => {
   } else
     return (
       <ScrollView>
-        <AppBadge classname={`p-2 h-28 flex flex-row items-center justify-between`}>
+        <View className={`p-2 h-28 flex flex-row items-center justify-between`}>
 
           <View className="flex flex-row h-full items-center " >
             <View className=" flex p-2 items-center">
-              <TouchableOpacity onPress={() => { navigation.navigate('image', { image: route.params.img }) }} className="border-2 border-blue-600 rounded-lg overflow-hidden">
-                <Image source={{ uri: route.params.img }} width={80} height={80} />
+              <TouchableOpacity onPress={() => { navigation.navigate('image', { image: provider.profilPic }) }} className="border-2 border-blue-600 rounded-lg overflow-hidden">
+                <Image source={provider.profilPic ? { uri: provider.profilPic } : require('../assets/img/noProfilPic.jpg')} width={80} height={80} />
               </TouchableOpacity>
             </View>
             <View>
@@ -75,34 +76,45 @@ const ServiceProviderScreen = ({ navigation, route }) => {
               </View>
             </View>
           }
-        </AppBadge>
-        <AppBadge className="flex mt-2 p-4  ">
-          <AppText className=" font-medium mb-2 ml-8" >Days of work : </AppText>
-          <View className="w-full flex items-center">
-            <Availability days={provider.availability.days} />
-          </View>
-        </AppBadge>
-        <AppBadge classname={"p-4 mt-2 "}>
-          <AppText className="font-medium" >
-            {
-              provider.experience === 0 ? "less then one year" : `${provider.experience} years of exprirence`
-            }
-          </AppText>
-          {provider.description &&
-            <>
-              <AppText className="font-medium">
-                Description :
-              </AppText>
-              <AppText >
-                {provider.description}
-              </AppText>
-            </>
-          }
-        </AppBadge>
-
-        <View className="w-full flex p-1  items-center">
-          <StarRating />
         </View>
+        <View className="px-2">
+          <AppBadge className="flex my-2 p-4 rounded-xl">
+            <AppText className=" font-medium mb-2 ml-6" >Days of work : </AppText>
+            <View className="w-full flex items-center">
+              <Availability days={provider.availability.days} />
+            </View>
+          </AppBadge>
+          <AppBadge classname={"p-4 mb-2 rounded-xl "}>
+            <AppText className="font-medium" >
+              {
+                provider.experience === 0 ? "less then one year" : `${provider.experience} years of exprirence`
+              }
+            </AppText>
+
+            {provider.description &&
+              <>
+                <View className="my-1" >
+                  <AppSeparator />
+                </View>
+                <AppText className="font-medium">
+                  Description :
+                </AppText>
+                <AppText >
+                  {provider.description}
+                </AppText>
+              </>
+            }
+          </AppBadge>
+          <InteractiveStarRating
+            total={provider.rating.numberOfUsers}
+            userId={providerId}
+            serviceRating={provider.rating.average} />
+
+        </View>
+
+
+       
+
       </ScrollView>
     );
 };

@@ -7,7 +7,7 @@ const createNewConversation = async (req, res) => {
     const { users } = req.body;
     const conv = await ConversationModel.findOne({ users });
     if (conv) {
-      return res.status(200).json(conv);
+      return res.status(200).json({convId : conv._id});
     }
     const newConversation = new ConversationModel({ users });
     await newConversation.save();
@@ -29,9 +29,8 @@ const getConv = async (req, res) => {
                                         .sort({ updatedAt: -1 });
 
     if (!conv || conv.length === 0) {
-      return res.status(404).json({ message: "Conversation not found" });
+      return res.json({ message: "you have no Conversation yet !" });
     }
-
     res.status(200).json(conv);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error", error: error.message });

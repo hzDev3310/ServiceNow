@@ -15,7 +15,7 @@ const RegisterScreen = ({ navigation }) => {
     number: "",
     password: "",
     name: "",
-    Location: currentLocation
+    location: currentLocation
   })
   useEffect(()=>{
     error && alert("check your internt connection")
@@ -94,7 +94,7 @@ const RegisterScreen = ({ navigation }) => {
             <AppSeparator text="or" />
           </View>
           <View className="w-full p-2">
-            <AppButton icon={"login"} onPress={() => { navigation.navigate('login') }} outLine >login</AppButton>
+            <AppButton icon={"login"} onPress={() => { console.log(currentLocation)}} outLine >login</AppButton>
           </View>
          
         </ScrollView>

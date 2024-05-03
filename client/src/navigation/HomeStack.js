@@ -5,6 +5,7 @@ import colors from "../colors";
 
 import AppAuth from "../componenet/AppAuth";
 import { ColorModeSwitch } from "../componenet";
+import ReportScreen from "../screens/ReportScreen";
 
 const Stack = createStackNavigator();
 function HomeStack() {
@@ -31,6 +32,7 @@ function HomeStack() {
           headerTitle: "",
         }}
       />
+    
     </Stack.Navigator>
   );
 }

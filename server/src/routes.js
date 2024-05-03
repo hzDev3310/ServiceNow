@@ -6,6 +6,7 @@ const imageRouter = require('./routes/image.routes')
 const messageRouter = require('./routes/message.routes')
 const conversationRouter = require('./routes/conversation.routes')
 const serivcesRouter = require('./routes/service.routes')
+const reportRouter = require('./routes/reports.routes')
 
 const router = express();
 router.use(express.json());
@@ -16,5 +17,5 @@ router.use("/serivces", serivcesRouter)
 router.use("/admin", adminRouter)
 router.use("/image", imageRouter)
 router.use("/auth", authRouter)
-
+router.use("/reports", reportRouter)
 module.exports = router;

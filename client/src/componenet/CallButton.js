@@ -10,7 +10,8 @@ const CallButton = ({ phoneNumber ,disabled =false}) => {
   };
 
   return (
-    <TouchableOpacity disabled={disabled} onPress={handlePress} style={disabled ? {backgroundColor : colors.secondary} : {backgroundColor : colors.primary}}  className=" w-8 h-8 flex justify-center items-center rounded-full" >
+    <TouchableOpacity disabled={disabled} onPress={handlePress} style={disabled ? {backgroundColor : colors.secondary} : {backgroundColor : colors.primary}} 
+     className=" w-8 h-8 flex justify-center items-center rounded-full" >
       <Zocial name="call" size={24} color={"white"} />
     </TouchableOpacity>
   );

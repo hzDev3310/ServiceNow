@@ -16,9 +16,6 @@ const useGet = (endpoint, headers = { 'Content-Type': 'application/json' } , dep
             ...headers
           }
         });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
         const responseData = await response.json();
         setData(responseData);
         setError(null)

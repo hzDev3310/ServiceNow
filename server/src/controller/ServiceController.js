@@ -4,35 +4,38 @@ const calculateDistance = require("../services/calculateDistance");
 
 const getServices = async (req, res) => {
   try {
-    if (!req.params) {
-      const services = await userModel.find({ isProvider: true }).select('service');
-      res.json(services);
-      return;
+    let services;
+
+    // Check if latitude and longitude are provided
+    if (req.params && req.params.latitude && req.params.longitude) {
+      const { latitude, longitude } = req.params;
+
+      // Fetch services with location and sort by rating and distance
+      services = await userModel.find({ isProvider: true })
+        .select('service')
+        .sort({ 'service.rating.average': -1 })
+        .lean(); // Use lean() to get plain JavaScript objects instead of Mongoose documents
+      
+      // Calculate distance for each service and sort by distance
+      services.sort((a, b) => {
+        const distanceToA = calculateDistance(
+          latitude,
+          longitude,
+          parseFloat(a.service.location.latitude),
+          parseFloat(a.service.location.longitude)
+        );
+        const distanceToB = calculateDistance(
+          latitude,
+          longitude,
+          parseFloat(b.service.location.latitude),
+          parseFloat(b.service.location.longitude)
+        );
+        return distanceToA - distanceToB;
+      });
+    } else {
+      // Fetch services without location
+      services = await userModel.find({ isProvider: true }).select('_id service');
     }
-
-    const { latitude, longitude } = req.params;
-    
-    
-    let services = await userModel.find({ isProvider: true }).select('service');
-
-    
-    services.sort((a, b) => b.service.rating.average - a.service.rating.average);
-
-    services.sort((a, b) => {
-      const distanceToA = calculateDistance(
-        latitude,
-        longitude,
-        parseFloat(a.service.location.latitude),
-        parseFloat(a.service.location.longitude)
-      );
-      const distanceToB = calculateDistance(
-        latitude,
-        longitude,
-        parseFloat(b.service.location.latitude),
-        parseFloat(b.service.location.longitude)
-      );
-      return distanceToA - distanceToB;
-    });
 
     res.json(services);
   } catch (error) {
@@ -40,6 +43,7 @@ const getServices = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error " + error });
   }
 };
+
 
 
 const emproveAccount = async (req, res) => {

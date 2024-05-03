@@ -4,10 +4,11 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AppTab from "./src/navigation/AppTab";
 import useTheme from "./src/hooks/useTheme";
 import { useEffect } from "react";
-import {  useCurrentUser, useIsLogin } from "./src/store";
+import { useCurrentUser, useIsLogin } from "./src/store";
 import { AuthStack } from "./src/navigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ViewImageScreen } from "./src/screens";
+import ReportScreen from "./src/screens/ReportScreen";
 
 
 
@@ -50,7 +51,16 @@ export default function App() {
         >
           <Stack.Screen name="app" component={AppTab} />
           <Stack.Screen name="auth" component={AuthStack} />
-          <Stack.Screen options={{headerShown : true , headerTitle : ""}} name="image" component={ViewImageScreen} />
+          <Stack.Screen options={{ headerShown: true, headerTitle: "" }} name="image" component={ViewImageScreen} />
+          <Stack.Screen
+            name="report"
+            component={ReportScreen}
+            options={{
+              headerShown: true ,
+              headerTitle: "Report",
+              headerTitleAlign: "center"
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

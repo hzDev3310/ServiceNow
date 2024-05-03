@@ -41,7 +41,10 @@ const Service = new Schema({
     type: String,
     default: "",
   },
-  experience: Number,
+  experience: {
+    type : Number, 
+    default : 0
+  },
   availability: {
     type: Availability,
     default:  {

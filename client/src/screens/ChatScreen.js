@@ -129,9 +129,9 @@ const ChatScreen = ({ navigation, route }) => {
     <MessageContainer
 
       key={index}
-      date={item.createdAt}
-      message={item.content}
-      sender={item.sender}
+      date={item?.createdAt}
+      message={item?.content}
+      sender={item?.sender}
       user={currentUser}
       otherUser={otherUser}
     />

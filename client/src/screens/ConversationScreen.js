@@ -1,7 +1,7 @@
-import { View, FlatList, Image } from 'react-native'
+import { View, FlatList } from 'react-native'
 import React from 'react'
 
-import { AppActivityIndicator, AppMessageCard, AppSeparator, AppText } from "../componenet"
+import { AppMessageCard, AppSeparator, AppText } from "../componenet"
 
 import useGet from '../apis/useGet';
 import { useCurrentUser } from '../store';
@@ -9,26 +9,33 @@ import AppLoadingCard from '../componenet/AppLoadingCard';
 const ConversationScreen = ({ navigation }) => {
 
   const { currentUser } = useCurrentUser()
-  const { data, isLoading, error } = useGet(`/conversation/${currentUser.userId}`)
+  const { data, isLoading, error } = useGet(`/conversation/${currentUser.userId}`,[data])
   return (
     <>
-      {isLoading && 
-      <AppLoadingCard message />
-      
+      {isLoading &&
+        <AppLoadingCard message />
+
       }
-      {error && <AppText>
-        {error?.message}
-      </AppText>
+      {error && <View className="flex flex-1 justify-center items-center">
+        <AppText className="text-red-500">
+          {error?.message}
+        </AppText>
+      </View>
+      }
+        {data?.message && <View className="flex flex-1 justify-center items-center">
+        <AppText >
+          {data?.message}
+        </AppText>
+      </View>
       }
       {
-        data && <View className="flex-1">
-
+        data &&
+        <View className="flex-1">
           <FlatList
             ItemSeparatorComponent={() => <AppSeparator />}
             data={data}
             renderItem={item => <AppMessageCard item={item} currentUser={currentUser.userId} />}
           ></FlatList>
-
         </View>
       }
     </>

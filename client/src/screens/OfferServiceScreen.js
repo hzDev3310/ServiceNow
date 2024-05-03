@@ -20,7 +20,7 @@ const OfferServiceScreen = ({navigation}) => {
         serviceName: "",
         email: "",
         description: "",
-        expirence: 0
+        experience: 0
     })
 
 
@@ -82,13 +82,13 @@ const OfferServiceScreen = ({navigation}) => {
             />
                 <AppInput
                 iconName={"account-hard-hat"}
-                label={"expirence"}
-                placeholder='expirence'
-                value={body.expirence}
+                label={"experience"}
+                placeholder='experience'
+                value={body.experience}
                 onChangeText={
                     (text) => setBody(prevState => ({
                         ...prevState,
-                        expirence: text
+                        experience: text
                     }))}
 
             />

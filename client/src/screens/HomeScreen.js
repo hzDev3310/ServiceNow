@@ -44,6 +44,7 @@ const HomeScreen = () => {
 
   return (
     <View className="flex flex-1 items-center">
+
       <View className="w-full flex justify-center items-end ">
         <View className="w-full px-2 flex items-center ">
           <AppInput

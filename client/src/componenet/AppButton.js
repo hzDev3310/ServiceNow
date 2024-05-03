@@ -17,7 +17,7 @@ const AppButton = ({ classname,children, icon, outLine = false, ...otherProps })
             <Text style={[
                 outLine ? { color: colors.primary } : { color: colors.white },
                 otherProps.disabled && { color: colors.white }
-            ]} className={"text-base font-medium capitalize"} >
+            ]} className={" font-medium capitalize"} >
                 {children}
             </Text>
         </TouchableOpacity>

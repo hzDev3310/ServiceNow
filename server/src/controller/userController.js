@@ -65,6 +65,9 @@ const updateUser = async (req, res) => {
       case "availability":
         user.service.availability = value;
         break;
+      case "experience":
+        user.service.experience = value;
+        break;
       default:
         return res.status(400).json({ message: "Invalid attribute" });
     }

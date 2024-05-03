@@ -10,6 +10,7 @@ import { isServiceAvailableToday } from "../verficationInputs";
 const AppService = ({ provider }) => {
 
   const data = provider.service;
+  const providerId = provider._id
   const navigation = useNavigation();
   const noProfilPic =
     "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
@@ -20,7 +21,7 @@ const AppService = ({ provider }) => {
     >
       <TouchableOpacity
         className={"flex - flex-row"}
-        onPress={() => navigation.navigate("provider", { provider, img })}
+        onPress={() => navigation.navigate("provider", { provider, img ,providerId})}
       >
         <View className="flex justify-center items-center p-2">
           <View className="overflow-hidden w-24 h-24 p-2 flex justify-center items-center rounded-lg ">
@@ -39,7 +40,7 @@ const AppService = ({ provider }) => {
           <AppText className="text-lg" >🤵🏻{data.ProviderName}</AppText>
           <AppText className="text-lg">⚒️ {data.serviceName}</AppText>
           <AppText className="text-lg">➕ experience : {data.experience}</AppText>
-          <AppText className="text-lg">📌 {data.location.cityName}</AppText>
+          <AppText className="text-lg">📌 {data.location?.cityName}</AppText>
         </View>
       </TouchableOpacity>
       <View className="h-full flex justify-between items-end">

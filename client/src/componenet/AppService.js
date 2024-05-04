@@ -8,7 +8,6 @@ import AppBadge from "./AppBadge";
 import { isServiceAvailableToday } from "../verficationInputs";
 import colors from "../colors";
 import { useDarkMode } from "../store";
-import Availability from "./Availability";
 import StarRating from "./StarRating";
 
 const AppService = ({ provider }) => {

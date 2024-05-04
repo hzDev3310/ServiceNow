@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react'
-import AppBadge from './AppBadge'
 import { Text, View } from 'react-native'
-import TimeElapsedComponent from './TimeElapsedComponent'
+import AppBadge from './AppBadge'
 import AppText from './AppText'
+import TimeElapsedComponent from './TimeElapsedComponent'
 import colors from '../colors'
 
 const MessageContainer = ({ message, sender, user, otherUser, date }) => {
     const MemoizedComponent = useMemo(() => {
-
         return (
             <View >
                 {

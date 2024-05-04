@@ -40,4 +40,15 @@ function isEmail(email) {
     else return pattern.test(email);
 }
 
-export { VerifyPassword, verifyPhoneNumber, verifyInputs, isServiceAvailableToday , isEmail };
+function verifyName(name) {
+    if (name === "") {
+        return true; 
+    } else {
+
+        return name.length >= 3 && /^[a-zA-Z]+$/.test(name);
+    }
+}
+
+
+
+export { VerifyPassword, verifyPhoneNumber, verifyName,verifyInputs, isServiceAvailableToday , isEmail };

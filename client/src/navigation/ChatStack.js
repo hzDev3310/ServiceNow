@@ -1,14 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { ChatScreen, ConversationScreen, LoginScreen } from "../screens";
-import { useOtherUser } from "../store";
-import { AppText } from "../componenet";
-import { Image, View } from "react-native";
+import { ChatScreen, ConversationScreen } from "../screens";
 import colors from "../colors";
-
 const Stack = createStackNavigator();
-
 function ChatStack() {
-  const {otherUser} = useOtherUser()
   return (
     <Stack.Navigator  
     >

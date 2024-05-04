@@ -1,6 +1,4 @@
 import { View, Text } from "react-native";
-import React, { useEffect } from "react";
-import AppText from "./AppText";
 import colors from "../colors";
 
 const Availability = ({days}) => {

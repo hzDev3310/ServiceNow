@@ -1,18 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { HomeStack, AuthStack, ChatStack } from "./";
+import { HomeStack, ChatStack } from "./";
 import { useDarkMode, useIsLogin } from "../store";
 import colors from "../colors";
-import { ProfilScreen } from "../screens";
 import AccountStack from "./AccountStack";
-const TabArr = [
-  { route: "auth", label: "Account", component: AuthStack, icon: "account" },
-  { route: "Home", label: "Home", component: HomeStack, icon: "home" },
-  { route: "Chats", label: "chats", component: ChatStack, icon: "chat" },
-];
 
 const Tab = createBottomTabNavigator();
-
 export default function AppTab() {
   const {isLogin}= useIsLogin() 
   return (

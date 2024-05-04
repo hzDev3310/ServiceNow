@@ -1,11 +1,11 @@
+import { useEffect } from "react";
 import { Alert, Image, ScrollView, TouchableOpacity, View } from "react-native";
 import { AppActivityIndicator, AppBadge, AppButton, AppSeparator, AppText, Availability, CallButton, AppComments } from "../componenet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import colors from "../colors";
 import { isServiceAvailableToday } from "../verficationInputs";
 import { useCurrentUser, useIsLogin } from "../store";
+import colors from "../colors";
 import usePost from "../apis/usePost";
-import { useEffect } from "react";
 import InteractiveStarRating from "../componenet/InteractiveStarRating";
 const ServiceProviderScreen = ({ navigation, route }) => {
   const provider = route.params.data;
@@ -28,7 +28,7 @@ const ServiceProviderScreen = ({ navigation, route }) => {
       AppAlert()
       
     }else{
-      postData("/conversation", { users: [currentUser.userId, providerId] })
+      postData("/conversation", { users: [currentUser?.userId, providerId] })
     }
 
   }
@@ -59,7 +59,7 @@ const ServiceProviderScreen = ({ navigation, route }) => {
           <View className="flex flex-row h-full items-center " >
             <View className=" flex p-2 items-center">
               <TouchableOpacity onPress={() => { navigation.navigate('image', { image: provider.profilPic }) }} className="border-2 border-blue-600 rounded-lg overflow-hidden">
-                <Image source={provider.profilPic ? { uri: provider.profilPic } : require('../assets/img/noProfilPic.jpg')} width={80} height={80} />
+                <Image source={provider.profilPic ? { uri: provider.profilPic } : require('../assets/img/noProfilPic.jpg')} style={{width : 80 , height : 80}} />
               </TouchableOpacity>
             </View>
             <View>
@@ -102,7 +102,7 @@ const ServiceProviderScreen = ({ navigation, route }) => {
           <AppBadge classname={"p-4 mb-2 rounded-xl "}>
             <AppText className="font-medium" >
               {
-                provider.experience === 0 ? "less then one year" : `${provider.experience} years of exprirence`
+                (provider.experience === 0 || provider.experience ===null)? "Less then one year" : `${provider.experience} years of exprirence`
               }
             </AppText>
 

@@ -1,7 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { UpdateImageScreen, ProfilScreen } from "../screens";
-import OfferServiceScreen from "../screens/OfferServiceScreen";
-
+import { UpdateImageScreen, ProfilScreen,OfferServiceScreen } from "../screens";
 
 
 function AccountStack() {

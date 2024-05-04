@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../colors';
 import useProfil from '../hooks/useProfil';
 import AppLoadingProfil from '../componenet/AppLoadingProfil';
-import { isServiceAvailableToday } from '../verficationInputs';
+
 
 const ProfilScreen = ({ navigation }) => {
   const { setIsLogin } = useIsLogin()
@@ -39,10 +39,7 @@ const ProfilScreen = ({ navigation }) => {
         <AppLoadingProfil />}
       {
         data &&
-        <ScrollView >
-          <AppText>
-
-          </AppText>
+        <ScrollView>
           <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
             <View className="flex flex-row items-center" >
               <TouchableOpacity onPress={() => { navigation.navigate('image', { image: data.profilPic }) }} className="relative w-24 h-24 justify-center items-center">

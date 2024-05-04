@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useCurrentUser } from '../store';
 import { SafeAreaView, View, Text } from 'react-native';
 import AppBadge from './AppBadge';
 import AppInput from './AppInput';
@@ -6,9 +7,8 @@ import AppCommentCard from './AppCommentCard';
 import useUpdate from "../apis/useUpdate";
 import colors from '../colors';
 import AppActivityIndicator from './AppActivityIndicator';
-import { useCurrentUser } from '../store';
 import AppSeparator from './AppSeparator';
-import { create } from 'zustand';
+
 
 const AppComments = ({ data, providerId }) => {
   const { currentUser } = useCurrentUser()
@@ -26,7 +26,7 @@ const AppComments = ({ data, providerId }) => {
   useEffect(() => {
     responseData && alert("comment added succusfuly")
     responseData && setComments(prv => [...prv, {
-      sender: currentUser.userId,
+      sender: currentUser?.userId,
       content,
       createdAt: Date.now()
     }])
@@ -46,7 +46,7 @@ const AppComments = ({ data, providerId }) => {
         <View className="w-full my-2" >
           <AppSeparator />
         </View>
-        {currentUser.userId != providerId && <View className="my-2 w-full flex justify-center items-center " >
+        {currentUser?.userId != providerId && <View className="my-2 w-full flex justify-center items-center " >
           <AppInput label={"white new comment"} value={content} onpress={() => { updateData("/users/" + providerId + "/comment", { value: { sender: currentUser.userId, content } }) }} onChangeText={e => { setContent(e) }} disableRightIcon={content == "" ? true : false} rightIcon={"send"} />
         </View>}
 
@@ -57,7 +57,6 @@ const AppComments = ({ data, providerId }) => {
 
           </View>
         ))}
-
       </AppBadge>
     </SafeAreaView>
   );

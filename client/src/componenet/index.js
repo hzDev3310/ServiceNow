@@ -7,7 +7,6 @@ export { default as CallButton } from "./CallButton";
 export { default as Availability } from "./Availability";
 export { default as AppBadge } from "./AppBadge";
 export { default as AppInput } from "./AppInput";
-export { default as AppAlert } from "./AppAlert";
 export { default as AppButton } from "./AppButton";
 export { default as AppSeparator } from "./AppSeparator";
 export { default as AppActivityIndicator } from "./AppActivityIndicator";

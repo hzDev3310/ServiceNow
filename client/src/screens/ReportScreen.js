@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
-import { AppActivityIndicator, AppInput, AppText } from '../componenet'
+import { AppActivityIndicator, AppInput } from '../componenet'
 import { useCurrentUser } from '../store'
 import usePost from '../apis/usePost'
 import colors from '../colors'

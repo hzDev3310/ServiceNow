@@ -1,9 +1,6 @@
-// Model.js
-
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import colors from '../colors';
-
 const AppActivityIndicator = () => {
 
   return (

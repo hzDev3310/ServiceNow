@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import baseUrl from "../apis/apiClient";
-
-
 const useServices = (endpoint) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);

@@ -27,9 +27,7 @@ const AppCommentCard = ({ comment }) => {
                         <TimeElapsedComponent timestamp={comment?.createdAt} ></TimeElapsedComponent>
                     </AppText>
                 </View>
-
             </View>
-
         </View>
     )
 }

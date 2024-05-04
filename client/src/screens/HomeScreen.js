@@ -1,5 +1,4 @@
-import useGet from "../apis/useGet";
-import { AppActivityIndicator, AppInput, AppPicker, AppService, AppText } from "../componenet";
+import {  AppInput, AppPicker, AppService } from "../componenet";
 import { View, FlatList, Text } from "react-native";
 import useLocation from "../hooks/useLocation";
 import { useEffect, useState } from "react";

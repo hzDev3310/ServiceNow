@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import AppBadge from './AppBadge'
-import colors from "../colors"
+
 const AppLoadingProfil = () => {
     return (
         <View className="h-full" >

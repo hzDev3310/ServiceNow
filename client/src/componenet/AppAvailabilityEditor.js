@@ -8,11 +8,10 @@ import useUpdate from '../apis/useUpdate';
 
 const AppAvailabilityEditor = ({user}) => {
     
-    const { error, isLoading, responseData, updateData } = useUpdate()
+    const { error, responseData, updateData } = useUpdate()
     const handelUpdate = () => {
         updateData(`/users/${user}/availability`, { value :availability })
     }
-
     useEffect(() => {
         responseData && alert(responseData.message)
         error && alert("check your internt connection")

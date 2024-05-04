@@ -7,7 +7,7 @@ import StarRating from './StarRating';
 import AppButton from './AppButton';
 import AppText from './AppText';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useIsLogin } from '../store';
+import { useCurrentUser, useIsLogin } from '../store';
 
 const InteractiveStarRating = ({ serviceRating, total, userId }) => {
   const { error, isLoading, responseData, updateData } = useUpdate()
@@ -16,6 +16,7 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
   const { isLogin } = useIsLogin()
   const [finalRating, setFinal] = useState(serviceRating)
   const [totalRating, setTotal] = useState(total)
+  const { currentUser } = useCurrentUser()
   const handleStarPress = (index) => {
     setRating(index + 1);
   };
@@ -41,8 +42,9 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
     if (responseData) {
       alert("thank you")
       setShow(false)
-      setTotal(prv => prv+1)
-      setFinal((serviceRating * total + rating) / totalRating)
+      setTotal(prv => prv + 1)
+      const s = (serviceRating * total + rating) / total
+      setFinal(s)
     }
   }, [responseData, error])
   return (
@@ -72,10 +74,10 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
         </View>
         <AppSeparator></AppSeparator>
       </>}
-      {!show ? <TouchableOpacity onPress={() => { setShow(true) }} className=" w-full" >
-        <StarRating rating={0} size={40} />
-      </TouchableOpacity>
-        :
+      {
+        currentUser?.userId && currentUser?.userId == userId && <StarRating rating={0} size={40} />
+      }
+      {currentUser?.userId !== userId &&
         <View>
           <View className="flex flex-row w-full  justify-around" >
             {[...Array(5)].map((_, index) => (
@@ -84,9 +86,10 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
               </TouchableOpacity>
             ))}
           </View>
-          <AppButton onPress={handelUpdate} disabled={rating == 0} classname="my-2" >Add a rating</AppButton>
+          <View className={`my-1 ${rating == 0 && "hidden"}`} >
+            <AppButton onPress={handelUpdate} >Add a rating</AppButton>
+          </View>
         </View>
-
       }
     </AppBadge>
   );

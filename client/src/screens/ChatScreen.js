@@ -1,13 +1,9 @@
 
 import { useEffect, useRef, useState } from 'react';
-
-import { FlatList, Image, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, View } from 'react-native'
 import { AppActivityIndicator, AppInput, AppText, MessageContainer } from '../componenet'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-import colors from '../colors';
-
 import { io } from "socket.io-client"
+import colors from '../colors';
 import usePost from '../apis/usePost';
 import baseUrl from '../apis/apiClient';
 

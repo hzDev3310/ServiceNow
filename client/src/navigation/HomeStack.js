@@ -2,10 +2,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen, ServiceProviderScreen } from "../screens";
 import { Image, View } from "react-native"
 import colors from "../colors";
-
 import AppAuth from "../componenet/AppAuth";
 import { ColorModeSwitch } from "../componenet";
-import ReportScreen from "../screens/ReportScreen";
+
 
 const Stack = createStackNavigator();
 function HomeStack() {

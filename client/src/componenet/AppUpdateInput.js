@@ -5,7 +5,7 @@ import AppInput from './AppInput'
 import AppButton from './AppButton'
 import AppActivityIndicator from './AppActivityIndicator'
 
-const AppUpdateInput = ({ label, icon, user, attribute }) => {
+const AppUpdateInput = ({ label, icon, user, attribute ,check , errorMsg }) => {
     const [value, setValue] = useState("")
     const { error, isLoading, responseData, updateData } = useUpdate()
     const handelUpdate = () => {
@@ -38,6 +38,7 @@ const AppUpdateInput = ({ label, icon, user, attribute }) => {
                         value={value}
                         onChangeText={e => { setValue(e) }}
                         placeholder={"change your " + label}
+                        
                     />
                 
                 <AppButton classname={"my-2"} onPress={AppAlert} >

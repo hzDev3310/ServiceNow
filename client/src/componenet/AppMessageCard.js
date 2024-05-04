@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
-import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
-import AppText from './AppText';
-import useGet from '../apis/useGet';
-import { useNavigation } from '@react-navigation/native';
 
+import {  Image, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import useGet from '../apis/useGet';
+import AppText from './AppText';
 import AppBadge from './AppBadge';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AppMessageCard = ({ item, currentUser }) => {
     const navigation = useNavigation()
@@ -14,11 +12,8 @@ const AppMessageCard = ({ item, currentUser }) => {
     const otherUser = conv.users.find(user => user !== currentUser);
     const { data, error } = useGet(`/users/${otherUser}`, [otherUser]);
 
-
-
     return (
         <>
-           
             {error && <AppText>{error.message}</AppText>}
             {
                 data &&

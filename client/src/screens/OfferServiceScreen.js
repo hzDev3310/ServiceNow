@@ -1,18 +1,15 @@
 
 
 import React, { useEffect, useState } from 'react'
-import { View, Text, StatusBar, ScrollView, Button } from 'react-native'
-import { AppActivityIndicator, AppBadge, AppButton, AppInput, AppPicker, AppSeparator } from '../componenet'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { VerifyPassword, isEmail, verifyInputs, verifyPhoneNumber } from "../verficationInputs"
-import colors from '../colors'
-
+import { View } from 'react-native'
+import { AppActivityIndicator, AppBadge, AppButton, AppInput, AppPicker } from '../componenet'
+import { isEmail } from "../verficationInputs"
 import usePost from '../apis/usePost'
 import { useCurrentUser } from '../store'
 import { serviceProviders } from '../storage'
 
 
-const OfferServiceScreen = ({navigation}) => {
+const OfferServiceScreen = ({ navigation }) => {
     const { currentUser } = useCurrentUser()
     const { loading, error, responseData, postData } = usePost()
 
@@ -32,11 +29,11 @@ const OfferServiceScreen = ({navigation}) => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         responseData?.error && alert(responseData.error)
         responseData?.message && alert(responseData.message)
         responseData?.message && navigation.navigate("profil")
-    },[responseData])
+    }, [responseData])
 
     if (loading) {
         return <AppActivityIndicator />
@@ -68,7 +65,7 @@ const OfferServiceScreen = ({navigation}) => {
                     }))}
 
             />
-             <AppInput
+            <AppInput
                 iconName={"format-align-left"}
                 label={"description"}
                 placeholder='description'
@@ -80,7 +77,7 @@ const OfferServiceScreen = ({navigation}) => {
                     }))}
 
             />
-                <AppInput
+            <AppInput
                 iconName={"account-hard-hat"}
                 label={"experience"}
                 placeholder='experience'
@@ -92,8 +89,8 @@ const OfferServiceScreen = ({navigation}) => {
                     }))}
 
             />
-            <AppButton disabled={!isEmail(body.email) || body.email==="" } classname={"mt-2"} onPress={handelSignUp} >add your service </AppButton>
-            
+            <AppButton disabled={!isEmail(body.email) || body.email === ""} classname={"mt-2"} onPress={handelSignUp} >add your service </AppButton>
+
         </AppBadge>
     )
 

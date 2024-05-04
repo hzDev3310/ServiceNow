@@ -5,6 +5,8 @@ import AppUpdateSelecet from './AppUpdateSelecet';
 import { useNavigation } from '@react-navigation/native';
 import { locations } from '../storage';
 import { Text, View } from 'react-native';
+import { verifyName } from '../verficationInputs';
+
 
 const AppUpdateUserCard = ({ user }) => {
     const navigation = useNavigation();
@@ -24,7 +26,7 @@ const AppUpdateUserCard = ({ user }) => {
                 label={`name : ${user.name}`}
                 isOpen={openModel === 'name'}
                 toggleModel={() => handleModelToggle('name')}>
-                <AppUpdateInput label="name" icon="account" attribute="name" user={user._id} />
+                <AppUpdateInput check={e=>verifyName(e)}  label="name" icon="account" attribute="name" user={user._id} />
             </AppUpdateModel>
             <AppUpdateModel
                 isOpen={openModel === 'phoneNumber'}
@@ -60,13 +62,14 @@ const AppUpdateUserCard = ({ user }) => {
                 isOpen={openModel === 'profilePicture'}
                 icon="image-edit"
                 label="change your profile picture"
-                toggleModel={() => { navigation.navigate('updateImage', {
-                    attribute: 'profilPic',
-                    label: 'Are you sure you want to change your profile picture?',
-                });
-            setOpenModel(null)
-            }}
-                
+                toggleModel={() => {
+                    navigation.navigate('updateImage', {
+                        attribute: 'profilPic',
+                        label: 'Are you sure you want to change your profile picture?',
+                    });
+                    setOpenModel(null)
+                }}
+
             />
         </View>
     );

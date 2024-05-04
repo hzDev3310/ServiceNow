@@ -1,8 +1,6 @@
 import { View, FlatList } from 'react-native'
 import React from 'react'
-
 import { AppMessageCard, AppSeparator, AppText } from "../componenet"
-
 import useGet from '../apis/useGet';
 import { useCurrentUser } from '../store';
 import AppLoadingCard from '../componenet/AppLoadingCard';

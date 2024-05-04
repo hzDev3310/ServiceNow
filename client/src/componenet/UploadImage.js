@@ -6,7 +6,7 @@ import AppImagePicker from './AppImagePicker'
 import AppButton from './AppButton'
 import useImage from "../hooks/useImage"
 
-const UploadImage = ({ keyName, userId, attribute }) => {
+const UploadImage = ({  userId, attribute }) => {
   
     const [img, setImg] = useState(null)
     const { error, loading, postImg, responseData } = useImage(img, userId, attribute)

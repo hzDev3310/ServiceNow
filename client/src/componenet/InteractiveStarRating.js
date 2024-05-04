@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import useUpdate from '../apis/useUpdate';
 import AppBadge from './AppBadge';
 import AppSeparator from './AppSeparator';
@@ -7,18 +7,33 @@ import StarRating from './StarRating';
 import AppButton from './AppButton';
 import AppText from './AppText';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useIsLogin } from '../store';
 
 const InteractiveStarRating = ({ serviceRating, total, userId }) => {
   const { error, isLoading, responseData, updateData } = useUpdate()
   const [rating, setRating] = useState(0);
   const [show, setShow] = useState(false)
+  const {isLogin}=useIsLogin()
   const handleStarPress = (index) => {
     setRating(index + 1);
   };
   const handelUpdate = () => {
-    updateData('/users/' +userId+"/rating", { value: rating })
+    if (!isLogin) {
+      AppAlert()
+    } else {
+      updateData('/users/' +userId||''+"/rating", { value: rating })
+    }
   }
 
+
+  const AppAlert = () =>
+    Alert.alert('', 'you need to login ', [
+        {
+            text: 'cancel',
+            style: 'cancel',
+        },
+        { text: 'ok', onPress: ()=>{navigation.navigate('auth')} },
+    ]);
   useEffect(() => {
     responseData && alert("thank you")
     error && alert("check your internet connexion")

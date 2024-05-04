@@ -37,7 +37,7 @@ const AppUpdateSelecet = ({ user, attribute ,label ,data }) => {
             />
 
             <View className="w-full flex justify-center items-center" >
-                <AppButton  onPress={AppAlert} classname={"w-28"} >
+                <AppButton  onPress={AppAlert}  >
                     update
                 </AppButton>
             </View>

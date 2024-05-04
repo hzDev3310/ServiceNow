@@ -1,5 +1,5 @@
-import { Image, ScrollView, TouchableOpacity, View } from "react-native";
-import { AppActivityIndicator, AppBadge, AppButton, AppSeparator, AppText, Availability, CallButton, StarRating } from "../componenet";
+import { Alert, Image, ScrollView, TouchableOpacity, View } from "react-native";
+import { AppActivityIndicator, AppBadge, AppButton, AppSeparator, AppText, Availability, CallButton, AppComments } from "../componenet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../colors";
 import { isServiceAvailableToday } from "../verficationInputs";
@@ -14,8 +14,22 @@ const ServiceProviderScreen = ({ navigation, route }) => {
   const { currentUser } = useCurrentUser()
   const { error, loading, postData, responseData } = usePost()
 
+  const AppAlert = () =>
+    Alert.alert('', 'you need to login ', [
+        {
+            text: 'cancel',
+            style: 'cancel',
+        },
+        { text: 'ok', onPress: ()=>{navigation.navigate('auth')} },
+    ]);
+
   const handelPost = () => {
-    postData("/conversation", { users: [currentUser.userId, providerId] })
+    if (!isLogin) {
+      AppAlert()
+      
+    }else{
+      postData("/conversation", { users: [currentUser.userId, providerId] })
+    }
 
   }
 
@@ -23,7 +37,7 @@ const ServiceProviderScreen = ({ navigation, route }) => {
     responseData?.message && navigation.navigate('chats')
     responseData?.convId && navigation.navigate("chats", {
       screen: "chat", params: {
-        convId: responseData?.convId, currentUser: currentUser.userId, otherUser: providerId, otherUserDetails: {
+        convId: responseData?.convId, currentUser: currentUser?.userId, otherUser: providerId, otherUserDetails: {
           pic: provider.profilPic,
           name: provider.ProviderName
         }
@@ -49,7 +63,7 @@ const ServiceProviderScreen = ({ navigation, route }) => {
               </TouchableOpacity>
             </View>
             <View>
-              <AppText className="font-bold text-lg capitalize text-blue-700 ${}">
+              <AppText className="font-bold text-lg capitalize text-blue-700 ">
                 {provider.serviceName}{" "}
               </AppText>
               <AppText className="font-bold  capitalize">
@@ -62,14 +76,15 @@ const ServiceProviderScreen = ({ navigation, route }) => {
             </View>
           </View>
           {
-            providerId !== currentUser.userId &&
+            providerId !== currentUser?.userId &&
             <View className="flex justify-around items-end h-full" >
-              <AppButton outLine classname={"w-20"} onPress={() => navigation.navigate('report', { providerId: providerId })}  >report</AppButton>
+              <AppButton outLine classname={"w-20"} onPress={() => {
+                !isLogin ? AppAlert() : navigation.navigate('report', { providerId: providerId })
+              }}  >report</AppButton>
               <View className="flex w-20 flex-row justify-between items-center" >
                 <TouchableOpacity
-                  disabled={!isLogin}
                   onPress={handelPost}
-                  className=" w-8 h-8 flex justify-center items-center rounded-full" style={isLogin ? { backgroundColor: colors.primary } : { backgroundColor: colors.secondary }} >
+                  className=" w-8 h-8 flex justify-center items-center rounded-full" style={ { backgroundColor: colors.primary } } >
                   <MaterialCommunityIcons name="chat-processing-outline" color={"white"} size={24} />
                 </TouchableOpacity>
                 <CallButton disabled={!isServiceAvailableToday(provider.availability.isAvailable, provider.availability.days)} phoneNumber={provider.phoneNumber} />
@@ -110,8 +125,8 @@ const ServiceProviderScreen = ({ navigation, route }) => {
             userId={providerId}
             serviceRating={provider.rating.average} />
 
+        <AppComments data={provider.comments}  providerId={providerId} />
         </View>
-
 
        
 

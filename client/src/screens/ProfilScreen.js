@@ -68,7 +68,7 @@ const ProfilScreen = ({ navigation }) => {
 
           </AppBadge>
           {
-            !data.service && <AppBadge classname={"w-full mb-2 px-2 py-4 flex flex-row items-center justify-between"} >
+            !data.service && <AppBadge className={"w-full mb-2 px-2 py-4 flex flex-row items-center justify-between"} >
               <AppText className="text-base" style={{ color: colors.primary }} >
                 you want to offer a service ?
               </AppText>

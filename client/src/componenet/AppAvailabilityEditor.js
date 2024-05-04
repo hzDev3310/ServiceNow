@@ -103,7 +103,7 @@ const AppAvailabilityEditor = ({user}) => {
                 </View>
             ))}
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                <AppButton classname={"w-28"}  onPress={() => AppAlert()} style={{ width: 100 }}>Update</AppButton>
+                <AppButton   onPress={() => AppAlert()} style={{ width: 100 }}>Update</AppButton>
             </View>
         </View>
     );

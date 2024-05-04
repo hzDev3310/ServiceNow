@@ -71,6 +71,9 @@ const updateUser = async (req, res) => {
       case "experience":
         user.service.experience = value;
         break;
+        case "comment":
+          user.service.comments.push(value)
+          break;
       default:
         return res.status(400).json({ message: "Invalid attribute" });
     }

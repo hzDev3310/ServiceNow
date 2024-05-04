@@ -1,38 +1,33 @@
-import { TouchableOpacity, View } from "react-native"
-import AppText from "./AppText"
-import AppSeparator from "./AppSeparator"
-import { MaterialCommunityIcons } from "@expo/vector-icons"
-import { useState } from "react"
-import { useDarkMode } from "../store"
+// AppUpdateModel.js
 
-const AppUpdateModel = ({ children, label, nav , icon }) => {
-    const {darkMode} = useDarkMode()
-    const [show, setShow] = useState(false)
+import React from 'react';
+import { TouchableOpacity, View } from "react-native";
+import AppText from "./AppText";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDarkMode } from "../store";
+import AppBadge from "./AppBadge";
+
+const AppUpdateModel = ({ children, label, icon, isOpen, toggleModel }) => {
+    const { darkMode } = useDarkMode();
+
     return (
-        <View className="p-2">
-            <View className="flex flex-row justify-between items-center">
-                <View className="flex flex-row items-center">
-                    <MaterialCommunityIcons color={darkMode ? "white" : "black"} name={icon} size={20} />
-                    <AppText className="text-base capitalize ml-1" >
-                        {label}
-                    </AppText>
+        <TouchableOpacity onPress={toggleModel}>
+            <AppBadge classname="p-2 mb-2 rounded-xl">
+                <View className="flex flex-row justify-between items-center">
+                    <View className="flex flex-row items-center">
+                        <MaterialCommunityIcons color={darkMode ? "white" : "black"} name={icon} size={20} />
+                        <AppText className="text-base capitalize ml-1">
+                            {label}
+                        </AppText>
+                    </View>
+                    <MaterialCommunityIcons color="gray" name={isOpen ? "window-close" : "lead-pencil"} size={20} />
                 </View>
-                {nav ?
-                    <TouchableOpacity onPress={nav} >
-                        <MaterialCommunityIcons color="gray" name={show ? "window-close" : "lead-pencil"} size={20} />
-                    </TouchableOpacity> :
-                    <TouchableOpacity onPress={() => { setShow(prv => !prv) }} >
-                        <MaterialCommunityIcons color="gray" name={show ? "window-close" : "lead-pencil"} size={20} />
-                    </TouchableOpacity>
-                }
-            </View>
+                <View className={!isOpen ? "hidden" : "my-2"}>
+                    {children}
+                </View>
+            </AppBadge>
+        </TouchableOpacity>
+    );
+};
 
-            <View className={!show ? "hidden" : "my-2"} >
-                {children}
-            </View>
-            <View className="my-2" ><AppSeparator /></View>
-        </View>
-    )
-}
-
-export default AppUpdateModel
+export default AppUpdateModel;

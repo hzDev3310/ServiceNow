@@ -19,5 +19,6 @@ export { default as AppLoadingProfil } from "./AppLoadingProfil";
 export { default as AppUpdateUserCard } from "./AppUpdateUserCard";
 export { default as AppUpdateService } from "./AppUpdateService";
 export { default as MessageContainer } from "./MessageContainer";
+export { default as AppComments } from "./AppComments";
 
 

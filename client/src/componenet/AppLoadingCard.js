@@ -36,7 +36,7 @@ const AppLoadingCard = ({ message = false }) => {
                                 <MaterialCommunityIcons color={"gray"} size={25} name='dots-vertical' />
                             </View> :
                                 <View className="h-full flex max-h-20  justify-between items-end" >
-                                    <Text className="text-xl" >⭐</Text>
+                                    <Text className="text-xl" > </Text>
                                     <View style={{ backgroundColor: "gray" }} className=" w-8 h-8 flex justify-center items-center rounded-full" >
                                         <MaterialCommunityIcons color={"white"} size={25} name='phone' />
                                     </View>

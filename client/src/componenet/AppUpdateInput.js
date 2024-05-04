@@ -32,17 +32,15 @@ const AppUpdateInput = ({ label, icon, user, attribute }) => {
     else {
         return (
             <View className="flex justify-start items-center">
-                <View className="my-2 w-full">
+                
                     <AppInput
                         iconName={icon}
                         value={value}
                         onChangeText={e => { setValue(e) }}
                         placeholder={"change your " + label}
                     />
-                </View>
-                <AppButton
-                    classname="w-20 flex justify-center items-center"
-                    onPress={AppAlert} >
+                
+                <AppButton classname={"my-2"} onPress={AppAlert} >
                     update
                 </AppButton>
             </View>

@@ -1,8 +1,9 @@
 const { Schema } = require("mongoose");
 
 const Comment = new Schema({
-  userImage: String,
-  userName: String,
-  content: String,
+  sender : String,
+  content : String
+},{
+  timestamps : true
 });
 module.exports = Comment;

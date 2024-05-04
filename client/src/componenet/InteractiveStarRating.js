@@ -13,7 +13,9 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
   const { error, isLoading, responseData, updateData } = useUpdate()
   const [rating, setRating] = useState(0);
   const [show, setShow] = useState(false)
-  const {isLogin}=useIsLogin()
+  const { isLogin } = useIsLogin()
+  const [finalRating, setFinal] = useState(serviceRating)
+  const [totalRating, setTotal] = useState(total)
   const handleStarPress = (index) => {
     setRating(index + 1);
   };
@@ -21,30 +23,34 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
     if (!isLogin) {
       AppAlert()
     } else {
-      updateData('/users/' +userId||''+"/rating", { value: rating })
+      updateData('/users/' + userId + "/rating", { value: rating })
     }
   }
 
 
   const AppAlert = () =>
     Alert.alert('', 'you need to login ', [
-        {
-            text: 'cancel',
-            style: 'cancel',
-        },
-        { text: 'ok', onPress: ()=>{navigation.navigate('auth')} },
+      {
+        text: 'cancel',
+        style: 'cancel',
+      },
+      { text: 'ok', onPress: () => { navigation.navigate('auth') } },
     ]);
   useEffect(() => {
-    responseData && alert("thank you")
     error && alert("check your internet connexion")
-    responseData && setShow(false)
+    if (responseData) {
+      alert("thank you")
+      setShow(false)
+      setTotal(prv => prv+1)
+      setFinal((serviceRating * total + rating) / totalRating)
+    }
   }, [responseData, error])
   return (
     <AppBadge classname={"w-full p-2 rounded-xl"} >
-      {serviceRating != 0 && <>
+      {finalRating != 0 && <>
         <View className={"flex flex-row w-full justify-between"} >
           <View style={{ width: "49%" }} className="flex flex-row items-center justify-center" >
-            <AppText className="text-4xl" >{serviceRating}</AppText>
+            <AppText className="text-4xl" >{finalRating.toFixed(1)}</AppText>
             <MaterialCommunityIcons name='star' color={"orange"} size={40} />
           </View>
           <View style={{ backgroundColor: "gray", width: 1 }} className="h-20 my-1 mb-2" >
@@ -56,7 +62,7 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
                 From
               </AppText>
               <AppText className="text-xl font-medium" >
-                {" " + total}
+                {" " + totalRating}
               </AppText>
             </View>
             <AppText className="text-lg" >
@@ -78,7 +84,7 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
               </TouchableOpacity>
             ))}
           </View>
-          <AppButton onPress={handelUpdate} disabled={rating==0}  classname="my-2" >Add a rating</AppButton>
+          <AppButton onPress={handelUpdate} disabled={rating == 0} classname="my-2" >Add a rating</AppButton>
         </View>
 
       }

@@ -6,13 +6,14 @@ import { useEffect, useState } from "react";
 import colors from "../colors";
 import { locations } from "../storage";
 import AppLoadingCard from "../componenet/AppLoadingCard";
+import useServices from "../hooks/useServices";
 
 const HomeScreen = () => {
   const { getLocation, currentLocation } = useLocation();
   const [search, setSearch] = useState("");
   const [selectedValue, setSelectedValue] = useState(currentLocation);
   const [url, setUrl] = useState(`/serivces/${selectedValue.latitude}/${selectedValue.longitude}`)
-  const { data, error, isLoading } = useGet(url, [currentLocation]);
+  const { data, error, isLoading } = useServices(url);
   const [services, setServices] = useState([]);
 
   useEffect(() => {

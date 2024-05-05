@@ -21,7 +21,7 @@ const updateUser = async (req, res) => {
   try {
     const { userId, attribute } = req.params;
     const user = await userModel.findById(userId);
-    const { value } = req.body
+    const { value, password } = req.body
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -42,8 +42,15 @@ const updateUser = async (req, res) => {
         user.service ? user.service.phoneNumber = value : null;
         break;
       case "password":
-        const cryptedPassword = bcrypt.hashSync(value, 10);
-        user.password = cryptedPassword;
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if (!isPasswordCorrect) {
+          return res.status(404).json({ message: "Incorrect password" });
+        }
+        else {
+          const cryptedPassword = bcrypt.hashSync(value, 10);
+          user.password = cryptedPassword;
+        }
+
         break;
 
       case "rating":
@@ -71,9 +78,9 @@ const updateUser = async (req, res) => {
       case "experience":
         user.service.experience = value;
         break;
-        case "comment":
-          user.service.comments.push(value)
-          break;
+      case "comment":
+        user.service.comments.push(value)
+        break;
       default:
         return res.status(400).json({ message: "Invalid attribute" });
     }

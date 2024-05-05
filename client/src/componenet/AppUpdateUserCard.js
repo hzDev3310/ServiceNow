@@ -15,7 +15,9 @@ const AppUpdateUserCard = ({ user }) => {
     const handleModelToggle = (model) => {
         setOpenModel(openModel === model ? null : model);
     };
-
+    const handleButtonClick = () => {
+        console.log("Button clicked in ParentComponent");
+      };
     return (
         <View className="px-2">
             <Text className="ml-1 text-lg font-semibold mb-2" style={{ color: colors.primary }}>
@@ -26,7 +28,7 @@ const AppUpdateUserCard = ({ user }) => {
                 label={`name : ${user.name}`}
                 isOpen={openModel === 'name'}
                 toggleModel={() => handleModelToggle('name')}>
-                <AppUpdateInput check={e=>verifyName(e)}  label="name" icon="account" attribute="name" user={user._id} />
+                <AppUpdateInput   label="name" icon="account" attribute="name" user={user._id} />
             </AppUpdateModel>
             <AppUpdateModel
                 isOpen={openModel === 'phoneNumber'}

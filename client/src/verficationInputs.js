@@ -45,7 +45,7 @@ function verifyName(name) {
         return true; 
     } else {
 
-        return name.length >= 3 && /^[a-zA-Z]+$/.test(name);
+        return name.trim().length >= 3 && /^[a-zA-Z\s]+$/.test(name);
     }
 }
 

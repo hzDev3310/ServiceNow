@@ -24,8 +24,9 @@ const useServices = (endpoint) => {
     };
 
     fetchData();
+    
 
-  }, [data , endpoint]);
+  }, [ endpoint]);
 
   return { data, error, isLoading };
 };

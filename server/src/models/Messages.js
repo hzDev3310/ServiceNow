@@ -1,15 +1,5 @@
-const { Schema, model } = require("mongoose");
-
-const Message = new Schema(
-    {
-        convId:String,
-        sender: String,
-        content: String,
-    },
-    { timestamps: true }
-)
-
-
+const {  model } = require("mongoose");
+const Message = require("../schema/Message")
 
 const MessageModel = model("Message", Message);
 module.exports = MessageModel;

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import useGet from '../apis/useGet';
 import AppText from './AppText';
 import AppBadge from './AppBadge';
+import { useMessage } from '../store';
 
 const AppMessageCard = ({ item, currentUser }) => {
     const navigation = useNavigation()
@@ -11,6 +12,7 @@ const AppMessageCard = ({ item, currentUser }) => {
     const convId = conv._id
     const otherUser = conv.users.find(user => user !== currentUser);
     const { data, error } = useGet(`/users/${otherUser}`, [otherUser]);
+ 
 
     return (
         <>
@@ -29,7 +31,10 @@ const AppMessageCard = ({ item, currentUser }) => {
                         />
 
                         <View style={{ marginLeft: 10 }}>
-                            <AppText>{data?.name}</AppText>
+                            <AppText className="text-base" >{data?.name}</AppText>
+                           {conv.lastMessage &&
+                             <AppText> {conv.lastMessage.sender !== otherUser && "you:"} {conv.lastMessage?.content}</AppText>
+                           }
                         </View>
 
                     </TouchableOpacity>

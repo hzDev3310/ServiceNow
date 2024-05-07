@@ -54,6 +54,7 @@ const addNewMessage = async (req, res) => {
     });
 
     conv.updatedAt = Date.now();
+    conv.lastMessage = message
     await message.save();
     await conv.save();
 

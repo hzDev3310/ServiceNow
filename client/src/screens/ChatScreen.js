@@ -6,6 +6,7 @@ import { io } from "socket.io-client"
 import colors from '../colors';
 import usePost from '../apis/usePost';
 import baseUrl from '../apis/apiClient';
+import { useMessage } from '../store';
 
 const ChatScreen = ({ navigation, route }) => {
   const { convId, currentUser, otherUser, otherUserDetails } = route.params;
@@ -16,6 +17,7 @@ const ChatScreen = ({ navigation, route }) => {
   const [page, setPage] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { lastMessage, setLastMessage } = useMessage()
   const socket = useRef();
   const flatListRef = useRef()
   const { error: sendError, loading, postData } = usePost()
@@ -85,6 +87,7 @@ const ChatScreen = ({ navigation, route }) => {
   //post new message the db and soket io and adet the messages
   const sendNewMessage = async () => {
     await postData("/messages", { convId, sender: currentUser, content: newMessage });
+    setLastMessage({ convId, sender: currentUser, content: newMessage })
     setMessages(prv => [...prv, {
       convId,
       sender: currentUser,
@@ -114,7 +117,7 @@ const ChatScreen = ({ navigation, route }) => {
         </View>
       ),
       headerTitleAlign: "center",
-     
+
     });
   }, []);
   //render the messages

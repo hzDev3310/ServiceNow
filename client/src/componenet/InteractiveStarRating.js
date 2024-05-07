@@ -12,7 +12,6 @@ import { useCurrentUser, useIsLogin } from '../store';
 const InteractiveStarRating = ({ serviceRating, total, userId }) => {
   const { error, isLoading, responseData, updateData } = useUpdate()
   const [rating, setRating] = useState(0);
-  const [show, setShow] = useState(false)
   const { isLogin } = useIsLogin()
   const [finalRating, setFinal] = useState(serviceRating)
   const [totalRating, setTotal] = useState(total)
@@ -41,10 +40,16 @@ const InteractiveStarRating = ({ serviceRating, total, userId }) => {
     error && alert("check your internet connexion")
     if (responseData) {
       alert("thank you")
-      setShow(false)
+  
+     if(totalRating === 0 ){
       setTotal(prv => prv + 1)
-      const s = (serviceRating * total + rating) / total
-      setFinal(s)
+      setFinal(rating)
+     }
+     else{
+      const s = finalRating * totalRating + rating
+      setFinal(s/(totalRating+1))
+      setTotal(prv=>prv+1)
+     }
     }
   }, [responseData, error])
   return (

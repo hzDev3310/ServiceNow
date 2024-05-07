@@ -24,6 +24,11 @@ const useOtherUser = create((set) => ({
   otherUser: {},
   changeUser: (user) => set((state) => ({ otherUser: user }))
 }));
+const useMessage = create((set) => ({
+  lastMessage: {},
+  setLastMessage: (msg) => set((state) => ({ lastMessage: msg }))
+}));
 
 
-export { useCurrentLocation, useDarkMode, useCurrentUser, useOtherUser, useIsLogin }
+
+export { useCurrentLocation, useDarkMode, useCurrentUser, useOtherUser, useIsLogin ,useMessage }

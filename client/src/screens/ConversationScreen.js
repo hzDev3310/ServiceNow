@@ -1,13 +1,13 @@
 import { View, FlatList } from 'react-native'
 import React from 'react'
 import { AppMessageCard, AppSeparator, AppText } from "../componenet"
-import useGet from '../apis/useGet';
-import { useCurrentUser } from '../store';
+import { useCurrentUser, useMessage } from '../store';
 import AppLoadingCard from '../componenet/AppLoadingCard';
+import useServices from '../hooks/useServices';
 const ConversationScreen = ({ navigation }) => {
-
+  const {lastMessage,setLastMessage} = useMessage()
   const { currentUser } = useCurrentUser()
-  const { data, isLoading, error } = useGet(`/conversation/${currentUser.userId}`,[data])
+  const { data, isLoading, error } = useServices(`/conversation/${currentUser.userId}`)
   return (
     <>
       {isLoading &&

@@ -65,6 +65,7 @@ io.on("connection", (socket) => {
         console.log("user connected")
         addUsers(userId, socket.id);
         io.emit('getUsers', users);
+      
         
     });
 

@@ -5,17 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "env-cmd -f .env nodemon index.js"
+    "server": "env-cmd -f .env nodemon index.js",
+    "client": "cd ../client && npm start",
+    "admin": "cd ../admin && npm run dev",
+    "start": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@formspree/react": "^2.5.1",
     "@vonage/server-sdk": "^3.13.1",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "buffer": "^6.0.3",
     "cloudinary": "^2.0.2",
+    "concurrently": "^8.2.2",
     "connect-mongodb-session": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",

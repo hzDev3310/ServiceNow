@@ -10,10 +10,10 @@ const removeUser = async (req, res) => {
     const { userId } = req.params;
     const user = await userModel.findByIdAndDelete(userId);
 
-    res.json("user removed succsefuly");
+    res.json({message :"user removed succsefuly"});
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error " + error });
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error " + err });
   }
 };
 
@@ -81,6 +81,12 @@ const updateUser = async (req, res) => {
       case "comment":
         user.service.comments.push(value)
         break;
+        case "photo":
+          user.profilPic = "";
+         if(user.service){
+          user.service.profilPic = ""
+         }
+          break;
       default:
         return res.status(400).json({ message: "Invalid attribute" });
     }
@@ -115,9 +121,35 @@ const getOtherUser = async (req, res) => {
   }
 }
 
+const getUsers = async (req, res) => {
+  const id = req.query.id;
+  let users;
+
+  try {
+    if (!id) {
+      users = await userModel.find();
+    } else {
+      users = await userModel.findById(id);
+      if (!users) {
+        return res.status(404).json({ message: "User not found" });
+      }
+    }
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
+
+
+
+
 module.exports = {
   updateUser,
   removeUser,
   getuser,
-  getOtherUser
+  getOtherUser,
+  getUsers,
+
 };

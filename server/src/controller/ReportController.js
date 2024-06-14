@@ -19,7 +19,19 @@ const getReports = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error " + error });
     }
 };
+const deleteReport = async (req, res) => {
+    try {
+      const { id } = req.params;
+       await ReportModel.findByIdAndDelete(id);
+  
+      res.json({message :"report removed succsefuly"});
+    } catch (error) {
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error " + err });
+    }
+  };
+  
 
 
 
-module.exports = { sendReport ,getReports };
+module.exports = { sendReport ,getReports ,deleteReport};

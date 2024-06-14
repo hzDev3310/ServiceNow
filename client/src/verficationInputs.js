@@ -29,7 +29,7 @@ const isServiceAvailableToday = (isAvailable, days) => {
     const currentDate = new Date();
     const currentDayIndex = currentDate.getDay();
     const currentDayName = daysOfWeek[currentDayIndex];
-    if (isAvailable) {
+    if (!isAvailable) {
         return true;
     } else return days[currentDayName]
 };

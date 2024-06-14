@@ -61,9 +61,7 @@ const UpdateImageScreen = ({ navigation, route }) => {
         return (
 
             <View className="flex flex-1 justify-center items-center p-2">
-                <AppText>
-                    {JSON.stringify({responseData , error , loading})}
-                </AppText>
+             
 
                 {img ?
                     <Image

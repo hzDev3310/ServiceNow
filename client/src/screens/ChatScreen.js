@@ -1,13 +1,14 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { FlatList, Image, View } from 'react-native'
+import { FlatList, Image, TouchableOpacity, View } from 'react-native'
 import { AppActivityIndicator, AppInput, AppText, MessageContainer } from '../componenet'
 import { io } from "socket.io-client"
 import colors from '../colors';
 import usePost from '../apis/usePost';
 import baseUrl from '../apis/apiClient';
 import { useMessage } from '../store';
-
+import {  MaterialCommunityIcons } from '@expo/vector-icons';
+import {IPADDRESS   } from "@env";
 const ChatScreen = ({ navigation, route }) => {
   const { convId, currentUser, otherUser, otherUserDetails } = route.params;
 
@@ -17,7 +18,7 @@ const ChatScreen = ({ navigation, route }) => {
   const [page, setPage] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { lastMessage, setLastMessage } = useMessage()
+  const { setLastMessage } = useMessage()
   const socket = useRef();
   const flatListRef = useRef()
   const { error: sendError, loading, postData } = usePost()
@@ -55,7 +56,7 @@ const ChatScreen = ({ navigation, route }) => {
 
   //connect to socket server
   useEffect(() => {
-    socket.current = io("ws://192.168.1.16:8900");
+    socket.current = io(`ws://${IPADDRESS}:8900`);
   }, []);
 
   //conncet the userser to socket
@@ -107,6 +108,11 @@ const ChatScreen = ({ navigation, route }) => {
   //edite the screen header
   useEffect(() => {
     navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.goBack()} className="ml-2" >
+          <MaterialCommunityIcons name="arrow-left" size={26} color="gray" />
+        </TouchableOpacity>
+      ),
       headerTitle: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image
@@ -117,6 +123,7 @@ const ChatScreen = ({ navigation, route }) => {
         </View>
       ),
       headerTitleAlign: "center",
+    
 
     });
   }, []);

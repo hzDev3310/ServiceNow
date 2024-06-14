@@ -5,6 +5,7 @@ import { useDarkMode, useIsLogin } from "../store";
 import colors from "../colors";
 import AccountStack from "./AccountStack";
 
+
 const Tab = createBottomTabNavigator();
 export default function AppTab() {
   const {isLogin}= useIsLogin() 
@@ -35,6 +36,7 @@ export default function AppTab() {
             ),
           }}
         />
+    
          {
            isLogin && 
            <Tab.Screen

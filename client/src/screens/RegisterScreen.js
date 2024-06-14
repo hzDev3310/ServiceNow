@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StatusBar, ScrollView } from 'react-native'
+import { View, Text, StatusBar, ScrollView, Image } from 'react-native'
 import { AppActivityIndicator, AppBadge, AppButton, AppInput, AppSeparator } from '../componenet'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { VerifyPassword, verifyInputs, verifyName, verifyPhoneNumber } from "../verficationInputs"
@@ -37,27 +37,25 @@ const RegisterScreen = ({ navigation }) => {
   } else
     return (
       <View style={{ backgroundColor: colors.primary }} className="flex-1 w-full" >
-        <View className="h-1/4 flex justify-center w-full items-center" >
+        <View className="h-1/3 flex justify-center w-full items-center" >
+
           <View style={{ borderColor: colors.secondary }} className="h-40 w-40 rounded-full flex justify-center items-center border-4 bg-white">
-            <MaterialCommunityIcons name='account' size={80} color={colors.primary} />
-            <View className="absolute right-4 w-12 flex justify-center items-center aspect-square bottom-10  bg-white rounded-full overflow-hidden" >
-              <Text className="text-6xl" style={{ color: colors.primary }} >+</Text>
-            </View>
-            <Text style={{ color: colors.primary }} className="text-xl font-medium" >Sign Up</Text>
+            <Image source={require("../assets/adaptive-icon.png")} className="h-36 w-36" />
           </View>
+
         </View>
-        <AppBadge className="h-3/4 w-full rounded-t-3xl flex justify-center items-center p-2" >
+        <AppBadge className="h-2/3 w-full rounded-t-3xl flex justify-center items-center p-2" >
           <Text style={{ color: colors.primary }} className="font-bold text-3xl m-4 capitalize text-center" >create New account</Text>
-            <AppInput
-              iconName={"account"}
-              label={"Name"}
-              placeholder='Enter your full name'
-              value={body.name}
-              error={!verifyName(body.name)}
-              errorMessage="Name should be at least 3 characters long and contain only alphabetic characters"
-              onChangeText={(text) => setBody(prevState => ({ ...prevState, name: text }))}
-            />
-        
+          <AppInput
+            iconName={"account"}
+            label={"Name"}
+            placeholder='Enter your full name'
+            value={body.name}
+            error={!verifyName(body.name)}
+            errorMessage="Name should be at least 3 characters long and contain only alphabetic characters"
+            onChangeText={(text) => setBody(prevState => ({ ...prevState, name: text }))}
+          />
+
           <AppInput
             keyboardType='numeric'
             iconName={"phone"}
@@ -91,7 +89,7 @@ const RegisterScreen = ({ navigation }) => {
             <AppSeparator text="or" />
           </View>
           <View className="w-full p-2">
-            <AppButton icon={"login"} onPress={() => {  navigation.navigate('login') }} outLine >login</AppButton>
+            <AppButton icon={"login"} onPress={() => { navigation.navigate('login') }} outLine >login</AppButton>
           </View>
 
         </AppBadge>

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StatusBar } from 'react-native'
+import { View, Text, ScrollView, StatusBar, Image } from 'react-native'
 import { AppBadge, AppButton, AppInput, AppSeparator, AppActivityIndicator } from '../componenet'
 import { VerifyPassword, verifyPhoneNumber, verifyInputs } from '../verficationInputs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -23,8 +23,7 @@ const LoginScreen = ({ navigation }) => {
       <StatusBar backgroundColor={colors.primary} />
       <View className="h-1/3 flex justify-center items-center overflow-hidden">
         <View style={{ borderColor: colors.secondary }} className="h-40 w-40 rounded-full flex justify-center items-center border-4 bg-white">
-          <MaterialCommunityIcons name='account' size={100} color={colors.primary} />
-          <Text style={{ color: colors.primary }} className="text-xl font-medium" >Login</Text>
+          <Image source={require("../assets/adaptive-icon.png")} className="h-36 w-36"  />
         </View>
       </View>
       <AppBadge classname={"h-2/3 rounded-t-3xl flex justify-center items-center p-2"}>

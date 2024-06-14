@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useCurrentUser, useIsLogin } from "./src/store";
 import { AuthStack } from "./src/navigation";
 import { createStackNavigator } from "@react-navigation/stack";
-import { ViewImageScreen } from "./src/screens";
+import { OfferServiceScreen, ViewImageScreen } from "./src/screens";
 import ReportScreen from "./src/screens/ReportScreen";
 
 
@@ -17,9 +17,11 @@ export default function App() {
 
   const { isLogin, setIsLogin } = useIsLogin()
   const { setCurrentUser } = useCurrentUser()
+  
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
+      console.log(value)
       if (value !== null) {
         setCurrentUser(JSON.parse(value))
         console.log("login")
@@ -62,6 +64,7 @@ export default function App() {
             }}
           />
         </Stack.Navigator>
+    
       </NavigationContainer>
     </GestureHandlerRootView>
 

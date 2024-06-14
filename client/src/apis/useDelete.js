@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import baseUrl from "./apiClient";
-const useDelete = (endpoint, headers = {}) => {
+const useDelete = () => {
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
+
+    const handleDelete = async (endpoint) => {
       setIsLoading(true);
       try {
         const response = await fetch(`${baseUrl}${endpoint}`, {
           method: "DELETE",
           headers: {
-            ...headers,
             "Content-Type": "application/json", 
           },
         });
@@ -30,10 +29,10 @@ const useDelete = (endpoint, headers = {}) => {
       }
     };
 
-    fetchData();
-  }, [endpoint, headers]);
+  
 
-  return { responseData, error, isLoading };
+
+  return { handleDelete,responseData, error, isLoading };
 };
 
 export default useDelete;

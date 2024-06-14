@@ -16,9 +16,12 @@ const HomeScreen = () => {
   const [services, setServices] = useState([]);
   const [show, setShow] = useState(false);
 
+
+
   useEffect(() => {
     getLocation();
-  }, []);
+   
+  }, [currentLocation]);
 
   useEffect(() => {
     if (data) {
@@ -85,7 +88,7 @@ const HomeScreen = () => {
       )}
 
       {data && (
-        <View className="w-full p-1 mt-1" >
+        <View className="w-full flex-1 p-1 mt-1" >
           <FlatList
             data={services}
             renderItem={({ item }) => <AppService provider={item} />}

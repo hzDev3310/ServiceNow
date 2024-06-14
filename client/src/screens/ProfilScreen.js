@@ -40,7 +40,7 @@ const ProfilScreen = ({ navigation }) => {
       {
         data &&
         <ScrollView>
-          <AppBadge classname={"my-2 flex flex-row justify-between items-center"} >
+          <AppBadge classname={"m-2 flex flex-row rounded-xl justify-between items-center"} >
             <View className="flex flex-row items-center" >
               <TouchableOpacity onPress={() => { navigation.navigate('image', { image: data.profilPic }) }} className="relative w-24 h-24 justify-center items-center">
                 <Image
@@ -83,7 +83,7 @@ const ProfilScreen = ({ navigation }) => {
             </AppBadge>
           }
           {
-            data.service && !data.service.certification && <AppBadge classname={"w-full mb-2 px-2 py-4 flex flex-row items-center justify-between"} >
+            data.service && !data.service.certification  && <AppBadge classname={"w-full mb-2 px-2 py-4 flex flex-row items-center justify-between"} >
               <AppText className="text-base" style={darkMode ? { color: colors.warning } : { color: "rgb(192, 151, 39)" }}>
                 please verify your account !
               </AppText>

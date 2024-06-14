@@ -15,10 +15,7 @@ function AccountStack() {
          headerShown: true,
          headerTitle : ""
       }} name="updateImage" component={UpdateImageScreen} />
-      <Stack.Screen  options={{
-         headerShown: true,
-         headerTitle : ""
-      }} name="offerService" component={OfferServiceScreen} />
+      <Stack.Screen  name="offerService" options={{headerShown:false}} component={OfferServiceScreen} />
     </Stack.Navigator>
   );
 }

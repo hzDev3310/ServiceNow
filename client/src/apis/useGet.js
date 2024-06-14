@@ -10,6 +10,7 @@ const useGet = (endpoint, headers = { 'Content-Type': 'application/json' } , dep
     const fetchData = async () => {
     setIsLoading(true)
       try {
+        console.log(baseUrl)
         const response = await fetch(baseUrl + endpoint, {
           method: 'GET',
           headers: {

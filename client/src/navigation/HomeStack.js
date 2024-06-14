@@ -14,7 +14,6 @@ function HomeStack() {
         name="home screen"
         component={HomeScreen}
         options={{
-          headerLeft:()=><Image style={{width : 30 , height :30 , marginLeft : 10}} source={require("../assets/favicon.png")} ></Image>,
           headerTitle: "ServiceNow",
           headerTintColor: colors.primary,
           headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
@@ -31,7 +30,7 @@ function HomeStack() {
           headerTitle: "",
         }}
       />
-    
+
     </Stack.Navigator>
   );
 }

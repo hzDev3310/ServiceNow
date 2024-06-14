@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import { AppActivityIndicator, AppBadge, AppButton, AppInput, AppPicker } from '../componenet'
 import { isEmail } from "../verficationInputs"
 import usePost from '../apis/usePost'
@@ -40,58 +40,67 @@ const OfferServiceScreen = ({ navigation }) => {
     }
     else return (
 
-        <AppBadge classname={"flex flex-1 justify-center p-1"}>
-            <View>
-                <AppPicker
-                    data={serviceProviders}
-                    selectedValue={body.serviceName}
-                    onValueChange={v => setBody(prevState => ({
-                        ...prevState,
-                        serviceName: v
-                    }))}
-                />
+        <View className="flex flex-1 h-full bg-blue-700">
+
+            <View className="h-1/3 flex justify-center items-center overflow-hidden">
+                <View style={{ borderColor: colors.secondary }} className="h-40 w-40 rounded-full flex justify-center items-center border-4 bg-white">
+                    <Image source={require("../assets/adaptive-icon.png")} className="h-36 w-36" />
+                </View>
+
             </View>
-            <AppInput
-                iconName={"email"}
-                label={"email"}
-                placeholder='email'
-                value={body.email}
-                error={!isEmail(body.email)}
-                errorMessage="inter a valide email"
-                onChangeText={
-                    (text) => setBody(prevState => ({
-                        ...prevState,
-                        email: text
-                    }))}
+            <AppBadge classname={"flex flex-1 justify-center p-1 h-2/3 rounded-t-3xl"}>
+                <View>
+                    <AppPicker
+                        data={serviceProviders}
+                        selectedValue={body.serviceName}
+                        onValueChange={v => setBody(prevState => ({
+                            ...prevState,
+                            serviceName: v
+                        }))}
+                    />
+                </View>
+                <AppInput
+                    iconName={"email"}
+                    label={"email"}
+                    placeholder='email'
+                    value={body.email}
+                    error={!isEmail(body.email)}
+                    errorMessage="inter a valide email"
+                    onChangeText={
+                        (text) => setBody(prevState => ({
+                            ...prevState,
+                            email: text
+                        }))}
 
-            />
-            <AppInput
-                iconName={"format-align-left"}
-                label={"description"}
-                placeholder='description'
-                value={body.description}
-                onChangeText={
-                    (text) => setBody(prevState => ({
-                        ...prevState,
-                        description: text
-                    }))}
+                />
+                <AppInput
+                    iconName={"format-align-left"}
+                    label={"description"}
+                    placeholder='description'
+                    value={body.description}
+                    onChangeText={
+                        (text) => setBody(prevState => ({
+                            ...prevState,
+                            description: text
+                        }))}
 
-            />
-            <AppInput
-                iconName={"account-hard-hat"}
-                label={"experience"}
-                placeholder='experience'
-                value={body.experience}
-                onChangeText={
-                    (text) => setBody(prevState => ({
-                        ...prevState,
-                        experience: text
-                    }))}
+                />
+                <AppInput
+                    iconName={"account-hard-hat"}
+                    label={"experience"}
+                    placeholder='experience'
+                    value={body.experience}
+                    onChangeText={
+                        (text) => setBody(prevState => ({
+                            ...prevState,
+                            experience: text
+                        }))}
 
-            />
-            <AppButton disabled={!isEmail(body.email) || body.email === ""} classname={"mt-2"} onPress={handelSignUp} >add your service </AppButton>
+                />
+                <AppButton disabled={!isEmail(body.email) || body.email === ""} classname={"mt-2"} onPress={handelSignUp} >add your service </AppButton>
 
-        </AppBadge>
+            </AppBadge>
+        </View>
     )
 
 

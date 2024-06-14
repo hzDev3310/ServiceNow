@@ -5,7 +5,7 @@ import colors from '../colors';
 
 const AppPicker = ({ selectedValue, onValueChange, data, label }) => {
   return (
-    <View className={`h-10 my-2 flex justify-center rounded-full`} style={{ backgroundColor: colors.secondary }}  >
+    <View className={`h-10 my-2 flex justify-center rounded-full`} style={{ backgroundColor: colors.warning }}  >
       <Picker
         selectedValue={selectedValue}
         style={{ width: '100%' }}

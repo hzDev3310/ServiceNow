@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+}
+.light-mode-img {
+    content: url("../src/img/icon-text.png");
+}
+
+.dark .dark-mode-img {
+    content: url("../src/img/whiteIcon-text.png");
+}
+
+body {
+    overflow-x: hidden;
+    transition: all 0.3s ease-in-out;
+}
